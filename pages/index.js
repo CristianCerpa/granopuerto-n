@@ -35,10 +35,17 @@ export default function Home() {
 
       <main className="hero">
 
-        {/* FONDO */}
+        {/* =========================================
+            FONDO
+        ========================================= */}
+
         <div className="hero-background" />
 
-        {/* NAVEGACIÓN */}
+
+        {/* =========================================
+            NAVEGACIÓN
+        ========================================= */}
+
         <header className="navbar">
 
           <nav>
@@ -71,7 +78,9 @@ export default function Home() {
             </ul>
           </nav>
 
+
           {/* CARRITO */}
+
           <div className="cart">
 
             <svg
@@ -111,7 +120,11 @@ export default function Home() {
 
         </header>
 
-        {/* LOGO */}
+
+        {/* =========================================
+            LOGO
+        ========================================= */}
+
         <div className="hero-logo">
 
           <img
@@ -121,7 +134,11 @@ export default function Home() {
 
         </div>
 
-        {/* TEXTO PRINCIPAL */}
+
+        {/* =========================================
+            TEXTO PRINCIPAL
+        ========================================= */}
+
         <div className="hero-content">
 
           <h1>
@@ -138,20 +155,34 @@ export default function Home() {
 
         </div>
 
-        {/* BOLSA INDEPENDIENTE */}
+
+        {/* =========================================
+            BOLSA DE CAFÉ
+            QUEDA DETRÁS DEL TEXTO
+        ========================================= */}
+
         <img
           className="coffee-bag"
           src="/bolsa-colombia.png"
           alt="Café GRANOPUERTO Colombia"
         />
 
-        {/* BOTÓN */}
+
+        {/* =========================================
+            BOTÓN
+        ========================================= */}
+
         <a
           href="#"
           className="hero-button"
         >
           VER NUESTROS CAFÉS&nbsp; →
         </a>
+
+
+        {/* =========================================
+            CSS
+        ========================================= */}
 
         <style jsx>{`
 
@@ -163,6 +194,7 @@ export default function Home() {
             box-sizing: border-box;
           }
 
+
           /* =========================================
              PORTADA
           ========================================= */
@@ -173,6 +205,7 @@ export default function Home() {
             width: 100%;
 
             height: 100vh;
+
             height: 100svh;
 
             min-height: 650px;
@@ -189,6 +222,7 @@ export default function Home() {
               serif;
           }
 
+
           /* =========================================
              FONDO
           ========================================= */
@@ -201,6 +235,7 @@ export default function Home() {
             bottom: 0;
 
             width: 100%;
+
             height: 69%;
 
             background-image:
@@ -215,6 +250,7 @@ export default function Home() {
 
             z-index: 1;
           }
+
 
           .hero-background::before {
             content: "";
@@ -237,6 +273,7 @@ export default function Home() {
               );
           }
 
+
           /* =========================================
              NAVEGACIÓN
           ========================================= */
@@ -248,11 +285,13 @@ export default function Home() {
             left: 0;
 
             width: 100%;
+
             height: 60px;
 
             display: flex;
 
             align-items: center;
+
             justify-content: center;
 
             z-index: 30;
@@ -263,10 +302,12 @@ export default function Home() {
               sans-serif;
           }
 
+
           .nav-menu {
             display: flex;
 
             align-items: center;
+
             justify-content: center;
 
             gap: 48px;
@@ -274,8 +315,10 @@ export default function Home() {
             list-style: none;
 
             margin: 0;
+
             padding: 0;
           }
+
 
           .nav-menu a {
             position: relative;
@@ -291,11 +334,16 @@ export default function Home() {
             letter-spacing: 1px;
 
             padding: 8px 0;
+
+            transition:
+              color 0.3s ease;
           }
+
 
           .nav-menu a:hover {
             color: #d9a34a;
           }
+
 
           .nav-menu .active::after {
             content: "";
@@ -312,6 +360,7 @@ export default function Home() {
             background: #d9a34a;
           }
 
+
           /* =========================================
              CARRITO
           ========================================= */
@@ -320,9 +369,11 @@ export default function Home() {
             position: absolute;
 
             right: 32px;
+
             top: 50%;
 
-            transform: translateY(-50%);
+            transform:
+              translateY(-50%);
 
             display: flex;
 
@@ -340,12 +391,15 @@ export default function Home() {
             font-size: 13px;
           }
 
+
           .cart-icon {
             width: 27px;
+
             height: 27px;
 
             display: block;
           }
+
 
           /* =========================================
              LOGO
@@ -360,12 +414,14 @@ export default function Home() {
 
             left: 50%;
 
-            transform: translateX(-50%);
+            transform:
+              translateX(-50%);
 
-            width: 260px;
+            width: 225px;
 
-            max-width: 32vw;
+            max-width: 28vw;
           }
+
 
           .hero-logo img {
             display: block;
@@ -374,6 +430,7 @@ export default function Home() {
 
             height: auto;
           }
+
 
           /* =========================================
              TEXTO PRINCIPAL
@@ -384,19 +441,21 @@ export default function Home() {
 
             z-index: 25;
 
-            top: 295px;
+            top: 245px;
 
             left: 50%;
 
-            transform: translateX(-50%);
+            transform:
+              translateX(-50%);
 
-            width: min(900px, 90%);
+            width: min(820px, 88%);
 
             text-align: center;
           }
 
+
           .hero-content h1 {
-            margin: 0 0 14px;
+            margin: 0 0 12px;
 
             font-family:
               "Cormorant Garamond",
@@ -404,7 +463,11 @@ export default function Home() {
               serif;
 
             font-size:
-              clamp(38px, 4vw, 58px);
+              clamp(
+                32px,
+                3.2vw,
+                46px
+              );
 
             line-height: 1.05;
 
@@ -413,10 +476,11 @@ export default function Home() {
             color: #f5f5f5;
           }
 
+
           .hero-content p {
             margin: 0 auto;
 
-            max-width: 760px;
+            max-width: 680px;
 
             font-family:
               "Cormorant Garamond",
@@ -424,21 +488,23 @@ export default function Home() {
               serif;
 
             font-size:
-              clamp(18px, 1.65vw, 25px);
+              clamp(
+                16px,
+                1.3vw,
+                20px
+              );
 
-            line-height: 1.25;
+            line-height: 1.3;
 
             font-weight: 400;
 
             color: #f0f0f0;
           }
 
-          /* =========================================
-             BOLSA DE CAFÉ
 
-             MÁS PEQUEÑA
-             MÁS ABAJO
-             DETRÁS DEL TEXTO
+          /* =========================================
+             BOLSA
+             PEQUEÑA Y ABAJO
           ========================================= */
 
           .coffee-bag {
@@ -448,13 +514,14 @@ export default function Home() {
 
             left: 50%;
 
-            bottom: 6%;
+            bottom: 5%;
 
-            transform: translateX(-50%);
+            transform:
+              translateX(-50%);
 
-            width: 235px;
+            width: 175px;
 
-            max-width: 21vw;
+            max-width: 17vw;
 
             height: auto;
 
@@ -462,9 +529,11 @@ export default function Home() {
 
             filter:
               drop-shadow(
-                0 20px 30px rgba(0, 0, 0, 0.65)
+                0 18px 28px
+                rgba(0, 0, 0, 0.65)
               );
           }
+
 
           /* =========================================
              BOTÓN
@@ -477,21 +546,24 @@ export default function Home() {
 
             left: 50%;
 
-            bottom: 2.5%;
+            bottom: 2%;
 
-            transform: translateX(-50%);
+            transform:
+              translateX(-50%);
 
             display: flex;
 
             align-items: center;
+
             justify-content: center;
 
-            width: 310px;
+            width: 280px;
 
-            height: 42px;
+            height: 38px;
 
             border:
-              1px solid rgba(255,255,255,0.85);
+              1px solid
+              rgba(255, 255, 255, 0.85);
 
             color: #fff;
 
@@ -505,9 +577,9 @@ export default function Home() {
               Arial,
               sans-serif;
 
-            font-size: 10px;
+            font-size: 9px;
 
-            letter-spacing: 3px;
+            letter-spacing: 2.5px;
 
             white-space: nowrap;
 
@@ -516,11 +588,13 @@ export default function Home() {
               color 0.3s ease;
           }
 
+
           .hero-button:hover {
             background: #fff;
 
             color: #0e0d0b;
           }
+
 
           /* =========================================
              TABLET
@@ -532,46 +606,61 @@ export default function Home() {
               min-height: 650px;
             }
 
+
             .nav-menu {
               gap: 32px;
             }
+
 
             .cart {
               right: 20px;
             }
 
+
             .hero-logo {
               top: 72px;
 
-              width: 225px;
+              width: 205px;
 
-              max-width: 32vw;
+              max-width: 30vw;
             }
+
 
             .hero-content {
-              top: 260px;
+              top: 225px;
+
+              width: 90%;
             }
+
 
             .hero-content h1 {
-              font-size: 42px;
+              font-size: 38px;
             }
+
 
             .hero-content p {
-              font-size: 19px;
+              font-size: 17px;
+
+              max-width: 620px;
             }
+
 
             .coffee-bag {
-              width: 215px;
+              width: 165px;
 
-              max-width: 25vw;
+              max-width: 21vw;
 
-              bottom: 6%;
+              bottom: 4%;
             }
+
 
             .hero-button {
-              width: 275px;
+              width: 260px;
+
+              height: 36px;
             }
           }
+
 
           /* =========================================
              MÓVIL
@@ -585,6 +674,7 @@ export default function Home() {
               min-height: 600px;
             }
 
+
             .hero-background {
               height: 67%;
 
@@ -592,19 +682,23 @@ export default function Home() {
                 center bottom;
             }
 
+
             .navbar {
               height: 48px;
             }
 
+
             .nav-menu {
               gap: 22px;
             }
+
 
             .nav-menu a {
               font-size: 8px;
 
               letter-spacing: 0.6px;
             }
+
 
             .cart {
               right: 10px;
@@ -614,10 +708,13 @@ export default function Home() {
               font-size: 10px;
             }
 
+
             .cart-icon {
               width: 22px;
+
               height: 22px;
             }
+
 
             .hero-logo {
               top: 62px;
@@ -627,35 +724,45 @@ export default function Home() {
               max-width: 48vw;
             }
 
+
             .hero-content {
-              top: 205px;
+              top: 190px;
 
               width: 92%;
             }
 
-            .hero-content h1 {
-              margin-bottom: 10px;
 
-              font-size: 30px;
+            .hero-content h1 {
+              margin-bottom: 9px;
+
+              font-size: 27px;
+
+              line-height: 1.05;
             }
+
 
             .hero-content p {
-              font-size: 15px;
+              font-size: 14px;
 
-              line-height: 1.25;
+              line-height: 1.28;
+
+              max-width: 360px;
             }
+
 
             .desktop-break {
               display: none;
             }
 
+
             .coffee-bag {
-              width: 175px;
+              width: 155px;
 
               max-width: none;
 
-              bottom: 6%;
+              bottom: 5%;
             }
+
 
             .hero-button {
               width: 220px;
@@ -670,6 +777,7 @@ export default function Home() {
             }
           }
 
+
           /* =========================================
              MÓVIL PEQUEÑO
           ========================================= */
@@ -680,9 +788,11 @@ export default function Home() {
               gap: 16px;
             }
 
+
             .nav-menu a {
               font-size: 7px;
             }
+
 
             .hero-logo {
               top: 57px;
@@ -690,21 +800,28 @@ export default function Home() {
               width: 155px;
             }
 
+
             .hero-content {
-              top: 190px;
+              top: 180px;
             }
+
 
             .hero-content h1 {
-              font-size: 27px;
+              font-size: 25px;
             }
+
 
             .hero-content p {
-              font-size: 14px;
+              font-size: 13px;
             }
 
+
             .coffee-bag {
-              width: 160px;
+              width: 145px;
+
+              bottom: 5%;
             }
+
 
             .hero-button {
               width: 200px;
