@@ -45,7 +45,7 @@ export default function Home() {
             <ul className="nav-menu">
 
               <li>
-                <a href="#" className="active">
+                <a href="/" className="active">
                   INICIO
                 </a>
               </li>
@@ -70,7 +70,6 @@ export default function Home() {
 
             </ul>
           </nav>
-
 
           {/* CARRITO */}
           <div className="cart">
@@ -112,7 +111,6 @@ export default function Home() {
 
         </header>
 
-
         {/* LOGO */}
         <div className="hero-logo">
 
@@ -122,7 +120,6 @@ export default function Home() {
           />
 
         </div>
-
 
         {/* TEXTO PRINCIPAL */}
         <div className="hero-content">
@@ -141,17 +138,12 @@ export default function Home() {
 
         </div>
 
-
-        {/* BOLSA
-            IMPORTANTE:
-            queda detrás del texto y del logo
-        */}
+        {/* BOLSA INDEPENDIENTE */}
         <img
           className="coffee-bag"
           src="/bolsa-colombia.png"
           alt="Café GRANOPUERTO Colombia"
         />
-
 
         {/* BOTÓN */}
         <a
@@ -161,30 +153,28 @@ export default function Home() {
           VER NUESTROS CAFÉS&nbsp; →
         </a>
 
-
         <style jsx>{`
+
+          /* =========================================
+             RESET
+          ========================================= */
 
           * {
             box-sizing: border-box;
           }
 
-
-          html,
-          body {
-            margin: 0;
-            padding: 0;
-          }
-
-
           /* =========================================
-             HERO
+             PORTADA
           ========================================= */
 
           .hero {
             position: relative;
 
             width: 100%;
+
             height: 100vh;
+            height: 100svh;
+
             min-height: 650px;
 
             background: #0e0d0b;
@@ -198,7 +188,6 @@ export default function Home() {
               Georgia,
               serif;
           }
-
 
           /* =========================================
              FONDO
@@ -227,7 +216,6 @@ export default function Home() {
             z-index: 1;
           }
 
-
           .hero-background::before {
             content: "";
 
@@ -248,7 +236,6 @@ export default function Home() {
                 rgba(14, 13, 11, 0) 100%
               );
           }
-
 
           /* =========================================
              NAVEGACIÓN
@@ -276,7 +263,6 @@ export default function Home() {
               sans-serif;
           }
 
-
           .nav-menu {
             display: flex;
 
@@ -290,7 +276,6 @@ export default function Home() {
             margin: 0;
             padding: 0;
           }
-
 
           .nav-menu a {
             position: relative;
@@ -308,11 +293,9 @@ export default function Home() {
             padding: 8px 0;
           }
 
-
           .nav-menu a:hover {
             color: #d9a34a;
           }
-
 
           .nav-menu .active::after {
             content: "";
@@ -328,7 +311,6 @@ export default function Home() {
 
             background: #d9a34a;
           }
-
 
           /* =========================================
              CARRITO
@@ -358,14 +340,12 @@ export default function Home() {
             font-size: 13px;
           }
 
-
           .cart-icon {
             width: 27px;
             height: 27px;
 
             display: block;
           }
-
 
           /* =========================================
              LOGO
@@ -376,17 +356,16 @@ export default function Home() {
 
             z-index: 20;
 
-            top: 82px;
+            top: 72px;
 
             left: 50%;
 
             transform: translateX(-50%);
 
-            width: 300px;
+            width: 260px;
 
             max-width: 32vw;
           }
-
 
           .hero-logo img {
             display: block;
@@ -396,17 +375,16 @@ export default function Home() {
             height: auto;
           }
 
-
           /* =========================================
-             TEXTO
+             TEXTO PRINCIPAL
           ========================================= */
 
           .hero-content {
             position: absolute;
 
-            z-index: 18;
+            z-index: 25;
 
-            top: 310px;
+            top: 295px;
 
             left: 50%;
 
@@ -416,7 +394,6 @@ export default function Home() {
 
             text-align: center;
           }
-
 
           .hero-content h1 {
             margin: 0 0 14px;
@@ -435,7 +412,6 @@ export default function Home() {
 
             color: #f5f5f5;
           }
-
 
           .hero-content p {
             margin: 0 auto;
@@ -457,10 +433,12 @@ export default function Home() {
             color: #f0f0f0;
           }
 
-
           /* =========================================
-             BOLSA
-             PEQUEÑA Y DETRÁS DEL TEXTO
+             BOLSA DE CAFÉ
+
+             MÁS PEQUEÑA
+             MÁS ABAJO
+             DETRÁS DEL TEXTO
           ========================================= */
 
           .coffee-bag {
@@ -470,13 +448,13 @@ export default function Home() {
 
             left: 50%;
 
-            bottom: 8%;
+            bottom: 6%;
 
             transform: translateX(-50%);
 
-            width: 290px;
+            width: 235px;
 
-            max-width: 25vw;
+            max-width: 21vw;
 
             height: auto;
 
@@ -487,7 +465,6 @@ export default function Home() {
                 0 20px 30px rgba(0, 0, 0, 0.65)
               );
           }
-
 
           /* =========================================
              BOTÓN
@@ -532,18 +509,18 @@ export default function Home() {
 
             letter-spacing: 3px;
 
+            white-space: nowrap;
+
             transition:
               background 0.3s ease,
               color 0.3s ease;
           }
-
 
           .hero-button:hover {
             background: #fff;
 
             color: #0e0d0b;
           }
-
 
           /* =========================================
              TABLET
@@ -555,55 +532,46 @@ export default function Home() {
               min-height: 650px;
             }
 
-
             .nav-menu {
               gap: 32px;
             }
-
 
             .cart {
               right: 20px;
             }
 
-
             .hero-logo {
               top: 72px;
 
-              width: 245px;
+              width: 225px;
 
               max-width: 32vw;
             }
-
 
             .hero-content {
               top: 260px;
             }
 
-
             .hero-content h1 {
               font-size: 42px;
             }
-
 
             .hero-content p {
               font-size: 19px;
             }
 
-
             .coffee-bag {
-              width: 245px;
+              width: 215px;
 
-              max-width: 28vw;
+              max-width: 25vw;
 
-              bottom: 8%;
+              bottom: 6%;
             }
-
 
             .hero-button {
               width: 275px;
             }
           }
-
 
           /* =========================================
              MÓVIL
@@ -617,7 +585,6 @@ export default function Home() {
               min-height: 600px;
             }
 
-
             .hero-background {
               height: 67%;
 
@@ -625,23 +592,19 @@ export default function Home() {
                 center bottom;
             }
 
-
             .navbar {
               height: 48px;
             }
 
-
             .nav-menu {
               gap: 22px;
             }
-
 
             .nav-menu a {
               font-size: 8px;
 
               letter-spacing: 0.6px;
             }
-
 
             .cart {
               right: 10px;
@@ -651,21 +614,18 @@ export default function Home() {
               font-size: 10px;
             }
 
-
             .cart-icon {
               width: 22px;
               height: 22px;
             }
 
-
             .hero-logo {
               top: 62px;
 
-              width: 190px;
+              width: 175px;
 
               max-width: 48vw;
             }
-
 
             .hero-content {
               top: 205px;
@@ -673,13 +633,11 @@ export default function Home() {
               width: 92%;
             }
 
-
             .hero-content h1 {
               margin-bottom: 10px;
 
               font-size: 30px;
             }
-
 
             .hero-content p {
               font-size: 15px;
@@ -687,20 +645,17 @@ export default function Home() {
               line-height: 1.25;
             }
 
-
             .desktop-break {
               display: none;
             }
 
-
             .coffee-bag {
-              width: 190px;
+              width: 175px;
 
               max-width: none;
 
-              bottom: 8%;
+              bottom: 6%;
             }
-
 
             .hero-button {
               width: 220px;
@@ -715,7 +670,6 @@ export default function Home() {
             }
           }
 
-
           /* =========================================
              MÓVIL PEQUEÑO
           ========================================= */
@@ -726,38 +680,31 @@ export default function Home() {
               gap: 16px;
             }
 
-
             .nav-menu a {
               font-size: 7px;
             }
 
-
             .hero-logo {
               top: 57px;
 
-              width: 165px;
+              width: 155px;
             }
-
 
             .hero-content {
               top: 190px;
             }
 
-
             .hero-content h1 {
               font-size: 27px;
             }
-
 
             .hero-content p {
               font-size: 14px;
             }
 
-
             .coffee-bag {
-              width: 175px;
+              width: 160px;
             }
-
 
             .hero-button {
               width: 200px;
