@@ -67,7 +67,7 @@
       width: 100%;
       height: 72%;
 
-      background-image: url("fondo-cafe.jpg");
+      background-image: url("fondo-cafe.png");
       background-size: cover;
       background-position: center center;
       background-repeat: no-repeat;
