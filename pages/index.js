@@ -1076,7 +1076,7 @@ export default function Home() {
 
               width: 125px;
 
-              bottom: 5px;
+              bottom: 30px;
             }
           }
 
