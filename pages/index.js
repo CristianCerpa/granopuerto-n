@@ -35,14 +35,14 @@ export default function Home() {
 
       <main className="hero">
 
-        {/* ================================
+        {/* =================================
             FONDO
         ================================= */}
 
         <div className="hero-background" />
 
 
-        {/* ================================
+        {/* =================================
             NAVEGACIÓN
         ================================= */}
 
@@ -121,7 +121,7 @@ export default function Home() {
         </header>
 
 
-        {/* ================================
+        {/* =================================
             LOGO
         ================================= */}
 
@@ -135,8 +135,8 @@ export default function Home() {
         </div>
 
 
-        {/* ================================
-            TEXTO
+        {/* =================================
+            TEXTO PRINCIPAL
         ================================= */}
 
         <section className="hero-content">
@@ -156,7 +156,7 @@ export default function Home() {
         </section>
 
 
-        {/* ================================
+        {/* =================================
             BOLSA
         ================================= */}
 
@@ -167,8 +167,9 @@ export default function Home() {
         />
 
 
-        {/* ================================
+        {/* =================================
             BOTÓN
+            AHORA QUEDA SOBRE LA BOLSA
         ================================= */}
 
         <a
@@ -179,7 +180,7 @@ export default function Home() {
         </a>
 
 
-        {/* ================================
+        {/* =================================
             CSS
         ================================= */}
 
@@ -209,7 +210,9 @@ export default function Home() {
             position: relative;
 
             width: 100%;
+
             height: 100vh;
+
             height: 100svh;
 
             min-height: 620px;
@@ -256,11 +259,6 @@ export default function Home() {
           }
 
 
-          /*
-             Degradado superior.
-             Une el fondo con la parte negra.
-          */
-
           .hero-background::before {
             content: "";
 
@@ -300,6 +298,7 @@ export default function Home() {
             display: flex;
 
             justify-content: center;
+
             align-items: center;
 
             z-index: 50;
@@ -318,11 +317,12 @@ export default function Home() {
 
             justify-content: center;
 
-            gap: clamp(
-              30px,
-              4vw,
-              55px
-            );
+            gap:
+              clamp(
+                30px,
+                4vw,
+                55px
+              );
 
             list-style: none;
 
@@ -500,8 +500,8 @@ export default function Home() {
             top:
               clamp(
                 255px,
-                37vh,
-                360px
+                36vh,
+                350px
               );
 
             left: 50%;
@@ -569,6 +569,7 @@ export default function Home() {
 
           /* =================================
              BOLSA
+             MÁS ABAJO
           ================================= */
 
           .coffee-bag {
@@ -581,13 +582,13 @@ export default function Home() {
             transform:
               translateX(-50%);
 
-            bottom: 0;
+            bottom: -1%;
 
             width:
               clamp(
-                155px,
-                22vw,
-                245px
+                145px,
+                20vw,
+                225px
               );
 
             height: auto;
@@ -604,6 +605,7 @@ export default function Home() {
 
           /* =================================
              BOTÓN
+             SOBRE LA BOLSA
           ================================= */
 
           .hero-button {
@@ -613,10 +615,15 @@ export default function Home() {
 
             left: 50%;
 
-            bottom: 16px;
-
             transform:
               translateX(-50%);
+
+            bottom:
+              clamp(
+                115px,
+                17vh,
+                150px
+              );
 
             width:
               clamp(
@@ -635,6 +642,7 @@ export default function Home() {
             display: flex;
 
             align-items: center;
+
             justify-content: center;
 
             border:
@@ -706,7 +714,7 @@ export default function Home() {
 
 
             .hero-content {
-              top: 275px;
+              top: 260px;
             }
 
 
@@ -721,7 +729,14 @@ export default function Home() {
 
 
             .coffee-bag {
-              width: 205px;
+              width: 190px;
+
+              bottom: -1%;
+            }
+
+
+            .hero-button {
+              bottom: 125px;
             }
           }
 
@@ -772,9 +787,6 @@ export default function Home() {
 
             .hero-background {
               height: 58%;
-
-              background-position:
-                center bottom;
             }
 
 
@@ -816,16 +828,14 @@ export default function Home() {
 
 
             .coffee-bag {
-              bottom: 24px;
+              width: 150px;
 
-              width: 155px;
-
-              max-width: none;
+              bottom: -1%;
             }
 
 
             .hero-button {
-              bottom: 5px;
+              bottom: 105px;
 
               width: 215px;
 
@@ -884,9 +894,6 @@ export default function Home() {
 
             .hero-background {
               height: 54%;
-
-              background-position:
-                center bottom;
             }
 
 
@@ -924,19 +931,23 @@ export default function Home() {
             }
 
 
-            .coffee-bag {
-              bottom: 23px;
+            /* BOLSA EN CELULAR */
 
-              width: 135px;
+            .coffee-bag {
+              width: 125px;
+
+              bottom: -1%;
             }
 
 
+            /* BOTÓN SOBRE LA BOLSA */
+
             .hero-button {
-              bottom: 3px;
+              bottom: 78px;
 
               width: 190px;
 
-              height: 27px;
+              height: 29px;
 
               font-size: 7px;
 
@@ -986,16 +997,18 @@ export default function Home() {
 
 
             .coffee-bag {
-              width: 125px;
+              width: 115px;
 
-              bottom: 22px;
+              bottom: -1%;
             }
 
 
             .hero-button {
+              bottom: 70px;
+
               width: 180px;
 
-              height: 25px;
+              height: 27px;
 
               font-size: 6.5px;
             }
