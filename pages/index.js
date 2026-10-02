@@ -1019,7 +1019,7 @@ export default function Home() {
 
             .hero-content {
 
-              top: 166px;
+              top: 186px;
 
               width: 94%;
             }
