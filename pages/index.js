@@ -35,16 +35,12 @@ export default function Home() {
 
       <main className="hero">
 
-        {/* ================================
-            FONDO
-        ================================= */}
+        {/* FONDO */}
 
         <div className="hero-background" />
 
 
-        {/* ================================
-            MENÚ
-        ================================= */}
+        {/* MENÚ */}
 
         <header className="navbar">
 
@@ -121,9 +117,7 @@ export default function Home() {
         </header>
 
 
-        {/* ================================
-            LOGO
-        ================================= */}
+        {/* LOGO */}
 
         <div className="hero-logo">
 
@@ -135,9 +129,7 @@ export default function Home() {
         </div>
 
 
-        {/* ================================
-            TEXTO PRINCIPAL
-        ================================= */}
+        {/* TEXTO */}
 
         <section className="hero-content">
 
@@ -156,9 +148,7 @@ export default function Home() {
         </section>
 
 
-        {/* ================================
-            BOLSA
-        ================================= */}
+        {/* BOLSA */}
 
         <img
           className="coffee-bag"
@@ -167,9 +157,7 @@ export default function Home() {
         />
 
 
-        {/* ================================
-            BOTÓN
-        ================================= */}
+        {/* BOTÓN */}
 
         <a
           href="#"
@@ -178,10 +166,6 @@ export default function Home() {
           VER NUESTROS CAFÉS&nbsp; →
         </a>
 
-
-        {/* ================================
-            ESTILOS
-        ================================= */}
 
         <style jsx>{`
 
@@ -379,7 +363,6 @@ export default function Home() {
 
 
           .nav-menu a:hover {
-
             color: #d9a33f;
           }
 
@@ -725,6 +708,8 @@ export default function Home() {
 
           /* =================================
              TABLET
+             
+             SE MANTIENE IGUAL
           ================================= */
 
           @media (max-width: 1100px) {
@@ -901,11 +886,15 @@ export default function Home() {
             }
 
 
-            /* BOTÓN */
+            /* =================================
+               BOTÓN CELULAR
+               
+               SUBIDO
+            ================================= */
 
             .hero-button {
 
-              bottom: 125px;
+              bottom: 145px;
 
               width: 205px;
 
@@ -917,11 +906,15 @@ export default function Home() {
             }
 
 
-            /* BOLSA */
+            /* =================================
+               BOLSA CELULAR
+               
+               AGRANDADA
+            ================================= */
 
             .coffee-bag {
 
-              width: 100px;
+              width: 125px;
 
               bottom: 5px;
             }
@@ -1046,11 +1039,15 @@ export default function Home() {
             }
 
 
-            /* BOTÓN */
+            /* =================================
+               BOTÓN CELULAR PEQUEÑO
+               
+               SUBIDO
+            ================================= */
 
             .hero-button {
 
-              bottom: 112px;
+              bottom: 145px;
 
               width: 190px;
 
@@ -1062,11 +1059,15 @@ export default function Home() {
             }
 
 
-            /* BOLSA */
+            /* =================================
+               BOLSA CELULAR PEQUEÑO
+               
+               AGRANDADA
+            ================================= */
 
             .coffee-bag {
 
-              width: 88px;
+              width: 125px;
 
               bottom: 5px;
             }
@@ -1119,9 +1120,11 @@ export default function Home() {
             }
 
 
+            /* BOTÓN */
+
             .hero-button {
 
-              bottom: 105px;
+              bottom: 135px;
 
               width: 180px;
 
@@ -1131,9 +1134,11 @@ export default function Home() {
             }
 
 
+            /* BOLSA */
+
             .coffee-bag {
 
-              width: 82px;
+              width: 115px;
 
               bottom: 5px;
             }
