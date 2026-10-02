@@ -233,7 +233,7 @@ export default function Home() {
           href="#"
           className="hero-button"
         >
-          VER NUESTROS CAFÉS&nbsp; →
+          VER NUESTROS CAFÉS&nbsp; 
         </a>
 
 
