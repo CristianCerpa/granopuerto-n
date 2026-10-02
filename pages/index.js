@@ -16,10 +16,7 @@ export default function Home() {
           content="width=device-width, initial-scale=1"
         />
 
-        <link
-          rel="preconnect"
-          href="https://fonts.googleapis.com"
-        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
 
         <link
           rel="preconnect"
@@ -35,16 +32,11 @@ export default function Home() {
 
       <main className="hero">
 
-        {/* =================================
-            FONDO
-        ================================= */}
-
         <div className="hero-background" />
 
-
-        {/* =================================
-            NAVEGACIÓN
-        ================================= */}
+        {/* =========================
+            NAVBAR
+        ========================== */}
 
         <header className="navbar">
 
@@ -77,9 +69,6 @@ export default function Home() {
 
             </ul>
           </nav>
-
-
-          {/* CARRITO */}
 
           <div className="cart">
 
@@ -121,9 +110,9 @@ export default function Home() {
         </header>
 
 
-        {/* =================================
+        {/* =========================
             LOGO
-        ================================= */}
+        ========================== */}
 
         <div className="hero-logo">
 
@@ -135,9 +124,9 @@ export default function Home() {
         </div>
 
 
-        {/* =================================
+        {/* =========================
             TEXTO PRINCIPAL
-        ================================= */}
+        ========================== */}
 
         <section className="hero-content">
 
@@ -156,9 +145,9 @@ export default function Home() {
         </section>
 
 
-        {/* =================================
+        {/* =========================
             BOLSA
-        ================================= */}
+        ========================== */}
 
         <img
           className="coffee-bag"
@@ -167,10 +156,9 @@ export default function Home() {
         />
 
 
-        {/* =================================
+        {/* =========================
             BOTÓN
-            AHORA QUEDA SOBRE LA BOLSA
-        ================================= */}
+        ========================== */}
 
         <a
           href="#"
@@ -180,20 +168,15 @@ export default function Home() {
         </a>
 
 
-        {/* =================================
-            CSS
-        ================================= */}
-
         <style jsx>{`
 
-          /* =================================
-             RESET
-          ================================= */
+          /* =====================================================
+             BASE
+          ====================================================== */
 
           * {
             box-sizing: border-box;
           }
-
 
           html,
           body {
@@ -202,17 +185,17 @@ export default function Home() {
           }
 
 
-          /* =================================
-             PORTADA
-          ================================= */
+          /* =====================================================
+             HERO
+          ====================================================== */
 
           .hero {
+
             position: relative;
 
             width: 100%;
 
             height: 100vh;
-
             height: 100svh;
 
             min-height: 620px;
@@ -230,11 +213,12 @@ export default function Home() {
           }
 
 
-          /* =================================
-             FONDO
-          ================================= */
+          /* =====================================================
+             FONDO DE CAFÉ
+          ====================================================== */
 
           .hero-background {
+
             position: absolute;
 
             left: 0;
@@ -260,6 +244,7 @@ export default function Home() {
 
 
           .hero-background::before {
+
             content: "";
 
             position: absolute;
@@ -281,11 +266,12 @@ export default function Home() {
           }
 
 
-          /* =================================
-             NAVEGACIÓN
-          ================================= */
+          /* =====================================================
+             NAVBAR
+          ====================================================== */
 
           .navbar {
+
             position: absolute;
 
             top: 0;
@@ -311,6 +297,7 @@ export default function Home() {
 
 
           .nav-menu {
+
             display: flex;
 
             align-items: center;
@@ -332,6 +319,7 @@ export default function Home() {
 
 
           .nav-menu a {
+
             position: relative;
 
             color: #ffffff;
@@ -374,6 +362,7 @@ export default function Home() {
 
 
           .nav-menu .active::after {
+
             content: "";
 
             position: absolute;
@@ -389,11 +378,12 @@ export default function Home() {
           }
 
 
-          /* =================================
-             CARRITO
-          ================================= */
+          /* =====================================================
+             CARRO
+          ====================================================== */
 
           .cart {
+
             position: absolute;
 
             right:
@@ -431,6 +421,7 @@ export default function Home() {
 
 
           .cart-icon {
+
             width:
               clamp(
                 22px,
@@ -449,11 +440,12 @@ export default function Home() {
           }
 
 
-          /* =================================
+          /* =====================================================
              LOGO
-          ================================= */
+          ====================================================== */
 
           .hero-logo {
+
             position: absolute;
 
             z-index: 30;
@@ -480,6 +472,7 @@ export default function Home() {
 
 
           .hero-logo img {
+
             display: block;
 
             width: 100%;
@@ -488,11 +481,12 @@ export default function Home() {
           }
 
 
-          /* =================================
-             TEXTO PRINCIPAL
-          ================================= */
+          /* =====================================================
+             TEXTO
+          ====================================================== */
 
           .hero-content {
+
             position: absolute;
 
             z-index: 40;
@@ -520,7 +514,9 @@ export default function Home() {
 
 
           .hero-content h1 {
-            margin: 0 0 14px;
+
+            margin:
+              0 0 14px;
 
             color: #f7f5f1;
 
@@ -543,7 +539,9 @@ export default function Home() {
 
 
           .hero-content p {
-            margin: 0 auto;
+
+            margin:
+              0 auto;
 
             max-width: 720px;
 
@@ -567,12 +565,12 @@ export default function Home() {
           }
 
 
-          /* =================================
+          /* =====================================================
              BOLSA
-             MÁS ABAJO
-          ================================= */
+          ====================================================== */
 
           .coffee-bag {
+
             position: absolute;
 
             z-index: 20;
@@ -603,12 +601,12 @@ export default function Home() {
           }
 
 
-          /* =================================
+          /* =====================================================
              BOTÓN
-             SOBRE LA BOLSA
-          ================================= */
+          ====================================================== */
 
           .hero-button {
+
             position: absolute;
 
             z-index: 60;
@@ -694,46 +692,41 @@ export default function Home() {
 
 
           .hero-button:hover {
+
             background: #ffffff;
 
             color: #0e0d0b;
           }
 
 
-          /* =================================
-             NOTEBOOK PEQUEÑO
-          ================================= */
+          /* =====================================================
+             TABLET
+             NO MODIFICA COMPUTADOR
+          ====================================================== */
 
           @media (max-width: 1100px) {
 
             .hero-logo {
               top: 75px;
-
               width: 230px;
             }
-
 
             .hero-content {
               top: 260px;
             }
 
-
             .hero-content h1 {
               font-size: 42px;
             }
-
 
             .hero-content p {
               font-size: 18px;
             }
 
-
             .coffee-bag {
               width: 190px;
-
               bottom: -1%;
             }
-
 
             .hero-button {
               bottom: 125px;
@@ -741,28 +734,40 @@ export default function Home() {
           }
 
 
-          /* =================================
-             TABLET
-          ================================= */
+          /* =====================================================
+             CELULAR
+             
+             AQUÍ ESTÁ EL CAMBIO PRINCIPAL.
+             
+             SOLO SE MODIFICA ESTA PARTE.
+          ====================================================== */
 
           @media (max-width: 768px) {
 
             .hero {
+
               min-height: 560px;
             }
 
 
+            /* -------------------------
+               MENÚ
+            -------------------------- */
+
             .navbar {
+
               height: 55px;
             }
 
 
             .nav-menu {
+
               gap: 24px;
             }
 
 
             .nav-menu a {
+
               font-size: 8px;
 
               letter-spacing: 0.7px;
@@ -770,6 +775,7 @@ export default function Home() {
 
 
             .cart {
+
               right: 12px;
 
               gap: 5px;
@@ -779,18 +785,51 @@ export default function Home() {
 
 
             .cart-icon {
+
               width: 21px;
 
               height: 21px;
             }
 
 
+            /* -------------------------
+               FONDO
+               
+               Subimos visualmente
+               la fotografía para
+               eliminar el vacío.
+            -------------------------- */
+
             .hero-background {
-              height: 58%;
+
+              height: 62%;
+
+              background-position:
+                center bottom;
             }
 
 
+            .hero-background::before {
+
+              height: 50%;
+
+              background:
+                linear-gradient(
+                  to bottom,
+                  #0e0d0b 0%,
+                  rgba(14, 13, 11, 0.98) 20%,
+                  rgba(14, 13, 11, 0.70) 55%,
+                  rgba(14, 13, 11, 0) 100%
+                );
+            }
+
+
+            /* -------------------------
+               LOGO
+            -------------------------- */
+
             .hero-logo {
+
               top: 62px;
 
               width: 180px;
@@ -799,21 +838,33 @@ export default function Home() {
             }
 
 
+            /* -------------------------
+               TEXTO
+               
+               Un poco más abajo y
+               más compacto.
+            -------------------------- */
+
             .hero-content {
-              top: 185px;
+
+              top: 180px;
 
               width: 91%;
             }
 
 
             .hero-content h1 {
+
               margin-bottom: 9px;
 
               font-size: 29px;
+
+              line-height: 1.05;
             }
 
 
             .hero-content p {
+
               max-width: 390px;
 
               font-size: 14px;
@@ -823,19 +874,35 @@ export default function Home() {
 
 
             .desktop-break {
+
               display: none;
             }
 
 
-            .coffee-bag {
-              width: 150px;
+            /* -------------------------
+               BOLSA
+               
+               MÁS PEQUEÑA
+               COMPLETAMENTE VISIBLE
+            -------------------------- */
 
-              bottom: -1%;
+            .coffee-bag {
+
+              width: 108px;
+
+              bottom: 4px;
             }
 
 
+            /* -------------------------
+               BOTÓN
+               
+               SEPARADO DE LA BOLSA
+            -------------------------- */
+
             .hero-button {
-              bottom: 105px;
+
+              bottom: 150px;
 
               width: 215px;
 
@@ -848,28 +915,36 @@ export default function Home() {
           }
 
 
-          /* =================================
-             CELULAR
-          ================================= */
+          /* =====================================================
+             CELULAR PEQUEÑO
+          ====================================================== */
 
           @media (max-width: 480px) {
 
             .hero {
+
               min-height: 500px;
             }
 
 
+            /* -------------------------
+               MENÚ
+            -------------------------- */
+
             .navbar {
+
               height: 45px;
             }
 
 
             .nav-menu {
+
               gap: 18px;
             }
 
 
             .nav-menu a {
+
               font-size: 7px;
 
               letter-spacing: 0.5px;
@@ -877,6 +952,7 @@ export default function Home() {
 
 
             .cart {
+
               right: 8px;
 
               font-size: 8px;
@@ -886,18 +962,47 @@ export default function Home() {
 
 
             .cart-icon {
+
               width: 18px;
 
               height: 18px;
             }
 
 
+            /* -------------------------
+               FONDO
+            -------------------------- */
+
             .hero-background {
-              height: 54%;
+
+              height: 62%;
+
+              background-position:
+                center bottom;
             }
 
 
+            .hero-background::before {
+
+              height: 48%;
+
+              background:
+                linear-gradient(
+                  to bottom,
+                  #0e0d0b 0%,
+                  rgba(14, 13, 11, 0.98) 18%,
+                  rgba(14, 13, 11, 0.72) 55%,
+                  rgba(14, 13, 11, 0) 100%
+                );
+            }
+
+
+            /* -------------------------
+               LOGO
+            -------------------------- */
+
             .hero-logo {
+
               top: 54px;
 
               width: 150px;
@@ -906,14 +1011,20 @@ export default function Home() {
             }
 
 
+            /* -------------------------
+               TEXTO
+            -------------------------- */
+
             .hero-content {
-              top: 135px;
+
+              top: 137px;
 
               width: 94%;
             }
 
 
             .hero-content h1 {
+
               margin-bottom: 7px;
 
               font-size: 23px;
@@ -923,6 +1034,7 @@ export default function Home() {
 
 
             .hero-content p {
+
               max-width: 310px;
 
               font-size: 11px;
@@ -931,19 +1043,31 @@ export default function Home() {
             }
 
 
-            /* BOLSA EN CELULAR */
+            /* -------------------------
+               BOLSA
+               
+               MUCHO MÁS PEQUEÑA
+               Y COMPLETA
+            -------------------------- */
 
             .coffee-bag {
-              width: 125px;
 
-              bottom: -1%;
+              width: 100px;
+
+              bottom: 3px;
             }
 
 
-            /* BOTÓN SOBRE LA BOLSA */
+            /* -------------------------
+               BOTÓN
+               
+               QUEDA SOBRE LA BOLSA
+               PERO CON SEPARACIÓN
+            -------------------------- */
 
             .hero-button {
-              bottom: 78px;
+
+              bottom: 125px;
 
               width: 190px;
 
@@ -956,23 +1080,26 @@ export default function Home() {
           }
 
 
-          /* =================================
-             CELULAR MUY PEQUEÑO
-          ================================= */
+          /* =====================================================
+             CELULARES MUY PEQUEÑOS
+          ====================================================== */
 
           @media (max-width: 360px) {
 
             .nav-menu {
+
               gap: 14px;
             }
 
 
             .nav-menu a {
+
               font-size: 6.5px;
             }
 
 
             .hero-logo {
+
               top: 51px;
 
               width: 140px;
@@ -980,16 +1107,19 @@ export default function Home() {
 
 
             .hero-content {
+
               top: 128px;
             }
 
 
             .hero-content h1 {
+
               font-size: 21px;
             }
 
 
             .hero-content p {
+
               font-size: 10px;
 
               max-width: 285px;
@@ -997,14 +1127,16 @@ export default function Home() {
 
 
             .coffee-bag {
-              width: 115px;
 
-              bottom: -1%;
+              width: 92px;
+
+              bottom: 3px;
             }
 
 
             .hero-button {
-              bottom: 70px;
+
+              bottom: 112px;
 
               width: 180px;
 
