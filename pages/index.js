@@ -1054,7 +1054,7 @@ export default function Home() {
 
             .hero-button {
 
-              bottom: 400px;
+              bottom: 350px;
 
               width: 190px;
 
