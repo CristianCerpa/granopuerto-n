@@ -1,6 +1,24 @@
 import Head from "next/head";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+
+  const coffeeBags = [
+    "/bolsa-colombia.png",
+    "/bolsa-peru.png",
+    "/bolsa-brasil.png"
+  ];
+
+  const [currentBag, setCurrentBag] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentBag((prev) => (prev + 1) % coffeeBags.length);
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <>
       <Head>
@@ -157,14 +175,19 @@ export default function Home() {
 
 
         {/* =========================================
-            BOLSA
+            CARRUSEL DE BOLSAS
         ========================================== */}
 
-        <img
-          className="coffee-bag"
-          src="/bolsa-colombia.png"
-          alt="Café Granopuerto Colombia"
-        />
+        {coffeeBags.map((bag, index) => (
+          <img
+            key={bag}
+            className={`coffee-bag ${
+              index === currentBag ? "coffee-bag-active" : ""
+            }`}
+            src={bag}
+            alt="Café Granopuerto"
+          />
+        ))}
 
 
         {/* =========================================
@@ -579,7 +602,7 @@ export default function Home() {
 
 
           /* =========================================
-             BOLSA - COMPUTADOR
+             CARRUSEL DE BOLSAS
           ========================================== */
 
           .coffee-bag {
@@ -606,11 +629,24 @@ export default function Home() {
 
             display: block;
 
+            opacity: 0;
+
+            transition:
+              opacity 1s ease-in-out;
+
+            pointer-events: none;
+
             filter:
               drop-shadow(
                 0 18px 30px
                 rgba(0, 0, 0, 0.65)
               );
+          }
+
+
+          .coffee-bag-active {
+
+            opacity: 1;
           }
 
 
@@ -761,8 +797,6 @@ export default function Home() {
 
           /* =========================================
              CELULAR
-             
-             DISEÑO SEGÚN LA REFERENCIA
           ========================================== */
 
           @media (max-width: 768px) {
@@ -772,8 +806,6 @@ export default function Home() {
               min-height: 560px;
             }
 
-
-            /* MENÚ */
 
             .navbar {
 
@@ -813,8 +845,6 @@ export default function Home() {
             }
 
 
-            /* FONDO */
-
             .hero-background {
 
               height: 64%;
@@ -843,8 +873,6 @@ export default function Home() {
             }
 
 
-            /* LOGO */
-
             .hero-logo {
 
               top: 58px;
@@ -854,8 +882,6 @@ export default function Home() {
               max-width: 45vw;
             }
 
-
-            /* TEXTO */
 
             .hero-content {
 
@@ -892,12 +918,6 @@ export default function Home() {
             }
 
 
-            /* =====================================
-               BOTÓN CELULAR
-               
-               POSICIÓN DE LA REFERENCIA
-            ====================================== */
-
             .hero-button {
 
               bottom: 285px;
@@ -911,12 +931,6 @@ export default function Home() {
               letter-spacing: 2px;
             }
 
-
-            /* =====================================
-               BOLSA CELULAR
-               
-               GRANDE Y ABAJO
-            ====================================== */
 
             .coffee-bag {
 
@@ -938,8 +952,6 @@ export default function Home() {
               min-height: 500px;
             }
 
-
-            /* MENÚ */
 
             .navbar {
 
@@ -979,8 +991,6 @@ export default function Home() {
             }
 
 
-            /* FONDO */
-
             .hero-background {
 
               height: 65%;
@@ -1005,8 +1015,6 @@ export default function Home() {
             }
 
 
-            /* LOGO */
-
             .hero-logo {
 
               top: 83px;
@@ -1014,8 +1022,6 @@ export default function Home() {
               width: 150px;
             }
 
-
-            /* TEXTO */
 
             .hero-content {
 
@@ -1045,13 +1051,6 @@ export default function Home() {
             }
 
 
-            /* =====================================
-               BOTÓN
-               
-               EXACTAMENTE ARRIBA DE LA ZONA
-               DEL FONDO / BOLSA
-            ====================================== */
-
             .hero-button {
 
               bottom: 350px;
@@ -1065,12 +1064,6 @@ export default function Home() {
               letter-spacing: 1.8px;
             }
 
-
-            /* =====================================
-               BOLSA
-               
-               GRANDE Y CENTRADA
-            ====================================== */
 
             .coffee-bag {
 
@@ -1127,8 +1120,6 @@ export default function Home() {
             }
 
 
-            /* BOTÓN */
-
             .hero-button {
 
               bottom: 270px;
@@ -1140,8 +1131,6 @@ export default function Home() {
               font-size: 6.5px;
             }
 
-
-            /* BOLSA */
 
             .coffee-bag {
 
