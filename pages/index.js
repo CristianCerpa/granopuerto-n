@@ -10,14 +10,36 @@ export default function Home() {
   ];
 
   const [currentBag, setCurrentBag] = useState(0);
+  const [nextBag, setNextBag] = useState(1);
+  const [isSliding, setIsSliding] = useState(false);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentBag((prev) => (prev + 1) % coffeeBags.length);
-    }, 10000);
 
-    return () => clearInterval(interval);
-  }, []);
+    let slideTimer;
+
+    const waitTimer = setTimeout(() => {
+
+      const next = (currentBag + 1) % coffeeBags.length;
+
+      setNextBag(next);
+      setIsSliding(true);
+
+      slideTimer = setTimeout(() => {
+
+        setCurrentBag(next);
+        setIsSliding(false);
+
+      }, 1000);
+
+    }, 3000);
+
+    return () => {
+      clearTimeout(waitTimer);
+      clearTimeout(slideTimer);
+    };
+
+  }, [currentBag]);
+
 
   return (
     <>
@@ -178,16 +200,29 @@ export default function Home() {
             CARRUSEL DE BOLSAS
         ========================================== */}
 
-        {coffeeBags.map((bag, index) => (
+        <div
+          className={`coffee-carousel ${
+            isSliding ? "is-sliding" : ""
+          }`}
+        >
+
           <img
-            key={bag}
-            className={`coffee-bag ${
-              index === currentBag ? "coffee-bag-active" : ""
-            }`}
-            src={bag}
+            className="coffee-bag coffee-bag-current"
+            src={coffeeBags[currentBag]}
             alt="Café Granopuerto"
           />
-        ))}
+
+          {isSliding && (
+
+            <img
+              className="coffee-bag coffee-bag-next"
+              src={coffeeBags[nextBag]}
+              alt="Café Granopuerto"
+            />
+
+          )}
+
+        </div>
 
 
         {/* =========================================
@@ -605,7 +640,7 @@ export default function Home() {
              CARRUSEL DE BOLSAS
           ========================================== */
 
-          .coffee-bag {
+          .coffee-carousel {
 
             position: absolute;
 
@@ -625,28 +660,110 @@ export default function Home() {
                 225px
               );
 
+            height:
+              clamp(
+                190px,
+                28vw,
+                300px
+              );
+
+            overflow: visible;
+          }
+
+
+          .coffee-bag {
+
+            position: absolute;
+
+            left: 0;
+
+            bottom: 0;
+
+            width: 100%;
+
             height: auto;
 
             display: block;
-
-            opacity: 0;
-
-            transition:
-              opacity 1s ease-in-out;
-
-            pointer-events: none;
 
             filter:
               drop-shadow(
                 0 18px 30px
                 rgba(0, 0, 0, 0.65)
               );
+
+            pointer-events: none;
           }
 
 
-          .coffee-bag-active {
+          .coffee-bag-current {
 
-            opacity: 1;
+            transform:
+              translateX(0);
+          }
+
+
+          .coffee-bag-next {
+
+            transform:
+              translateX(100vw);
+          }
+
+
+          /* =========================================
+             MOVIMIENTO DE SALIDA
+          ========================================== */
+
+          .coffee-carousel.is-sliding
+          .coffee-bag-current {
+
+            animation:
+              coffeeBagExit
+              1s
+              ease-in-out
+              forwards;
+          }
+
+
+          /* =========================================
+             MOVIMIENTO DE ENTRADA
+          ========================================== */
+
+          .coffee-carousel.is-sliding
+          .coffee-bag-next {
+
+            animation:
+              coffeeBagEnter
+              1s
+              ease-in-out
+              forwards;
+          }
+
+
+          @keyframes coffeeBagExit {
+
+            from {
+              transform:
+                translateX(0);
+            }
+
+            to {
+              transform:
+                translateX(-100vw);
+            }
+          }
+
+
+          @keyframes coffeeBagEnter {
+
+            from {
+              transform:
+                translateX(100vw);
+            }
+
+            to {
+              transform:
+                translateX(0);
+            }
           }
 
 
@@ -780,11 +897,13 @@ export default function Home() {
             }
 
 
-            .coffee-bag {
+            .coffee-carousel {
 
               width: 190px;
 
               bottom: -1%;
+
+              height: 250px;
             }
 
 
@@ -797,6 +916,8 @@ export default function Home() {
 
           /* =========================================
              CELULAR
+
+             DISEÑO SEGÚN LA REFERENCIA
           ========================================== */
 
           @media (max-width: 768px) {
@@ -806,6 +927,8 @@ export default function Home() {
               min-height: 560px;
             }
 
+
+            /* MENÚ */
 
             .navbar {
 
@@ -845,6 +968,8 @@ export default function Home() {
             }
 
 
+            /* FONDO */
+
             .hero-background {
 
               height: 64%;
@@ -873,6 +998,8 @@ export default function Home() {
             }
 
 
+            /* LOGO */
+
             .hero-logo {
 
               top: 58px;
@@ -882,6 +1009,8 @@ export default function Home() {
               max-width: 45vw;
             }
 
+
+            /* TEXTO */
 
             .hero-content {
 
@@ -918,6 +1047,12 @@ export default function Home() {
             }
 
 
+            /* =====================================
+               BOTÓN CELULAR
+
+               POSICIÓN DE LA REFERENCIA
+            ====================================== */
+
             .hero-button {
 
               bottom: 285px;
@@ -932,11 +1067,19 @@ export default function Home() {
             }
 
 
-            .coffee-bag {
+            /* =====================================
+               BOLSA CELULAR
+
+               GRANDE Y ABAJO
+            ====================================== */
+
+            .coffee-carousel {
 
               width: 125px;
 
               bottom: 5px;
+
+              height: 170px;
             }
           }
 
@@ -952,6 +1095,8 @@ export default function Home() {
               min-height: 500px;
             }
 
+
+            /* MENÚ */
 
             .navbar {
 
@@ -991,6 +1136,8 @@ export default function Home() {
             }
 
 
+            /* FONDO */
+
             .hero-background {
 
               height: 65%;
@@ -1015,6 +1162,8 @@ export default function Home() {
             }
 
 
+            /* LOGO */
+
             .hero-logo {
 
               top: 83px;
@@ -1022,6 +1171,8 @@ export default function Home() {
               width: 150px;
             }
 
+
+            /* TEXTO */
 
             .hero-content {
 
@@ -1051,6 +1202,13 @@ export default function Home() {
             }
 
 
+            /* =====================================
+               BOTÓN
+
+               EXACTAMENTE ARRIBA DE LA ZONA
+               DEL FONDO / BOLSA
+            ====================================== */
+
             .hero-button {
 
               bottom: 350px;
@@ -1065,11 +1223,19 @@ export default function Home() {
             }
 
 
-            .coffee-bag {
+            /* =====================================
+               BOLSA
+
+               GRANDE Y CENTRADA
+            ====================================== */
+
+            .coffee-carousel {
 
               width: 125px;
 
               bottom: 30px;
+
+              height: 170px;
             }
           }
 
@@ -1120,6 +1286,8 @@ export default function Home() {
             }
 
 
+            /* BOTÓN */
+
             .hero-button {
 
               bottom: 270px;
@@ -1132,11 +1300,15 @@ export default function Home() {
             }
 
 
-            .coffee-bag {
+            /* BOLSA */
+
+            .coffee-carousel {
 
               width: 115px;
 
               bottom: 5px;
+
+              height: 155px;
             }
           }
 
