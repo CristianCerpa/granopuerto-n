@@ -1,3 +1,4 @@
+
 import Head from "next/head";
 import { useEffect, useState } from "react";
 
@@ -247,7 +248,7 @@ export default function Cafes() {
         </section>
 
         <footer className="pie">
-          © 2026 Granopuerto · todos los derechos reservados 
+          © 2026 Granopuerto · todos los derechos reservados
         </footer>
       </main>
 
@@ -362,13 +363,13 @@ export default function Cafes() {
         }
 
         .productos {
-          width: min(1120px, 90%);
+          width: min(1200px, 94%);
           margin: 0 auto;
-          padding: 10px 0 70px;
+          padding: 10px 0 50px;
           display: grid;
           grid-template-columns: repeat(3, minmax(0, 1fr));
           align-items: stretch;
-          gap: 26px;
+          gap: 16px;
         }
 
         .producto {
@@ -380,8 +381,8 @@ export default function Cafes() {
         }
 
         .imagen-producto {
-          height: 285px;
-          padding: 22px;
+          height: 190px;
+          padding: 14px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -402,51 +403,51 @@ export default function Cafes() {
           display: flex;
           flex-direction: column;
           align-items: flex-start;
-          padding: 24px 22px;
+          padding: 16px 14px;
         }
 
         .origen {
-          margin: 0 0 8px;
-          font-size: 9px;
-          line-height: 1.6;
+          margin: 0 0 6px;
+          font-size: 8px;
+          line-height: 1.5;
         }
 
         .detalle-producto h2 {
-          margin: 0 0 12px;
-          font-size: 34px;
+          margin: 0 0 8px;
+          font-size: 28px;
           font-weight: 500;
           letter-spacing: 1px;
         }
 
         .descripcion {
-          margin: 0 0 22px;
+          margin: 0 0 14px;
           color: #d5d0c8;
-          font-size: 17px;
-          line-height: 1.5;
+          font-size: 14px;
+          line-height: 1.4;
         }
 
         .caracteristicas,
         .notas,
         .informacion {
           width: 100%;
-          margin-bottom: 18px;
+          margin-bottom: 12px;
         }
 
         .caracteristicas h3,
         .notas h3 {
-          margin: 0 0 10px;
+          margin: 0 0 6px;
           color: #d9a33f;
-          font-size: 19px;
+          font-size: 16px;
           font-weight: 600;
         }
 
         .caracteristicas p,
         .notas p,
         .informacion p {
-          margin: 6px 0;
+          margin: 4px 0;
           color: #d5d0c8;
-          font-size: 15px;
-          line-height: 1.45;
+          font-size: 13px;
+          line-height: 1.35;
           overflow-wrap: anywhere;
         }
 
@@ -459,27 +460,27 @@ export default function Cafes() {
         .compra {
           width: 100%;
           margin-top: auto;
-          padding-top: 16px;
+          padding-top: 10px;
         }
 
         .precio {
-          margin: 0 0 18px;
+          margin: 0 0 12px;
           color: #d9a33f;
           font-family: Inter, Arial, sans-serif;
-          font-size: 20px;
+          font-size: 17px;
           font-weight: 500;
         }
 
         .boton-agregar {
           width: 100%;
-          min-height: 44px;
-          padding: 12px 8px;
+          min-height: 36px;
+          padding: 9px 6px;
           border: 1px solid rgba(255, 255, 255, 0.8);
           background: transparent;
           color: #fff;
           font-family: Inter, Arial, sans-serif;
-          font-size: 10px;
-          letter-spacing: 1px;
+          font-size: 9px;
+          letter-spacing: 0.7px;
           cursor: pointer;
           transition: background 0.25s ease, color 0.25s ease;
         }
@@ -544,14 +545,15 @@ export default function Cafes() {
           }
 
           .imagen-producto {
-            height: 300px;
+            height: 240px;
           }
 
           .detalle-producto {
-            padding: 24px;
+            padding: 18px 16px;
           }
         }
       `}</style>
     </>
   );
 }
+
