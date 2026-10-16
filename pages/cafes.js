@@ -148,12 +148,10 @@ export default function Cafes() {
           </a>
 
           <nav className="menu">
-            <a href="/">INICIO</a>
-            <a className="activo" href="/cafes">
-              CAFÉS
-            </a>
-            <a href="/nosotros">NOSOTROS</a>
-            <a href="/#contacto">CONTACTO</a>
+<a href="/">INICIO</a>
+<a className="activo" href="/cafes">CAFÉS</a>
+<a href="/nosotros">NOSOTROS</a>
+<a href="/contacto">CONTACTO</a>
           </nav>
 
           <a
