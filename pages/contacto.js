@@ -85,7 +85,7 @@ export default function Contacto() {
         </header>
 
         <section className="contenido">
-          <p className="sobretitulo">CONTACTO</p>
+      
 
           <h1>Hablemos de café.</h1>
 
