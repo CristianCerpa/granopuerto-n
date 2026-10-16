@@ -248,7 +248,7 @@ export default function Cafes() {
         </section>
 
         <footer className="pie">
-          GRANOPUERTO · VALPARAÍSO, CHILE
+          © 2026 Granopuerto · todos los derechos reservados 
         </footer>
       </main>
 
