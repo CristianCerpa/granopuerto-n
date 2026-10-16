@@ -37,7 +37,6 @@ export default function Home() {
 
     const waitTimer = setTimeout(() => {
       const next = (currentBag + 1) % coffeeBags.length;
-
       setNextBag(next);
       setIsSliding(true);
 
@@ -84,9 +83,7 @@ export default function Home() {
           <nav>
             <ul className="nav-menu">
               <li>
-                <a href="/" className="active">
-                  INICIO
-                </a>
+                <a href="/" className="active">INICIO</a>
               </li>
               <li>
                 <a href="/cafes">CAFÉS</a>
@@ -122,7 +119,10 @@ export default function Home() {
         </header>
 
         <div className="hero-logo">
-          <img src="/logo.png" alt="Granopuerto Coffee Roasters" />
+          <img
+            src="/logo.png"
+            alt="Granopuerto Coffee Roasters"
+          />
         </div>
 
         <section className="hero-content">
@@ -159,6 +159,10 @@ export default function Home() {
         <a href="/cafes" className="hero-button">
           VER NUESTROS CAFÉS&nbsp;
         </a>
+
+        <footer className="copyright">
+          © 2026 Granopuerto · todos los derechos reservados
+        </footer>
 
         <style jsx>{`
           * {
@@ -265,10 +269,10 @@ export default function Home() {
             display: flex;
             align-items: center;
             gap: 8px;
-            color: #ffffff;
-            text-decoration: none;
             font-family: "Inter", Arial, sans-serif;
             font-size: clamp(10px, 0.8vw, 13px);
+            color: #ffffff;
+            text-decoration: none;
           }
 
           .cart-icon {
@@ -402,6 +406,21 @@ export default function Home() {
           .hero-button:hover {
             background: #ffffff;
             color: #0e0d0b;
+          }
+
+          /* AVISO LEGAL AL PIE DE LA PÁGINA */
+          .copyright {
+            position: absolute;
+            z-index: 60;
+            bottom: 12px;
+            left: 0;
+            width: 100%;
+            padding: 0 10px;
+            color: rgba(255, 255, 255, 0.75);
+            text-align: center;
+            font-family: "Inter", Arial, sans-serif;
+            font-size: 10px;
+            letter-spacing: 0.5px;
           }
 
           @media (max-width: 1100px) {
@@ -642,6 +661,11 @@ export default function Home() {
               width: 115px;
               bottom: 5px;
               height: 155px;
+            }
+
+            .copyright {
+              bottom: 8px;
+              font-size: 8px;
             }
           }
         `}</style>
