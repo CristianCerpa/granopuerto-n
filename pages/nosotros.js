@@ -53,9 +53,7 @@ export default function Nosotros() {
             </svg>
           </a>
         </header>
-          <div className="separador">
-            <span />
-          </div>
+         
 
           <p>
             Nacimos inspirados en Valparaíso, puerto histórico que conectó
