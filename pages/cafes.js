@@ -23,7 +23,7 @@ const cafes = [
     nombre: "ANDINA",
     origen: "Perú",
     imagen: "/bolsa-peru.png",
-    precio: 13990,
+    precio: 12990,
     descripcion:
       "Desde las tierras peruanas, ANDINA nos invita a descubrir la riqueza de sus montañas y el carácter único de un café nacido en altura.",
     variedad: "Por confirmar",
