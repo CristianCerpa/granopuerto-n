@@ -159,9 +159,7 @@ export default function Home() {
         <a href="/cafes" className="hero-button">
           VER NUESTROS CAFÉS&nbsp;
         </a>
-<footer className="copyright">
-  © 2026 Granopuerto · todos los derechos reservados
-</footer>
+
         <style jsx>{`
           * {
             box-sizing: border-box;
