@@ -54,7 +54,7 @@ export default function Nosotros() {
           </a>
         </header>
          
-
+<section className="historia">
           <p>
             Nacimos inspirados en Valparaíso, puerto histórico que conectó
             a Chile con el mundo a través del comercio y las culturas.
