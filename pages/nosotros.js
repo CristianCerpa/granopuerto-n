@@ -33,10 +33,10 @@ export default function Nosotros() {
           </a>
 
           <nav className="menu">
-            <a href="/">INICIO</a>
-            <a href="/cafes">CAFÉS</a>
-            <a className="activo" href="/nosotros">NOSOTROS</a>
-            <a href="/#contacto">CONTACTO</a>
+<a href="/">INICIO</a>
+<a href="/cafes">CAFÉS</a>
+<a className="activo" href="/nosotros">NOSOTROS</a>
+<a href="/contacto">CONTACTO</a>
           </nav>
 
           <a className="carrito-link" href="/carrito" aria-label="Ver carrito">
@@ -88,7 +88,7 @@ export default function Nosotros() {
         </section>
 
         <footer className="pie">
-          GRANOPUERTO · VALPARAÍSO, CHILE
+        © 2026 Granopuerto · todos los derechos reservados
         </footer>
       </main>
 
