@@ -176,7 +176,6 @@ export default function Cafes() {
         </header>
 
         <section className="presentacion">
-          <p className="sobretitulo">GRANOPUERTO · CAFÉ DE ORIGEN</p>
           <h1>Nuestros cafés</h1>
           <p className="introduccion">
             Desde distintos rincones del mundo, una experiencia única en cada taza.
