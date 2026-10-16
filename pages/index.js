@@ -84,10 +84,27 @@ export default function Home() {
           <nav>
             <ul className="nav-menu">
               <li>
-<a href="/" className="activo">INICIO</a>
-<a href="/cafes">CAFÉS</a>
-<a href="/nosotros">NOSOTROS</a>
-<a href="/contacto">CONTACTO</a>
+                <a href="/" className="active">
+                  INICIO
+                </a>
+              </li>
+
+              <li>
+                <a href=>
+                  CAFÉS
+                </a>
+              </li>
+
+              <li>
+                <a href=>
+                  NOSOTROS
+                </a>
+              </li>
+
+              <li>
+                <a href=>
+                  CONTACTO
+                </a>
               </li>
             </ul>
           </nav>
