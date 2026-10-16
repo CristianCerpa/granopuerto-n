@@ -152,7 +152,7 @@ export default function Cafes() {
             <a className="activo" href="/cafes">
               CAFÉS
             </a>
-            <a href="/#nosotros">NOSOTROS</a>
+            <a href="/nosotros">NOSOTROS</a>
             <a href="/#contacto">CONTACTO</a>
           </nav>
 
