@@ -92,7 +92,7 @@ export default function Home() {
                 <a href="/cafes">CAFÉS</a>
               </li>
               <li>
-                <a href="#">NOSOTROS</a>
+                <a href="/nosotros">NOSOTROS</a>
               </li>
               <li>
                 <a href="#">CONTACTO</a>
