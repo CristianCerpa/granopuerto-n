@@ -90,14 +90,20 @@ export default function Home() {
               </li>
 
               <li>
-                <a href=>
+                <a href="#">
                   CAFÉS
                 </a>
               </li>
 
               <li>
-                <a href=>
+                <a href="#">
                   NOSOTROS
+                </a>
+              </li>
+
+              <li>
+                <a href="#">
+                  CONTACTO
                 </a>
               </li>
 
