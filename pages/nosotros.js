@@ -53,12 +53,6 @@ export default function Nosotros() {
             </svg>
           </a>
         </header>
-
-        <section className="historia">
-          <p className="sobretitulo">NUESTRA HISTORIA</p>
-
-          <h1>Granopuerto no es solo café.</h1>
-
           <div className="separador">
             <span />
           </div>
