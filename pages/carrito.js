@@ -48,11 +48,6 @@ export default function Carrito() {
   const [mensaje, setMensaje] = useState("");
 
   useEffect(() => {
-    cargarCarrito();
-    setCargando(false);
-  }, []);
-
-  function cargarCarrito() {
     try {
       const guardado = JSON.parse(
         localStorage.getItem(CLAVE_CARRITO) || "[]"
@@ -62,7 +57,9 @@ export default function Carrito() {
     } catch {
       setCarrito([]);
     }
-  }
+
+    setCargando(false);
+  }, []);
 
   function guardarCarrito(actualizado) {
     setCarrito(actualizado);
@@ -79,29 +76,26 @@ export default function Carrito() {
   }
 
   function cambiarCantidad(id, cambio) {
-    const actualizado = carrito
-      .map((producto) => {
-        if (producto.id !== id) return producto;
+    const actualizado = carrito.map((producto) => {
+      if (producto.id !== id) return producto;
 
-        return {
-          ...producto,
-          cantidad: Math.max(
-            1,
-            Number(producto.cantidad || 1) + cambio
-          ),
-        };
-      });
+      return {
+        ...producto,
+        cantidad: Math.max(
+          1,
+          Number(producto.cantidad || 1) + cambio
+        ),
+      };
+    });
 
     guardarCarrito(actualizado);
     setCostoEnvio(null);
   }
 
   function eliminarProducto(id) {
-    const actualizado = carrito.filter(
-      (producto) => producto.id !== id
+    guardarCarrito(
+      carrito.filter((producto) => producto.id !== id)
     );
-
-    guardarCarrito(actualizado);
     setCostoEnvio(null);
   }
 
@@ -204,11 +198,7 @@ export default function Carrito() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          cliente: {
-            nombre,
-            email,
-            telefono,
-          },
+          cliente: { nombre, email, telefono },
           despacho: {
             region,
             comuna,
@@ -246,8 +236,7 @@ export default function Carrito() {
       window.location.href = urlPago;
     } catch (error) {
       setMensaje(
-        error.message ||
-          "Ocurrió un error al iniciar el pago."
+        error.message || "Ocurrió un error al iniciar el pago."
       );
     }
   }
@@ -279,12 +268,10 @@ export default function Carrito() {
       <div className="pagina-carrito">
         <main className="contenido">
           <section className="encabezado">
-            <p className="sobre-titulo">GRANOPUERTO · VALPARAÍSO, CHILE</p>
             <h1>Tu carrito</h1>
             <p className="subtitulo">
               Tu próximo café favorito está a un paso.
             </p>
-            <span className="linea-dorada" />
           </section>
 
           {mensaje && (
@@ -319,10 +306,7 @@ export default function Carrito() {
                 </div>
 
                 {carrito.map((producto) => (
-                  <article
-                    className="producto"
-                    key={producto.id}
-                  >
+                  <article className="producto" key={producto.id}>
                     <div className="imagen-producto">
                       <img
                         src={producto.imagen || "/bolsa-colombia.png"}
@@ -483,9 +467,7 @@ export default function Carrito() {
                       Referencia (opcional)
                       <input
                         value={referencia}
-                        onChange={(e) =>
-                          setReferencia(e.target.value)
-                        }
+                        onChange={(e) => setReferencia(e.target.value)}
                         placeholder="Indicaciones para la entrega"
                       />
                     </label>
@@ -510,7 +492,6 @@ export default function Carrito() {
               </section>
 
               <aside className="resumen">
-                <p className="sobre-titulo">GRANOPUERTO</p>
                 <h2>Resumen de compra</h2>
 
                 <div className="fila-resumen">
@@ -557,10 +538,7 @@ export default function Carrito() {
                     <span>Webpay Plus · Transbank</span>
                   </label>
 
-                  <button
-                    type="submit"
-                    className="boton-pagar"
-                  >
+                  <button type="submit" className="boton-pagar">
                     CONTINUAR AL PAGO
                     <span>→</span>
                   </button>
@@ -570,13 +548,6 @@ export default function Carrito() {
                   El pago se realizará en la plataforma del proveedor
                   seleccionado.
                 </p>
-
-                <Link
-                  href="/cafes"
-                  className="boton-seguir boton-seguir-resumen"
-                >
-                  ← SEGUIR COMPRANDO
-                </Link>
               </aside>
             </div>
           )}
@@ -612,13 +583,6 @@ export default function Carrito() {
           padding: 68px 0 48px;
         }
 
-        .sobre-titulo {
-          margin: 0 0 17px;
-          color: #c5a56a;
-          font-size: 10px;
-          letter-spacing: 2.5px;
-        }
-
         .encabezado h1 {
           margin: 0;
           font-family: "Cormorant Garamond", Georgia, serif;
@@ -628,18 +592,10 @@ export default function Carrito() {
         }
 
         .subtitulo {
-          margin: 17px 0 25px;
+          margin: 17px 0 0;
           color: #a9a39a;
           font-size: 13px;
           line-height: 1.7;
-        }
-
-        .linea-dorada {
-          display: block;
-          width: 48px;
-          height: 1px;
-          margin: auto;
-          background: #c5a56a;
         }
 
         .mensaje {
@@ -903,12 +859,6 @@ export default function Carrito() {
           background: #0e0e0d;
         }
 
-        .resumen .sobre-titulo {
-          margin-bottom: 12px;
-          font-size: 9px;
-          letter-spacing: 2px;
-        }
-
         .resumen h2 {
           margin-bottom: 27px;
           font-size: 30px;
@@ -1013,19 +963,6 @@ export default function Carrito() {
           text-align: center;
         }
 
-        .boton-seguir-resumen {
-          width: 100%;
-          margin-top: 23px;
-          padding: 0 12px;
-          background: transparent;
-          color: #d5b477;
-        }
-
-        .boton-seguir-resumen:hover {
-          background: #c5a56a;
-          color: #090909;
-        }
-
         .vacio {
           max-width: 530px;
           margin: 0 auto 90px;
@@ -1085,7 +1022,6 @@ export default function Carrito() {
 
           .resumen {
             width: 100%;
-            max-width: none;
           }
         }
 
@@ -1096,11 +1032,6 @@ export default function Carrito() {
 
           .encabezado {
             padding: 52px 0 35px;
-          }
-
-          .sobre-titulo {
-            font-size: 9px;
-            letter-spacing: 1.7px;
           }
 
           .subtitulo {
