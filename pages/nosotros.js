@@ -73,7 +73,6 @@ export default function Nosotros() {
 
           <p className="frase">
             <strong>
-              GRANOPUERTO.
               <br />
               El mundo del café, con esencia porteña.
             </strong>
