@@ -724,7 +724,7 @@ export default function Carrito() {
 
         <footer className="pie">
           <p>GRANOPUERTO</p>
-          <span>CAFÉ DE ORIGEN · VALPARAÍSO, CHILE</span>
+          <span>© 2026 Granopuerto · todos los derechos reservados</span>
         </footer>
       </div>
 
