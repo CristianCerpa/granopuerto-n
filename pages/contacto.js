@@ -25,8 +25,6 @@ export default function Contacto() {
 
   function manejarEnvio(event) {
     event.preventDefault();
-
-    // El servicio de envío de correos se conectará más adelante.
     setEnviado(true);
   }
 
@@ -69,7 +67,11 @@ export default function Contacto() {
             </a>
           </nav>
 
-          <a className="carrito-link" href="/carrito" aria-label="Ver carrito">
+          <a
+            className="carrito-link"
+            href="/carrito"
+            aria-label="Ver carrito"
+          >
             <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
               <path
                 d="M3 5H7L10.2 20.5C10.5 22 11.8 23 13.4 23H24.5C26 23 27.3 22 27.7 20.6L30 12H9"
@@ -85,8 +87,6 @@ export default function Contacto() {
         </header>
 
         <section className="contenido">
-      
-
           <h1>Hablemos de café.</h1>
 
           <p className="introduccion">
@@ -180,14 +180,22 @@ export default function Contacto() {
           font-family: "Cormorant Garamond", Georgia, serif;
         }
 
+        /* ENCABEZADO: alineación equivalente a cafes.js */
         .encabezado {
-          min-height: 82px;
-          padding: 14px 5%;
+          position: relative;
+          min-height: 70px;
+          padding: 0 0 0 clamp(24px, 6vw, 90px);
           display: flex;
           align-items: center;
-          justify-content: space-between;
-          gap: 24px;
+          justify-content: flex-start;
+          gap: clamp(30px, 4vw, 55px);
           border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .marca {
+          display: flex;
+          flex-shrink: 0;
+          align-items: center;
         }
 
         .marca img {
@@ -198,19 +206,19 @@ export default function Contacto() {
 
         .menu {
           display: flex;
-          justify-content: center;
+          justify-content: flex-start;
           align-items: center;
-          gap: clamp(16px, 3vw, 42px);
+          gap: clamp(30px, 4vw, 55px);
         }
 
-        .menu a,
-        .carrito-link {
+        .menu a {
           color: #fff;
           text-decoration: none;
           font-family: Inter, Arial, sans-serif;
-          font-size: 11px;
-          letter-spacing: 1px;
+          font-size: clamp(9px, 0.75vw, 12px);
+          letter-spacing: clamp(0.6px, 0.08vw, 1.2px);
           white-space: nowrap;
+          transition: color 0.2s ease;
         }
 
         .menu a:hover,
@@ -219,13 +227,25 @@ export default function Contacto() {
         }
 
         .carrito-link {
+          position: absolute;
+          right: clamp(16px, 2.5vw, 38px);
+          top: 50%;
+          transform: translateY(-50%);
           display: flex;
           align-items: center;
+          justify-content: center;
+          color: #fff;
+          text-decoration: none;
+          font-family: Inter, Arial, sans-serif;
+          font-size: 14px;
+          gap: 10px;
         }
 
         .carrito-link svg {
-          width: 26px;
-          height: 26px;
+          display: block;
+          width: 34px;
+          height: 34px;
+          flex-shrink: 0;
         }
 
         .contenido {
@@ -233,15 +253,6 @@ export default function Contacto() {
           width: min(620px, 88%);
           margin: 0 auto;
           padding: 65px 0 80px;
-        }
-
-        .sobretitulo {
-          margin: 0 0 14px;
-          color: #d9a33f;
-          font-family: Inter, Arial, sans-serif;
-          font-size: 10px;
-          letter-spacing: 3px;
-          text-align: center;
         }
 
         h1 {
@@ -352,11 +363,52 @@ export default function Contacto() {
           letter-spacing: 2px;
         }
 
+        @media (max-width: 768px) {
+          .encabezado {
+            padding-left: 24px;
+            padding-right: 90px;
+            gap: 24px;
+          }
+
+          .marca img {
+            width: 112px;
+          }
+
+          .menu {
+            gap: 24px;
+          }
+
+          .menu a {
+            font-size: 8px;
+            letter-spacing: 0.7px;
+          }
+
+          .carrito-link {
+            right: 12px;
+            gap: 7px;
+            font-size: 12px;
+          }
+
+          .carrito-link svg {
+            width: 28px;
+            height: 28px;
+          }
+
+          .contenido {
+            padding: 48px 0 60px;
+          }
+
+          .introduccion {
+            font-size: 17px;
+          }
+        }
+
         @media (max-width: 600px) {
           .encabezado {
+            min-height: auto;
             flex-wrap: wrap;
-            justify-content: space-between;
-            padding: 14px 5%;
+            justify-content: flex-start;
+            padding: 14px 60px 14px 5%;
             gap: 14px;
           }
 
@@ -371,19 +423,55 @@ export default function Contacto() {
           }
 
           .menu a {
-            font-size: 9px;
+            font-size: 8px;
+            letter-spacing: 0.7px;
+          }
+
+          .carrito-link {
+            right: 12px;
+            top: 28px;
+            transform: translateY(-50%);
+          }
+        }
+
+        @media (max-width: 480px) {
+          .encabezado {
+            padding-left: 5%;
+            padding-right: 48px;
+          }
+
+          .menu {
+            gap: 18px;
+          }
+
+          .menu a {
+            font-size: 7px;
             letter-spacing: 0.5px;
           }
 
-          .contenido {
-            padding: 48px 0 60px;
+          .carrito-link {
+            right: 8px;
+            font-size: 11px;
+            gap: 5px;
           }
 
-          .introduccion {
-            font-size: 17px;
+          .carrito-link svg {
+            width: 25px;
+            height: 25px;
+          }
+        }
+
+        @media (max-width: 360px) {
+          .menu {
+            gap: 14px;
+          }
+
+          .menu a {
+            font-size: 6.5px;
           }
         }
       `}</style>
     </>
   );
 }
+
