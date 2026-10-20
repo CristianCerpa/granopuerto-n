@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 const CLAVE_CARRITO = "granopuerto-carrito";
 
-const REGIONES = [
+const regiones = [
   "Región de Arica y Parinacota",
   "Región de Tarapacá",
   "Región de Antofagasta",
@@ -24,167 +24,125 @@ const REGIONES = [
   "Región de Magallanes y de la Antártica Chilena",
 ];
 
+function formatoPrecio(precio) {
+  return new Intl.NumberFormat("es-CL", {
+    style: "currency",
+    currency: "CLP",
+    maximumFractionDigits: 0,
+  }).format(precio);
+}
+
 export default function Carrito() {
-  const [productos, setProductos] = useState([]);
+  const [carrito, setCarrito] = useState([]);
   const [cargando, setCargando] = useState(true);
+  const [nombre, setNombre] = useState("");
+  const [email, setEmail] = useState("");
+  const [telefono, setTelefono] = useState("");
   const [region, setRegion] = useState("");
   const [comuna, setComuna] = useState("");
   const [direccion, setDireccion] = useState("");
   const [referencia, setReferencia] = useState("");
-  const [nombre, setNombre] = useState("");
-  const [apellido, setApellido] = useState("");
-  const [correo, setCorreo] = useState("");
-  const [telefono, setTelefono] = useState("");
-  const [medioPago, setMedioPago] = useState("mercadopago");
+  const [metodoPago, setMetodoPago] = useState("mercadopago");
   const [costoEnvio, setCostoEnvio] = useState(null);
-  const [estadoEnvio, setEstadoEnvio] = useState("");
-  const [procesando, setProcesando] = useState(false);
-  const [error, setError] = useState("");
+  const [consultandoEnvio, setConsultandoEnvio] = useState(false);
+  const [mensaje, setMensaje] = useState("");
 
   useEffect(() => {
     cargarCarrito();
-
-    function sincronizar() {
-      cargarCarrito();
-    }
-
-    window.addEventListener("storage", sincronizar);
-    window.addEventListener("carrito-actualizado", sincronizar);
-
-    return () => {
-      window.removeEventListener("storage", sincronizar);
-      window.removeEventListener("carrito-actualizado", sincronizar);
-    };
+    setCargando(false);
   }, []);
 
   function cargarCarrito() {
     try {
-      const datos = JSON.parse(
+      const guardado = JSON.parse(
         localStorage.getItem(CLAVE_CARRITO) || "[]"
       );
 
-      setProductos(Array.isArray(datos) ? datos : []);
+      setCarrito(Array.isArray(guardado) ? guardado : []);
     } catch {
-      setProductos([]);
-      setError("No fue posible leer el carrito guardado.");
-    } finally {
-      setCargando(false);
+      setCarrito([]);
     }
   }
 
-  function guardarCarrito(nuevosProductos) {
+  function guardarCarrito(actualizado) {
+    setCarrito(actualizado);
+
     try {
       localStorage.setItem(
         CLAVE_CARRITO,
-        JSON.stringify(nuevosProductos)
+        JSON.stringify(actualizado)
       );
-
-      setProductos(nuevosProductos);
       window.dispatchEvent(new Event("carrito-actualizado"));
     } catch {
-      setError("No fue posible guardar los cambios del carrito.");
+      setMensaje("No se pudo guardar el carrito en este navegador.");
     }
   }
 
   function cambiarCantidad(id, cambio) {
-    const actualizados = productos
+    const actualizado = carrito
       .map((producto) => {
         if (producto.id !== id) return producto;
 
         return {
           ...producto,
-          cantidad: Number(producto.cantidad || 1) + cambio,
+          cantidad: Math.max(
+            1,
+            Number(producto.cantidad || 1) + cambio
+          ),
         };
-      })
-      .filter((producto) => Number(producto.cantidad) > 0);
+      });
 
-    guardarCarrito(actualizados);
+    guardarCarrito(actualizado);
     setCostoEnvio(null);
-    setEstadoEnvio("");
   }
 
   function eliminarProducto(id) {
-    guardarCarrito(productos.filter((producto) => producto.id !== id));
-    setCostoEnvio(null);
-    setEstadoEnvio("");
-  }
-
-  function vaciarCarrito() {
-    guardarCarrito([]);
-    setCostoEnvio(null);
-    setEstadoEnvio("");
-    setError("");
-  }
-
-  function precioProducto(producto) {
-    return Number(
-      producto.precio ?? producto.price ?? producto.valor ?? 0
+    const actualizado = carrito.filter(
+      (producto) => producto.id !== id
     );
+
+    guardarCarrito(actualizado);
+    setCostoEnvio(null);
   }
 
-  function nombreProducto(producto) {
-    return producto.nombre || producto.name || "Café GRANOPUERTO";
-  }
-
-  function formatoPrecio(valor) {
-    return new Intl.NumberFormat("es-CL", {
-      style: "currency",
-      currency: "CLP",
-      maximumFractionDigits: 0,
-    }).format(valor);
-  }
-
-  const cantidadTotal = productos.reduce(
+  const cantidadTotal = carrito.reduce(
     (total, producto) =>
-      total + Math.max(1, Number(producto.cantidad || 1)),
+      total + Number(producto.cantidad || 1),
     0
   );
 
-  const subtotal = productos.reduce(
+  const subtotal = carrito.reduce(
     (total, producto) =>
       total +
-      precioProducto(producto) *
-        Math.max(1, Number(producto.cantidad || 1)),
+      Number(producto.precio || 0) *
+        Number(producto.cantidad || 1),
     0
   );
 
-  const totalCompra =
+  const total =
     subtotal + (costoEnvio === null ? 0 : costoEnvio);
 
-  async function cotizarDespacho(event) {
-    event.preventDefault();
-    setError("");
-
-    if (!productos.length) {
-      setError("Agrega al menos un café antes de cotizar el despacho.");
+  async function consultarEnvio() {
+    if (!region || !comuna.trim()) {
+      setMensaje("Selecciona una región e ingresa tu comuna.");
       return;
     }
 
-    if (!region || !comuna.trim() || !direccion.trim()) {
-      setError("Completa la región, comuna y dirección de entrega.");
-      return;
-    }
-
-    setProcesando(true);
-    setCostoEnvio(null);
-    setEstadoEnvio("Consultando tarifa de despacho...");
+    setConsultandoEnvio(true);
+    setMensaje("");
 
     try {
       const respuesta = await fetch("/api/shipping/quote", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          proveedor: "blue-express",
-          destino: {
-            region,
-            comuna: comuna.trim(),
-            direccion: direccion.trim(),
-          },
-          productos: productos.map((producto) => ({
+          region,
+          comuna,
+          direccion,
+          productos: carrito.map((producto) => ({
             id: producto.id,
             cantidad: Number(producto.cantidad || 1),
           })),
-          subtotal,
         }),
       });
 
@@ -192,61 +150,53 @@ export default function Carrito() {
 
       if (!respuesta.ok || typeof datos.costo !== "number") {
         throw new Error(
-          datos.error ||
-            "No se pudo obtener la tarifa. Verifica la integración de Blue Express."
+          datos.message || "No se pudo calcular el despacho."
         );
       }
 
       setCostoEnvio(datos.costo);
-      setEstadoEnvio("Tarifa de despacho recibida.");
-    } catch (err) {
-      setEstadoEnvio("");
-      setError(
-        err.message ||
-          "No se pudo cotizar el despacho. Intenta nuevamente."
+      setMensaje("Costo de despacho calculado correctamente.");
+    } catch (error) {
+      setMensaje(
+        error.message ||
+          "No fue posible calcular el despacho. Intenta nuevamente."
       );
     } finally {
-      setProcesando(false);
+      setConsultandoEnvio(false);
     }
   }
 
   async function iniciarPago(event) {
     event.preventDefault();
-    setError("");
+    setMensaje("");
 
-    if (!productos.length) {
-      setError("Tu carrito está vacío.");
+    if (carrito.length === 0) {
+      setMensaje("Tu carrito está vacío.");
       return;
     }
 
     if (
       !nombre.trim() ||
-      !apellido.trim() ||
-      !correo.trim() ||
+      !email.trim() ||
       !telefono.trim() ||
       !region ||
       !comuna.trim() ||
       !direccion.trim()
     ) {
-      setError("Completa todos los datos del cliente y de entrega.");
-      return;
-    }
-
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
-      setError("Ingresa un correo electrónico válido.");
+      setMensaje("Completa tus datos de contacto y despacho.");
       return;
     }
 
     if (costoEnvio === null) {
-      setError("Primero debes obtener la tarifa de despacho.");
+      setMensaje(
+        "Primero calcula el costo de despacho para continuar."
+      );
       return;
     }
 
-    setProcesando(true);
-
     try {
       const endpoint =
-        medioPago === "mercadopago"
+        metodoPago === "mercadopago"
           ? "/api/payments/mercadopago"
           : "/api/payments/webpay";
 
@@ -254,25 +204,23 @@ export default function Carrito() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          medioPago,
           cliente: {
-            nombre: nombre.trim(),
-            apellido: apellido.trim(),
-            correo: correo.trim(),
-            telefono: telefono.trim(),
+            nombre,
+            email,
+            telefono,
           },
           despacho: {
-            proveedor: "blue-express",
             region,
-            comuna: comuna.trim(),
-            direccion: direccion.trim(),
-            referencia: referencia.trim(),
+            comuna,
+            direccion,
+            referencia,
             costo: costoEnvio,
           },
-          productos: productos.map((producto) => ({
+          productos: carrito.map((producto) => ({
             id: producto.id,
             cantidad: Number(producto.cantidad || 1),
           })),
+          metodoPago,
         }),
       });
 
@@ -280,451 +228,362 @@ export default function Carrito() {
 
       if (!respuesta.ok) {
         throw new Error(
-          datos.error ||
-            "No fue posible iniciar el pago. Intenta nuevamente."
+          datos.message || "No se pudo iniciar el pago."
         );
       }
 
-      if (datos.url) {
-        window.location.assign(datos.url);
-        return;
+      const urlPago =
+        metodoPago === "mercadopago"
+          ? datos.url
+          : datos.urlWebpay;
+
+      if (!urlPago) {
+        throw new Error(
+          "El servicio de pago no entregó una dirección válida."
+        );
       }
 
-      if (datos.token && datos.urlWebpay) {
-        const formulario = document.createElement("form");
-        formulario.method = "POST";
-        formulario.action = datos.urlWebpay;
-
-        const campo = document.createElement("input");
-        campo.type = "hidden";
-        campo.name = "token_ws";
-        campo.value = datos.token;
-
-        formulario.appendChild(campo);
-        document.body.appendChild(formulario);
-        formulario.submit();
-        return;
-      }
-
-      throw new Error("La respuesta del medio de pago no es válida.");
-    } catch (err) {
-      setError(
-        err.message ||
-          "No fue posible conectar con el medio de pago."
+      window.location.href = urlPago;
+    } catch (error) {
+      setMensaje(
+        error.message ||
+          "Ocurrió un error al iniciar el pago."
       );
-    } finally {
-      setProcesando(false);
     }
   }
 
   return (
     <>
       <Head>
-        <title>Mi carrito | GRANOPUERTO</title>
+        <title>Tu carrito | GRANOPUERTO</title>
         <meta
           name="description"
-          content="Compra cafés de origen GRANOPUERTO con despacho y pago online."
+          content="Revisa tu pedido de café GRANOPUERTO y completa tus datos de despacho."
+        />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1"
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap"
+          rel="stylesheet"
         />
       </Head>
 
-      <div className="pagina">
-        <header className="encabezado">
-          <nav className="menu">
-            <Link href="/">INICIO</Link>
-            <Link href="/cafes">CAFÉS</Link>
-            <Link href="/nosotros">NOSOTROS</Link>
-            <Link href="/contacto">CONTACTO</Link>
-          </nav>
-
-          <Link
-            href="/carrito"
-            className="icono-carrito"
-            aria-label={`Carrito, ${cantidadTotal} unidades`}
-          >
-            <svg
-              viewBox="0 0 24 24"
-              width="34"
-              height="34"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <circle cx="9" cy="21" r="1" />
-              <circle cx="20" cy="21" r="1" />
-              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-            </svg>
-            {cantidadTotal > 0 && (
-              <span className="contador">{cantidadTotal}</span>
-            )}
-          </Link>
-        </header>
-
+      <div className="pagina-carrito">
         <main className="contenido">
-          <div className="titulo">
+          <section className="encabezado">
+            <p className="sobre-titulo">GRANOPUERTO · VALPARAÍSO, CHILE</p>
             <h1>Tu carrito</h1>
             <p className="subtitulo">
-              Café de origen, preparado para llegar a tu puerta.
+              Tu próximo café favorito está a un paso.
             </p>
-          </div>
+            <span className="linea-dorada" />
+          </section>
 
-          {error && (
-            <div className="mensaje-error" role="alert">
-              {error}
+          {mensaje && (
+            <div className="mensaje" role="status">
+              {mensaje}
             </div>
           )}
 
           {cargando ? (
             <p className="estado">Cargando tu carrito...</p>
-          ) : productos.length === 0 ? (
+          ) : carrito.length === 0 ? (
             <section className="vacio">
-              <div className="icono-vacio">
-                <svg
-                  viewBox="0 0 24 24"
-                  width="48"
-                  height="48"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1"
-                >
-                  <path d="M4 7h16l-1.5 14h-13L4 7Z" />
-                  <path d="M9 7a3 3 0 0 1 6 0" />
-                </svg>
-              </div>
+              <span className="icono-vacio">◇</span>
               <h2>Tu carrito está vacío</h2>
               <p>
-                Descubre nuestros cafés de Colombia, Perú y Brasil.
+                Descubre nuestros cafés de origen y encuentra el
+                ideal para ti.
               </p>
-              <Link href="/cafes" className="boton-principal">
-                DESCUBRIR CAFÉS
+              <Link href="/cafes" className="boton-seguir">
+                EXPLORAR NUESTROS CAFÉS
               </Link>
             </section>
           ) : (
-            <>
-              <div className="barra-lista">
-                <span>
-                  {cantidadTotal}{" "}
-                  {cantidadTotal === 1 ? "producto" : "productos"}
-                </span>
-                <button
-                  type="button"
-                  className="limpiar"
-                  onClick={vaciarCarrito}
-                >
-                  Vaciar carrito
-                </button>
-              </div>
+            <div className="columnas">
+              <section className="productos">
+                <div className="titulo-seccion">
+                  <h2>Tu selección</h2>
+                  <span>
+                    {cantidadTotal}{" "}
+                    {cantidadTotal === 1 ? "producto" : "productos"}
+                  </span>
+                </div>
 
-              <div className="columnas">
-                <section className="lista">
-                  {productos.map((producto, indice) => {
-                    const cantidad = Math.max(
-                      1,
-                      Number(producto.cantidad || 1)
-                    );
-                    const precio = precioProducto(producto);
+                {carrito.map((producto) => (
+                  <article
+                    className="producto"
+                    key={producto.id}
+                  >
+                    <div className="imagen-producto">
+                      <img
+                        src={producto.imagen || "/bolsa-colombia.png"}
+                        alt={`${producto.nombre} ${producto.origen || ""}`}
+                      />
+                    </div>
 
-                    return (
-                      <article
-                        className="producto"
-                        key={
-                          producto.id ||
-                          `${nombreProducto(producto)}-${indice}`
-                        }
-                      >
-                        <div className="imagen-producto">
-                          {producto.imagen ? (
-                            <img
-                              src={producto.imagen}
-                              alt={nombreProducto(producto)}
-                            />
-                          ) : (
-                            <span>GRANOPUERTO</span>
-                          )}
+                    <div className="detalle-producto">
+                      <p className="origen">
+                        ORIGEN {producto.origen || ""}
+                      </p>
+                      <h3>{producto.nombre}</h3>
+                      <p className="formato">
+                        {producto.formato || "Café en grano · 250 g"}
+                      </p>
+
+                      <div className="controles">
+                        <div className="cantidad">
+                          <button
+                            type="button"
+                            onClick={() =>
+                              cambiarCantidad(producto.id, -1)
+                            }
+                            aria-label={`Disminuir cantidad de ${producto.nombre}`}
+                          >
+                            −
+                          </button>
+                          <span>
+                            {Number(producto.cantidad || 1)}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              cambiarCantidad(producto.id, 1)
+                            }
+                            aria-label={`Aumentar cantidad de ${producto.nombre}`}
+                          >
+                            +
+                          </button>
                         </div>
 
-                        <div className="datos-producto">
-                          <p className="origen">
-                            {(producto.origen || "CAFÉ DE ORIGEN").toUpperCase()}
-                          </p>
-                          <h2>{nombreProducto(producto)}</h2>
-                          <p className="formato">
-                            {producto.formato ||
-                              producto.presentacion ||
-                              "Café"}
-                          </p>
-                          <p className="precio-unitario">
-                            {formatoPrecio(precio)} / unidad
-                          </p>
+                        <button
+                          type="button"
+                          className="eliminar"
+                          onClick={() =>
+                            eliminarProducto(producto.id)
+                          }
+                        >
+                          Eliminar
+                        </button>
+                      </div>
+                    </div>
 
-                          <div className="acciones-producto">
-                            <div className="cantidad">
-                              <button
-                                type="button"
-                                onClick={() =>
-                                  cambiarCantidad(producto.id, -1)
-                                }
-                                aria-label={`Disminuir ${nombreProducto(producto)}`}
-                              >
-                                −
-                              </button>
-                              <span>{cantidad}</span>
-                              <button
-                                type="button"
-                                onClick={() =>
-                                  cambiarCantidad(producto.id, 1)
-                                }
-                                aria-label={`Aumentar ${nombreProducto(producto)}`}
-                              >
-                                +
-                              </button>
-                            </div>
-
-                            <button
-                              type="button"
-                              className="eliminar"
-                              onClick={() => eliminarProducto(producto.id)}
-                            >
-                              Eliminar
-                            </button>
-                          </div>
-                        </div>
-
-                        <div className="subtotal-producto">
-                          {formatoPrecio(precio * cantidad)}
-                        </div>
-                      </article>
-                    );
-                  })}
-
-                  <Link href="/cafes" className="seguir">
-                    ← Seguir comprando
-                  </Link>
-                </section>
-
-                <aside className="resumen">
-                  <h2>Resumen de compra</h2>
-
-                  <div className="fila">
-                    <span>Subtotal ({cantidadTotal} unidades)</span>
-                    <strong>{formatoPrecio(subtotal)}</strong>
-                  </div>
-
-                  <div className="fila">
-                    <span>Despacho Blue Express</span>
-                    <strong>
-                      {costoEnvio === null
-                        ? "Por cotizar"
-                        : formatoPrecio(costoEnvio)}
-                    </strong>
-                  </div>
-
-                  <div className="fila total">
-                    <span>Total</span>
-                    <strong>{formatoPrecio(totalCompra)}</strong>
-                  </div>
-
-                  {costoEnvio === null && (
-                    <p className="nota">
-                      El total final se confirmará al calcular el despacho.
+                    <p className="precio-producto">
+                      {formatoPrecio(
+                        Number(producto.precio || 0) *
+                          Number(producto.cantidad || 1)
+                      )}
                     </p>
-                  )}
+                  </article>
+                ))}
 
-                  <div className="separador" />
+                <Link href="/cafes" className="boton-seguir">
+                  ← SEGUIR COMPRANDO
+                </Link>
 
-                  <h3>Datos de contacto</h3>
+                <section className="despacho">
+                  <h2>Datos de despacho</h2>
+                  <p className="texto-seccion">
+                    Completa tus datos para preparar tu pedido.
+                  </p>
 
-                  <form onSubmit={cotizarDespacho}>
+                  <div className="formulario">
+                    <label>
+                      Nombre completo
+                      <input
+                        value={nombre}
+                        onChange={(e) => setNombre(e.target.value)}
+                        autoComplete="name"
+                        required
+                      />
+                    </label>
+
                     <div className="dos-columnas">
                       <label>
-                        Nombre *
+                        Correo electrónico
                         <input
+                          type="email"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          autoComplete="email"
                           required
-                          autoComplete="given-name"
-                          value={nombre}
-                          onChange={(e) => setNombre(e.target.value)}
                         />
                       </label>
 
                       <label>
-                        Apellido *
+                        Teléfono
                         <input
+                          type="tel"
+                          value={telefono}
+                          onChange={(e) => setTelefono(e.target.value)}
+                          autoComplete="tel"
                           required
-                          autoComplete="family-name"
-                          value={apellido}
-                          onChange={(e) => setApellido(e.target.value)}
                         />
                       </label>
                     </div>
 
                     <label>
-                      Correo electrónico *
-                      <input
-                        required
-                        type="email"
-                        autoComplete="email"
-                        value={correo}
-                        onChange={(e) => setCorreo(e.target.value)}
-                      />
-                    </label>
-
-                    <label>
-                      Teléfono *
-                      <input
-                        required
-                        type="tel"
-                        autoComplete="tel"
-                        value={telefono}
-                        onChange={(e) => setTelefono(e.target.value)}
-                      />
-                    </label>
-
-                    <div className="separador" />
-
-                    <h3>Dirección de despacho</h3>
-
-                    <label>
-                      Región *
+                      Región
                       <select
-                        required
                         value={region}
                         onChange={(e) => {
                           setRegion(e.target.value);
                           setCostoEnvio(null);
-                          setEstadoEnvio("");
                         }}
+                        required
                       >
-                        <option value="">Selecciona una región</option>
-                        {REGIONES.map((item) => (
-                          <option key={item} value={item}>
-                            {item}
+                        <option value="">Selecciona tu región</option>
+                        {regiones.map((nombreRegion) => (
+                          <option
+                            key={nombreRegion}
+                            value={nombreRegion}
+                          >
+                            {nombreRegion}
                           </option>
                         ))}
                       </select>
                     </label>
 
                     <label>
-                      Comuna *
+                      Comuna
                       <input
-                        required
                         value={comuna}
                         onChange={(e) => {
                           setComuna(e.target.value);
                           setCostoEnvio(null);
-                          setEstadoEnvio("");
                         }}
-                        placeholder="Ej. Viña del Mar"
+                        autoComplete="address-level2"
+                        required
                       />
                     </label>
 
                     <label>
-                      Dirección *
+                      Dirección
                       <input
-                        required
-                        autoComplete="street-address"
                         value={direccion}
                         onChange={(e) => {
                           setDireccion(e.target.value);
                           setCostoEnvio(null);
-                          setEstadoEnvio("");
                         }}
+                        autoComplete="street-address"
                         placeholder="Calle, número y departamento"
+                        required
                       />
                     </label>
 
                     <label>
-                      Referencia de entrega
-                      <textarea
-                        rows="2"
+                      Referencia (opcional)
+                      <input
                         value={referencia}
-                        onChange={(e) => setReferencia(e.target.value)}
-                        placeholder="Casa, oficina u otra referencia (opcional)"
+                        onChange={(e) =>
+                          setReferencia(e.target.value)
+                        }
+                        placeholder="Indicaciones para la entrega"
                       />
                     </label>
 
                     <button
-                      type="submit"
-                      className="boton-secundario"
-                      disabled={procesando}
+                      type="button"
+                      className="boton-despacho"
+                      onClick={consultarEnvio}
+                      disabled={consultandoEnvio}
                     >
-                      {procesando
-                        ? "CONSULTANDO..."
+                      {consultandoEnvio
+                        ? "CALCULANDO DESPACHO..."
                         : "CALCULAR DESPACHO"}
                     </button>
-                  </form>
 
-                  {estadoEnvio && (
-                    <p className="estado-envio" aria-live="polite">
-                      {estadoEnvio}
+                    <p className="proveedor">
+                      Despacho mediante Blue Express, sujeto a
+                      disponibilidad y cobertura.
                     </p>
-                  )}
-
-                  <div className="separador" />
-
-                  <h3>Medio de pago</h3>
-
-                  <div className="opciones-pago">
-                    <label className="opcion-pago">
-                      <input
-                        type="radio"
-                        name="medioPago"
-                        value="mercadopago"
-                        checked={medioPago === "mercadopago"}
-                        onChange={() => setMedioPago("mercadopago")}
-                      />
-                      <span className="marca-mercadopago">
-                        Mercado Pago
-                      </span>
-                    </label>
-
-                    <label className="opcion-pago">
-                      <input
-                        type="radio"
-                        name="medioPago"
-                        value="webpay"
-                        checked={medioPago === "webpay"}
-                        onChange={() => setMedioPago("webpay")}
-                      />
-                      <span className="marca-webpay">Webpay Plus</span>
-                      <small>Transbank</small>
-                    </label>
                   </div>
+                </section>
+              </section>
+
+              <aside className="resumen">
+                <p className="sobre-titulo">GRANOPUERTO</p>
+                <h2>Resumen de compra</h2>
+
+                <div className="fila-resumen">
+                  <span>Productos ({cantidadTotal})</span>
+                  <span>{formatoPrecio(subtotal)}</span>
+                </div>
+
+                <div className="fila-resumen">
+                  <span>Despacho</span>
+                  <span>
+                    {costoEnvio === null
+                      ? "Por calcular"
+                      : formatoPrecio(costoEnvio)}
+                  </span>
+                </div>
+
+                <div className="total">
+                  <span>Total</span>
+                  <strong>{formatoPrecio(total)}</strong>
+                </div>
+
+                <form onSubmit={iniciarPago}>
+                  <h3>Método de pago</h3>
+
+                  <label className="opcion-pago">
+                    <input
+                      type="radio"
+                      name="metodoPago"
+                      value="mercadopago"
+                      checked={metodoPago === "mercadopago"}
+                      onChange={(e) => setMetodoPago(e.target.value)}
+                    />
+                    <span>Mercado Pago</span>
+                  </label>
+
+                  <label className="opcion-pago">
+                    <input
+                      type="radio"
+                      name="metodoPago"
+                      value="webpay"
+                      checked={metodoPago === "webpay"}
+                      onChange={(e) => setMetodoPago(e.target.value)}
+                    />
+                    <span>Webpay Plus · Transbank</span>
+                  </label>
 
                   <button
-                    type="button"
-                    className="boton-principal boton-pagar"
-                    disabled={
-                      procesando ||
-                      costoEnvio === null ||
-                      !productos.length
-                    }
-                    onClick={iniciarPago}
+                    type="submit"
+                    className="boton-pagar"
                   >
-                    {procesando
-                      ? "PROCESANDO..."
-                      : `CONTINUAR CON ${
-                          medioPago === "mercadopago"
-                            ? "MERCADO PAGO"
-                            : "WEBPAY PLUS"
-                        }`}
+                    CONTINUAR AL PAGO
+                    <span>→</span>
                   </button>
+                </form>
 
-                  <p className="nota seguridad">
-                    El pago solo se confirmará después de que el proveedor
-                    valide la transacción. No ingreses datos de tarjeta
-                    directamente en esta página.
-                  </p>
-                </aside>
-              </div>
-            </>
+                <p className="nota-seguridad">
+                  El pago se realizará en la plataforma del proveedor
+                  seleccionado.
+                </p>
+
+                <Link
+                  href="/cafes"
+                  className="boton-seguir boton-seguir-resumen"
+                >
+                  ← SEGUIR COMPRANDO
+                </Link>
+              </aside>
+            </div>
           )}
         </main>
 
         <footer className="pie">
-          <p>GRANOPUERTO</p>
-          <span>© 2026 Granopuerto · todos los derechos reservados</span>
+          <p>© 2026 Granopuerto · todos los derechos reservados</p>
         </footer>
       </div>
 
@@ -733,121 +592,103 @@ export default function Carrito() {
           box-sizing: border-box;
         }
 
-        .pagina {
+        .pagina-carrito {
           min-height: 100vh;
+          display: flex;
+          flex-direction: column;
           background: #090909;
           color: #f4f0e8;
-          font-family: Arial, Helvetica, sans-serif;
-        }
-
-        .encabezado {
-          min-height: 70px;
-          width: 100%;
-          padding: 12px clamp(16px, 2.5vw, 38px);
-          display: flex;
-          align-items: center;
-          border-bottom: 1px solid rgba(213, 180, 119, 0.12);
-        }
-
-        .menu {
-          display: flex;
-          align-items: center;
-          gap: clamp(20px, 3vw, 42px);
-        }
-
-        .menu a {
-          color: #e7e0d5;
-          text-decoration: none;
-          font-size: clamp(9px, 0.75vw, 12px);
-          letter-spacing: clamp(0.6px, 0.08vw, 1.2px);
-          white-space: nowrap;
-        }
-
-        .menu a:hover {
-          color: #d5b477;
-        }
-
-        .icono-carrito {
-          margin-left: auto;
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          color: #f4f0e8;
-          text-decoration: none;
-          flex-shrink: 0;
-        }
-
-        .contador {
-          color: #d5b477;
-          font-size: 12px;
+          font-family: "Inter", Arial, sans-serif;
         }
 
         .contenido {
-          width: min(1180px, 90%);
+          width: min(1120px, 88%);
           margin: 0 auto;
-          padding: 62px 0 90px;
+          flex: 1;
         }
 
-        .titulo {
-          margin-bottom: 42px;
+        .encabezado {
+          text-align: center;
+          padding: 68px 0 48px;
         }
 
-        h1 {
+        .sobre-titulo {
+          margin: 0 0 17px;
+          color: #c5a56a;
+          font-size: 10px;
+          letter-spacing: 2.5px;
+        }
+
+        .encabezado h1 {
           margin: 0;
-          font-family: Georgia, "Times New Roman", serif;
-          font-size: clamp(40px, 5vw, 58px);
+          font-family: "Cormorant Garamond", Georgia, serif;
+          font-size: clamp(44px, 6vw, 65px);
           font-weight: 400;
+          line-height: 1.1;
         }
 
         .subtitulo {
-          margin: 15px 0 0;
-          color: #aaa49a;
-          font-size: 14px;
+          margin: 17px 0 25px;
+          color: #a9a39a;
+          font-size: 13px;
           line-height: 1.7;
         }
 
-        .barra-lista {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          gap: 20px;
-          padding: 0 0 17px;
-          border-bottom: 1px solid #39342c;
-          color: #bdb5a8;
-          font-size: 12px;
+        .linea-dorada {
+          display: block;
+          width: 48px;
+          height: 1px;
+          margin: auto;
+          background: #c5a56a;
         }
 
-        .limpiar {
-          padding: 5px 0;
-          border: 0;
-          background: none;
-          color: #bdb5a8;
-          text-decoration: underline;
-          cursor: pointer;
-          font-size: 12px;
-        }
-
-        .limpiar:hover,
-        .eliminar:hover,
-        .seguir:hover {
+        .mensaje {
+          margin: 0 0 24px;
+          padding: 15px 18px;
+          border: 1px solid #4b402d;
           color: #d5b477;
+          font-size: 13px;
+          line-height: 1.6;
         }
 
         .columnas {
           display: grid;
-          grid-template-columns: minmax(0, 1.65fr) minmax(300px, 0.85fr);
-          gap: clamp(28px, 5vw, 65px);
+          grid-template-columns: minmax(0, 1.65fr) minmax(290px, 0.85fr);
           align-items: start;
-          margin-top: 10px;
+          gap: 54px;
+          padding-bottom: 75px;
+        }
+
+        .titulo-seccion {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 15px;
+          padding-bottom: 18px;
+          border-bottom: 1px solid #302d27;
+        }
+
+        .titulo-seccion h2,
+        .despacho h2,
+        .resumen h2 {
+          margin: 0;
+          font-family: "Cormorant Garamond", Georgia, serif;
+          font-size: 29px;
+          font-weight: 400;
+        }
+
+        .titulo-seccion span {
+          color: #a9a39a;
+          font-size: 11px;
         }
 
         .producto {
           display: grid;
           grid-template-columns: 112px minmax(0, 1fr) auto;
-          gap: 20px;
-          align-items: start;
+          gap: 22px;
+          align-items: center;
           padding: 25px 0;
-          border-bottom: 1px solid #302c26;
+          border-bottom: 1px solid #302d27;
         }
 
         .imagen-producto {
@@ -856,12 +697,9 @@ export default function Carrito() {
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 10px;
-          background: #111110;
-          border: 1px solid #292621;
-          color: #d5b477;
-          font-size: 10px;
-          text-align: center;
+          padding: 8px;
+          background: #11110f;
+          border: 1px solid #25231f;
         }
 
         .imagen-producto img {
@@ -870,63 +708,58 @@ export default function Carrito() {
           object-fit: contain;
         }
 
-        .origen {
-          margin: 0 0 9px;
-          color: #c5a56a;
-          font-size: 9px;
-          letter-spacing: 1.7px;
+        .detalle-producto {
+          min-width: 0;
         }
 
-        .datos-producto h2 {
+        .origen {
+          margin: 0 0 8px;
+          color: #c5a56a;
+          font-size: 9px;
+          letter-spacing: 1.5px;
+          text-transform: uppercase;
+        }
+
+        .detalle-producto h3 {
           margin: 0;
-          font-family: Georgia, "Times New Roman", serif;
-          font-size: 25px;
+          font-family: "Cormorant Garamond", Georgia, serif;
+          font-size: 27px;
           font-weight: 400;
         }
 
-        .formato,
-        .precio-unitario {
-          color: #aaa49a;
-          font-size: 12px;
-          line-height: 1.6;
-        }
-
         .formato {
-          margin: 8px 0;
+          margin: 7px 0 15px;
+          color: #aaa49a;
+          font-size: 11px;
         }
 
-        .precio-unitario {
-          margin: 8px 0 14px;
-          color: #d5b477;
-        }
-
-        .acciones-producto {
+        .controles {
           display: flex;
-          flex-wrap: wrap;
           align-items: center;
+          flex-wrap: wrap;
           gap: 15px;
         }
 
         .cantidad {
-          min-height: 34px;
           display: inline-flex;
           align-items: center;
-          gap: 16px;
-          padding: 3px 9px;
-          border: 1px solid #494238;
+          border: 1px solid #39352e;
         }
 
         .cantidad button {
+          width: 31px;
+          height: 31px;
           border: 0;
           background: transparent;
-          color: #f4f0e8;
-          font-size: 19px;
+          color: #d5b477;
+          font-size: 18px;
           cursor: pointer;
         }
 
         .cantidad span {
-          min-width: 12px;
+          min-width: 24px;
           text-align: center;
+          color: #f4f0e8;
           font-size: 12px;
         }
 
@@ -934,415 +767,397 @@ export default function Carrito() {
           padding: 5px 0;
           border: 0;
           background: transparent;
-          color: #aaa49a;
-          text-decoration: underline;
+          color: #969087;
           font-size: 11px;
+          text-decoration: underline;
           cursor: pointer;
         }
 
-        .subtotal-producto {
-          padding-top: 2px;
+        .eliminar:hover {
+          color: #f4f0e8;
+        }
+
+        .precio-producto {
+          margin: 0;
+          align-self: start;
+          padding-top: 4px;
           color: #f4f0e8;
           font-size: 13px;
           white-space: nowrap;
         }
 
-        .seguir {
-          display: inline-block;
+        .boton-seguir {
+          min-height: 45px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
           margin-top: 24px;
-          color: #ddd5c8;
+          padding: 0 24px;
+          border: 1px solid #c5a56a;
+          background: #c5a56a;
+          color: #090909;
+          font-size: 10px;
+          font-weight: 600;
+          letter-spacing: 1.2px;
           text-decoration: none;
+          transition:
+            background 0.2s ease,
+            color 0.2s ease,
+            border-color 0.2s ease;
+        }
+
+        .boton-seguir:hover {
+          border-color: #e0c58f;
+          background: #e0c58f;
+          color: #090909;
+        }
+
+        .despacho {
+          margin-top: 54px;
+          padding-top: 30px;
+          border-top: 1px solid #302d27;
+        }
+
+        .texto-seccion {
+          margin: 10px 0 25px;
+          color: #a9a39a;
           font-size: 12px;
-        }
-
-        .resumen {
-          padding: 27px;
-          border: 1px solid #39342c;
-          background: #0d0d0c;
-        }
-
-        .resumen h2 {
-          margin: 0 0 24px;
-          font-family: Georgia, "Times New Roman", serif;
-          font-size: 24px;
-          font-weight: 400;
-        }
-
-        .resumen h3 {
-          margin: 0 0 17px;
-          font-family: Georgia, "Times New Roman", serif;
-          font-size: 19px;
-          font-weight: 400;
-        }
-
-        .fila {
-          display: flex;
-          justify-content: space-between;
-          gap: 15px;
-          margin: 17px 0;
-          color: #bdb5a8;
-          font-size: 12px;
-          line-height: 1.5;
-        }
-
-        .fila strong {
-          color: #eee7db;
-          font-weight: 400;
-          text-align: right;
-        }
-
-        .fila.total {
-          padding-top: 19px;
-          border-top: 1px solid #39342c;
-          color: #f4f0e8;
-          font-size: 14px;
-        }
-
-        .fila.total strong {
-          color: #d5b477;
-          font-family: Georgia, "Times New Roman", serif;
-          font-size: 22px;
-        }
-
-        .nota {
-          color: #999187;
-          font-size: 11px;
           line-height: 1.7;
         }
 
-        .separador {
-          height: 1px;
-          margin: 25px 0;
-          background: #39342c;
-        }
-
-        .resumen form {
+        .formulario {
           display: flex;
           flex-direction: column;
-          gap: 15px;
+          gap: 17px;
         }
 
-        .resumen label {
+        .formulario label {
           display: flex;
           flex-direction: column;
-          gap: 7px;
-          color: #c7bfb2;
+          gap: 9px;
+          color: #d5cec2;
           font-size: 11px;
         }
 
         .dos-columnas {
           display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 12px;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 15px;
         }
 
-        .resumen input:not([type="radio"]),
-        .resumen select,
-        .resumen textarea {
+        .formulario input,
+        .formulario select {
           width: 100%;
           min-width: 0;
-          padding: 12px;
-          border: 1px solid #403a31;
+          height: 44px;
+          padding: 0 12px;
+          border: 1px solid #38342d;
           border-radius: 0;
-          background: #090909;
+          outline: none;
+          background: #10100f;
           color: #f4f0e8;
-          font-family: Arial, Helvetica, sans-serif;
+          font-family: "Inter", Arial, sans-serif;
           font-size: 12px;
         }
 
-        .resumen input:focus,
-        .resumen select:focus,
-        .resumen textarea:focus {
-          outline: 1px solid #c5a56a;
+        .formulario input:focus,
+        .formulario select:focus {
           border-color: #c5a56a;
         }
 
-        .resumen select option {
-          background: #090909;
+        .formulario input::placeholder {
+          color: #716c63;
+        }
+
+        .boton-despacho {
+          min-height: 43px;
+          margin-top: 3px;
+          border: 1px solid #c5a56a;
+          background: transparent;
+          color: #d5b477;
+          font-size: 10px;
+          letter-spacing: 1.1px;
+          cursor: pointer;
+        }
+
+        .boton-despacho:hover {
+          background: #c5a56a;
+          color: #090909;
+        }
+
+        .boton-despacho:disabled {
+          opacity: 0.6;
+          cursor: wait;
+        }
+
+        .proveedor {
+          margin: -5px 0 0;
+          color: #817b72;
+          font-size: 10px;
+          line-height: 1.7;
+        }
+
+        .resumen {
+          padding: 30px 27px;
+          border: 1px solid #343027;
+          background: #0e0e0d;
+        }
+
+        .resumen .sobre-titulo {
+          margin-bottom: 12px;
+          font-size: 9px;
+          letter-spacing: 2px;
+        }
+
+        .resumen h2 {
+          margin-bottom: 27px;
+          font-size: 30px;
+        }
+
+        .fila-resumen {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: 15px;
+          margin: 17px 0;
+          color: #aaa49a;
+          font-size: 12px;
+          line-height: 1.5;
+        }
+
+        .fila-resumen span:last-child {
           color: #f4f0e8;
+          text-align: right;
+          white-space: nowrap;
         }
 
-        .resumen textarea {
-          resize: vertical;
-        }
-
-        .boton-secundario,
-        .boton-principal {
-          width: 100%;
-          min-height: 46px;
+        .total {
           display: flex;
           align-items: center;
-          justify-content: center;
-          padding: 13px 16px;
-          font-size: 10px;
-          letter-spacing: 1.3px;
-          text-align: center;
-          text-decoration: none;
-          cursor: pointer;
-          transition:
-            background 0.2s ease,
-            color 0.2s ease,
-            opacity 0.2s ease;
+          justify-content: space-between;
+          gap: 15px;
+          margin: 25px 0 30px;
+          padding-top: 22px;
+          border-top: 1px solid #39352e;
         }
 
-        .boton-secundario {
+        .total span {
+          color: #f4f0e8;
+          font-size: 13px;
+        }
+
+        .total strong {
+          color: #d5b477;
+          font-family: "Cormorant Garamond", Georgia, serif;
+          font-size: 28px;
+          font-weight: 500;
+          white-space: nowrap;
+        }
+
+        .resumen form h3 {
+          margin: 0 0 17px;
+          color: #f4f0e8;
+          font-family: "Cormorant Garamond", Georgia, serif;
+          font-size: 22px;
+          font-weight: 400;
+        }
+
+        .opcion-pago {
+          display: flex;
+          align-items: center;
+          gap: 11px;
+          min-height: 44px;
+          padding: 10px 0;
+          border-bottom: 1px solid #292621;
+          color: #d5cec2;
+          font-size: 11px;
+          cursor: pointer;
+        }
+
+        .opcion-pago input {
+          accent-color: #c5a56a;
+        }
+
+        .boton-pagar {
+          width: 100%;
+          min-height: 49px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 15px;
+          margin-top: 25px;
+          padding: 0 18px;
           border: 1px solid #c5a56a;
+          background: #c5a56a;
+          color: #090909;
+          font-size: 10px;
+          font-weight: 600;
+          letter-spacing: 1px;
+          cursor: pointer;
+          transition: background 0.2s ease;
+        }
+
+        .boton-pagar:hover {
+          background: #e0c58f;
+        }
+
+        .boton-pagar span {
+          font-size: 18px;
+        }
+
+        .nota-seguridad {
+          margin: 17px 0 0;
+          color: #817b72;
+          font-size: 10px;
+          line-height: 1.7;
+          text-align: center;
+        }
+
+        .boton-seguir-resumen {
+          width: 100%;
+          margin-top: 23px;
+          padding: 0 12px;
           background: transparent;
           color: #d5b477;
         }
 
-        .boton-secundario:hover:not(:disabled) {
+        .boton-seguir-resumen:hover {
           background: #c5a56a;
           color: #090909;
-        }
-
-        .boton-principal {
-          border: 1px solid #c5a56a;
-          background: #c5a56a;
-          color: #090909;
-        }
-
-        .boton-principal:hover:not(:disabled) {
-          background: #e0c38d;
-        }
-
-        .boton-principal:disabled,
-        .boton-secundario:disabled {
-          opacity: 0.45;
-          cursor: not-allowed;
-        }
-
-        .opciones-pago {
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-          margin-bottom: 20px;
-        }
-
-        .opcion-pago {
-          display: grid !important;
-          grid-template-columns: 18px 1fr auto;
-          align-items: center;
-          gap: 10px !important;
-          min-height: 49px;
-          padding: 12px;
-          border: 1px solid #403a31;
-          cursor: pointer;
-        }
-
-        .opcion-pago:has(input:checked) {
-          border-color: #c5a56a;
-        }
-
-        .opcion-pago input[type="radio"] {
-          accent-color: #c5a56a;
-        }
-
-        .marca-mercadopago {
-          color: #9bd8ee;
-          font-size: 12px;
-          font-weight: 600;
-        }
-
-        .marca-webpay {
-          color: #f4f0e8;
-          font-size: 12px;
-          font-weight: 600;
-        }
-
-        .opcion-pago small {
-          color: #aaa49a;
-          font-size: 10px;
-        }
-
-        .boton-pagar {
-          margin-top: 4px;
-        }
-
-        .seguridad {
-          margin-top: 15px;
         }
 
         .vacio {
-          padding: 65px 20px;
-          border-top: 1px solid #39342c;
-          border-bottom: 1px solid #39342c;
+          max-width: 530px;
+          margin: 0 auto 90px;
+          padding: 45px 25px;
+          border: 1px solid #302d27;
           text-align: center;
         }
 
         .icono-vacio {
           color: #c5a56a;
+          font-size: 32px;
         }
 
         .vacio h2 {
-          margin: 20px 0 10px;
-          font-family: Georgia, "Times New Roman", serif;
-          font-size: 30px;
+          margin: 18px 0 10px;
+          font-family: "Cormorant Garamond", Georgia, serif;
+          font-size: 34px;
           font-weight: 400;
         }
 
         .vacio p {
-          margin: 0 0 28px;
-          color: #aaa49a;
-          font-size: 13px;
-          line-height: 1.7;
-        }
-
-        .vacio .boton-principal {
-          width: auto;
-          display: inline-flex;
-          padding: 15px 25px;
-        }
-
-        .mensaje-error {
-          margin-bottom: 24px;
-          padding: 14px 16px;
-          border: 1px solid #7d453c;
-          color: #f0b9ad;
-          background: #1b100f;
+          margin: 0 auto;
+          max-width: 330px;
+          color: #a9a39a;
           font-size: 12px;
-          line-height: 1.6;
+          line-height: 1.8;
         }
 
-        .estado,
-        .estado-envio {
-          color: #d5b477;
-          font-size: 12px;
-          line-height: 1.6;
+        .estado {
+          padding: 35px 0 80px;
+          color: #a9a39a;
+          text-align: center;
         }
 
         .pie {
-          min-height: 85px;
-          padding: 22px;
-          border-top: 1px solid #292621;
+          min-height: 76px;
           display: flex;
-          flex-direction: column;
           align-items: center;
           justify-content: center;
-          gap: 7px;
+          padding: 20px;
+          border-top: 1px solid #292621;
+          text-align: center;
         }
 
         .pie p {
           margin: 0;
-          color: #d5b477;
-          font-family: Georgia, "Times New Roman", serif;
-          font-size: 13px;
-          letter-spacing: 2px;
-        }
-
-        .pie span {
           color: #969087;
-          font-size: 9px;
-          letter-spacing: 2px;
+          font-size: 10px;
+          letter-spacing: 0.4px;
         }
 
-        @media (max-width: 900px) {
-          .encabezado {
-            padding-left: 24px;
-          }
-
-          .menu {
-            gap: 18px;
-          }
-
-          .columnas {
-            grid-template-columns: minmax(0, 1fr) 310px;
-            gap: 25px;
-          }
-
-          .producto {
-            grid-template-columns: 90px minmax(0, 1fr);
-            gap: 15px;
-          }
-
-          .imagen-producto {
-            width: 90px;
-            height: 115px;
-          }
-
-          .subtotal-producto {
-            grid-column: 2;
-            padding-top: 0;
-          }
-        }
-
-        @media (max-width: 720px) {
-          .encabezado {
-            flex-wrap: wrap;
-            gap: 16px;
-            padding: 14px 22px;
-          }
-
-          .menu {
-            order: 1;
-            width: 100%;
-            justify-content: space-between;
-            gap: 10px;
-          }
-
-          .icono-carrito {
-            position: absolute;
-            top: 15px;
-            right: 18px;
-          }
-
+        @media (max-width: 850px) {
           .columnas {
             grid-template-columns: 1fr;
+            gap: 42px;
           }
 
           .resumen {
-            padding: 24px;
+            width: 100%;
+            max-width: none;
           }
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 520px) {
           .contenido {
             width: 90%;
-            padding-top: 42px;
           }
 
           .encabezado {
-            padding: 14px 18px;
+            padding: 52px 0 35px;
           }
 
-          .menu a {
+          .sobre-titulo {
             font-size: 9px;
-            letter-spacing: 0.4px;
+            letter-spacing: 1.7px;
+          }
+
+          .subtitulo {
+            font-size: 12px;
           }
 
           .producto {
-            grid-template-columns: 78px minmax(0, 1fr);
-            gap: 12px;
-            padding: 20px 0;
+            grid-template-columns: 84px minmax(0, 1fr);
+            gap: 14px;
+            position: relative;
+            padding: 22px 0 52px;
           }
 
           .imagen-producto {
-            width: 78px;
-            height: 100px;
+            width: 84px;
+            height: 110px;
           }
 
-          .datos-producto h2 {
-            font-size: 22px;
+          .detalle-producto h3 {
+            font-size: 24px;
           }
 
-          .subtotal-producto {
-            grid-column: 2;
+          .formato {
+            line-height: 1.5;
           }
 
-          .acciones-producto {
+          .precio-producto {
+            position: absolute;
+            right: 0;
+            bottom: 17px;
+            font-size: 12px;
+          }
+
+          .controles {
             gap: 10px;
-          }
-
-          .resumen {
-            padding: 19px;
           }
 
           .dos-columnas {
             grid-template-columns: 1fr;
           }
 
-          .titulo {
-            margin-bottom: 30px;
+          .resumen {
+            padding: 25px 20px;
+          }
+
+          .total strong {
+            font-size: 25px;
+          }
+
+          .boton-seguir {
+            width: 100%;
+            padding: 0 12px;
+            font-size: 9px;
+          }
+
+          .pie p {
+            font-size: 9px;
           }
         }
       `}</style>
