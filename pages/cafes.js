@@ -15,8 +15,7 @@ const cafes = [
     altitud: "1.700–1.900 msnm",
     proceso: "Lavado",
     tostado: "Medio",
-    notas:
-      "Caramelo, dulce de leche, azúcar morena y frutas maduras.",
+    notas: "Caramelo, dulce de leche, azúcar morena y frutas maduras.",
   },
   {
     id: "andina",
@@ -148,10 +147,10 @@ export default function Cafes() {
           </a>
 
           <nav className="menu">
-<a href="/">INICIO</a>
-<a className="activo" href="/cafes">CAFÉS</a>
-<a href="/nosotros">NOSOTROS</a>
-<a href="/contacto">CONTACTO</a>
+            <a href="/">INICIO</a>
+            <a className="activo" href="/cafes">CAFÉS</a>
+            <a href="/nosotros">NOSOTROS</a>
+            <a href="/contacto">CONTACTO</a>
           </nav>
 
           <a
@@ -267,7 +266,7 @@ export default function Cafes() {
           padding: 14px 5%;
           display: flex;
           align-items: center;
-          justify-content: space-between;
+          justify-content: flex-start;
           gap: 24px;
           border-bottom: 1px solid rgba(255, 255, 255, 0.12);
         }
@@ -280,9 +279,10 @@ export default function Cafes() {
 
         .menu {
           display: flex;
-          justify-content: center;
+          justify-content: flex-start;
           align-items: center;
           gap: clamp(16px, 3vw, 42px);
+          margin-left: 12px;
         }
 
         .menu a,
@@ -304,6 +304,7 @@ export default function Cafes() {
           display: flex;
           align-items: center;
           gap: 8px;
+          margin-left: auto;
         }
 
         .carrito-link svg {
@@ -520,6 +521,7 @@ export default function Cafes() {
           .menu {
             order: 3;
             width: 100%;
+            margin-left: 0;
             gap: clamp(12px, 4vw, 22px);
           }
 
@@ -554,4 +556,3 @@ export default function Cafes() {
     </>
   );
 }
-
