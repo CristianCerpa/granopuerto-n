@@ -3,6 +3,36 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 
 export default function Nosotros() {
+  const [cantidadCarrito, setCantidadCarrito] = useState(0);
+
+  useEffect(() => {
+    function actualizarCarrito() {
+      try {
+        const carrito = JSON.parse(
+          localStorage.getItem("granopuerto-carrito") || "[]"
+        );
+
+        const total = carrito.reduce(
+          (suma, producto) =>
+            suma + Number(producto.cantidad || 1),
+          0
+        );
+
+        setCantidadCarrito(total);
+      } catch {
+        setCantidadCarrito(0);
+      }
+    }
+
+    actualizarCarrito();
+
+    window.addEventListener("storage", actualizarCarrito);
+
+    return () => {
+      window.removeEventListener("storage", actualizarCarrito);
+    };
+  }, []);
+
   return (
     <>
       <Head>
@@ -45,7 +75,7 @@ export default function Nosotros() {
           <a
             className="carrito-link"
             href="/carrito"
-            aria-label="Ver carrito"
+            aria-label={`Ver carrito, ${cantidadCarrito} productos`}
           >
             <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
               <path
@@ -58,6 +88,12 @@ export default function Nosotros() {
               <circle cx="13" cy="27" r="1.8" fill="currentColor" />
               <circle cx="24" cy="27" r="1.8" fill="currentColor" />
             </svg>
+
+            {cantidadCarrito > 0 && (
+              <span className="contador-carrito">
+                {cantidadCarrito}
+              </span>
+            )}
           </a>
         </header>
 
@@ -178,6 +214,15 @@ export default function Nosotros() {
           width: 34px;
           height: 34px;
           flex-shrink: 0;
+        }
+
+        /* Contador sin círculo ni fondo */
+        .contador-carrito {
+          font-family: Inter, Arial, sans-serif;
+          font-size: 11px;
+          font-weight: 500;
+          color: inherit;
+          line-height: 1;
         }
 
         .historia {
