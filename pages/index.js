@@ -98,7 +98,7 @@ export default function Home() {
             </ul>
           </nav>
 
-          <a className="cart" href="/carrito" aria-label="Ver carrito">
+          <a className="cart" href="/carrito" aria-label={`Ver carrito, ${cartCount} productos`}>
             <svg
               className="cart-icon"
               viewBox="0 0 32 32"
@@ -263,16 +263,16 @@ export default function Home() {
             transform: translateY(-50%);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             color: #ffffff;
             text-decoration: none;
             font-family: "Inter", Arial, sans-serif;
-            font-size: clamp(10px, 0.8vw, 13px);
+            font-size: 14px;
           }
 
           .cart-icon {
-            width: clamp(22px, 1.8vw, 28px);
-            height: clamp(22px, 1.8vw, 28px);
+            width: 34px;
+            height: 34px;
             display: block;
           }
 
@@ -453,13 +453,13 @@ export default function Home() {
 
             .cart {
               right: 12px;
-              gap: 5px;
-              font-size: 9px;
+              gap: 7px;
+              font-size: 12px;
             }
 
             .cart-icon {
-              width: 21px;
-              height: 21px;
+              width: 28px;
+              height: 28px;
             }
 
             .hero-background {
@@ -543,13 +543,13 @@ export default function Home() {
 
             .cart {
               right: 8px;
-              font-size: 8px;
-              gap: 4px;
+              font-size: 11px;
+              gap: 5px;
             }
 
             .cart-icon {
-              width: 18px;
-              height: 18px;
+              width: 25px;
+              height: 25px;
             }
 
             .hero-background {
