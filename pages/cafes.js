@@ -281,7 +281,7 @@ export default function Cafes() {
           display: flex;
           justify-content: flex-start;
           align-items: center;
-          gap: clamp(16px, 3vw, 42px);
+          gap: clamp(30px, 4vw, 55px);
           margin-left: 12px;
         }
 
@@ -289,10 +289,17 @@ export default function Cafes() {
         .carrito-link {
           color: #fff;
           text-decoration: none;
-          font-family: Inter, Arial, sans-serif;
-          font-size: 11px;
-          letter-spacing: 1px;
+          font-family: "Inter", Arial, sans-serif;
           white-space: nowrap;
+        }
+
+        .menu a {
+          position: relative;
+          font-size: clamp(9px, 0.75vw, 12px);
+          font-weight: 400;
+          letter-spacing: clamp(0.6px, 0.08vw, 1.2px);
+          padding: 8px 0;
+          transition: color 0.25s ease;
         }
 
         .menu a:hover,
@@ -303,13 +310,15 @@ export default function Cafes() {
         .carrito-link {
           display: flex;
           align-items: center;
-          gap: 8px;
+          gap: 10px;
           margin-left: auto;
+          font-size: 14px;
         }
 
         .carrito-link svg {
-          width: 26px;
-          height: 26px;
+          display: block;
+          width: 34px;
+          height: 34px;
         }
 
         .presentacion {
@@ -506,6 +515,27 @@ export default function Cafes() {
           }
         }
 
+        @media (max-width: 768px) {
+          .menu {
+            gap: 24px;
+          }
+
+          .menu a {
+            font-size: 8px;
+            letter-spacing: 0.7px;
+          }
+
+          .carrito-link {
+            gap: 7px;
+            font-size: 12px;
+          }
+
+          .carrito-link svg {
+            width: 28px;
+            height: 28px;
+          }
+        }
+
         @media (max-width: 600px) {
           .encabezado {
             flex-wrap: wrap;
@@ -550,6 +580,37 @@ export default function Cafes() {
 
           .detalle-producto {
             padding: 18px 16px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .carrito-link {
+            gap: 5px;
+            font-size: 11px;
+          }
+
+          .carrito-link svg {
+            width: 25px;
+            height: 25px;
+          }
+
+          .menu {
+            gap: 18px;
+          }
+
+          .menu a {
+            font-size: 7px;
+            letter-spacing: 0.5px;
+          }
+        }
+
+        @media (max-width: 360px) {
+          .menu {
+            gap: 14px;
+          }
+
+          .menu a {
+            font-size: 6.5px;
           }
         }
       `}</style>
