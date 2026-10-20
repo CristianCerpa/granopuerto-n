@@ -56,7 +56,7 @@ export default function Nosotros() {
          
 <section className="historia">
           <p>
-                  ¡Bienvenido a nuestra tienda!
+                ¡Bienvenido a nuestra tienda!
 
   Este es un espacio para conocernos mejor y descubrir lo que tenemos para ti. Gracias por visitarnos y ser parte de nuestra comunidad.
  </p>
