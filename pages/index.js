@@ -1,3 +1,4 @@
+
 import Head from "next/head";
 import { useEffect, useState } from "react";
 
@@ -57,10 +58,7 @@ export default function Home() {
     <>
       <Head>
         <title>Granopuerto | Coffee Roasters</title>
-        <meta
-          name="description"
-          content="Granopuerto Coffee Roasters"
-        />
+        <meta name="description" content="Granopuerto Coffee Roasters" />
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1"
@@ -84,18 +82,18 @@ export default function Home() {
           <nav>
             <ul className="nav-menu">
               <li>
-      <a href="/" className="active">
-        INICIO
-      </a>
-    </li>
-    <li>
-      <a href="/cafes">CAFÉS</a>
-    </li>
-    <li>
-      <a href="/nosotros">NOSOTROS</a>
-    </li>
-    <li>
-      <a href="#">CONTACTO</a>
+                <a href="/" className="active">
+                  INICIO
+                </a>
+              </li>
+              <li>
+                <a href="/cafes">CAFÉS</a>
+              </li>
+              <li>
+                <a href="/nosotros">NOSOTROS</a>
+              </li>
+              <li>
+                <a href="/contacto">CONTACTO</a>
               </li>
             </ul>
           </nav>
@@ -214,8 +212,9 @@ export default function Home() {
             width: 100%;
             height: 70px;
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
+            padding-left: clamp(24px, 6vw, 90px);
             z-index: 50;
             font-family: "Inter", Arial, sans-serif;
           }
@@ -223,7 +222,7 @@ export default function Home() {
           .nav-menu {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             gap: clamp(30px, 4vw, 55px);
             list-style: none;
             margin: 0;
@@ -440,6 +439,7 @@ export default function Home() {
 
             .navbar {
               height: 55px;
+              padding-left: 16px;
             }
 
             .nav-menu {
@@ -529,6 +529,7 @@ export default function Home() {
 
             .navbar {
               height: 45px;
+              padding-left: 12px;
             }
 
             .nav-menu {
