@@ -1,6 +1,6 @@
 
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Contacto() {
   const [formulario, setFormulario] = useState({
@@ -11,6 +11,35 @@ export default function Contacto() {
   });
 
   const [enviado, setEnviado] = useState(false);
+  const [cantidadCarrito, setCantidadCarrito] = useState(0);
+
+  useEffect(() => {
+    function actualizarCarrito() {
+      try {
+        const carrito = JSON.parse(
+          localStorage.getItem("granopuerto-carrito") || "[]"
+        );
+
+        const total = carrito.reduce(
+          (suma, producto) =>
+            suma + Number(producto.cantidad || 1),
+          0
+        );
+
+        setCantidadCarrito(total);
+      } catch {
+        setCantidadCarrito(0);
+      }
+    }
+
+    actualizarCarrito();
+
+    window.addEventListener("storage", actualizarCarrito);
+
+    return () => {
+      window.removeEventListener("storage", actualizarCarrito);
+    };
+  }, []);
 
   function actualizarCampo(event) {
     const { name, value } = event.target;
@@ -69,7 +98,11 @@ export default function Contacto() {
             </a>
           </nav>
 
-          <a className="carrito-link" href="/carrito" aria-label="Ver carrito">
+          <a
+            className="carrito-link"
+            href="/carrito"
+            aria-label={`Ver carrito, ${cantidadCarrito} productos`}
+          >
             <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
               <path
                 d="M3 5H7L10.2 20.5C10.5 22 11.8 23 13.4 23H24.5C26 23 27.3 22 27.7 20.6L30 12H9"
@@ -81,6 +114,12 @@ export default function Contacto() {
               <circle cx="13" cy="27" r="1.8" fill="currentColor" />
               <circle cx="24" cy="27" r="1.8" fill="currentColor" />
             </svg>
+
+            {cantidadCarrito > 0 && (
+              <span className="contador-carrito">
+                {cantidadCarrito}
+              </span>
+            )}
           </a>
         </header>
 
@@ -178,7 +217,7 @@ export default function Contacto() {
           font-family: "Cormorant Garamond", Georgia, serif;
         }
 
-        /* ENCABEZADO: mismos tamaños y alineación que cafes.js */
+        /* Encabezado conservado */
         .encabezado {
           position: relative;
           min-height: 70px;
@@ -244,6 +283,15 @@ export default function Contacto() {
           width: 34px;
           height: 34px;
           flex-shrink: 0;
+        }
+
+        /* Contador sin círculo ni fondo */
+        .contador-carrito {
+          font-family: Inter, Arial, sans-serif;
+          font-size: 11px;
+          font-weight: 500;
+          color: inherit;
+          line-height: 1;
         }
 
         .contenido {
