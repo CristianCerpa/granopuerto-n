@@ -56,6 +56,11 @@ export default function Nosotros() {
          
 <section className="historia">
           <p>
+                  ¡Bienvenido a nuestra tienda!
+
+  Este es un espacio para conocernos mejor y descubrir lo que tenemos para ti. Gracias por visitarnos y ser parte de nuestra comunidad.
+ </p>
+    <p>
             Nacimos inspirados en Valparaíso, puerto histórico que conectó
             a Chile con el mundo a través del comercio y las culturas.
           </p>
