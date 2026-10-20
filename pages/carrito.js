@@ -73,14 +73,13 @@ export default function Carrito() {
   }
 
   function guardarCarrito(nuevosProductos) {
-    setProductos(nuevosProductos);
-
     try {
       localStorage.setItem(
         CLAVE_CARRITO,
         JSON.stringify(nuevosProductos)
       );
 
+      setProductos(nuevosProductos);
       window.dispatchEvent(new Event("carrito-actualizado"));
     } catch {
       setError("No fue posible guardar los cambios del carrito.");
@@ -233,13 +232,13 @@ export default function Carrito() {
       return;
     }
 
-    if (costoEnvio === null) {
-      setError("Primero debes obtener la tarifa de despacho.");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
+      setError("Ingresa un correo electrónico válido.");
       return;
     }
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
-      setError("Ingresa un correo electrónico válido.");
+    if (costoEnvio === null) {
+      setError("Primero debes obtener la tarifa de despacho.");
       return;
     }
 
@@ -330,10 +329,6 @@ export default function Carrito() {
 
       <div className="pagina">
         <header className="encabezado">
-          <Link href="/" className="logo" aria-label="GRANOPUERTO, inicio">
-            <img src="/logo.png" alt="GRANOPUERTO" />
-          </Link>
-
           <nav className="menu">
             <Link href="/">INICIO</Link>
             <Link href="/cafes">CAFÉS</Link>
@@ -369,7 +364,6 @@ export default function Carrito() {
 
         <main className="contenido">
           <div className="titulo">
-            <p className="sobre-titulo">GRANOPUERTO · VALPARAÍSO, CHILE</p>
             <h1>Tu carrito</h1>
             <p className="subtitulo">
               Café de origen, preparado para llegar a tu puerta.
@@ -411,7 +405,8 @@ export default function Carrito() {
             <>
               <div className="barra-lista">
                 <span>
-                  {cantidadTotal} {cantidadTotal === 1 ? "producto" : "productos"}
+                  {cantidadTotal}{" "}
+                  {cantidadTotal === 1 ? "producto" : "productos"}
                 </span>
                 <button
                   type="button"
@@ -434,7 +429,10 @@ export default function Carrito() {
                     return (
                       <article
                         className="producto"
-                        key={producto.id || `${nombreProducto(producto)}-${indice}`}
+                        key={
+                          producto.id ||
+                          `${nombreProducto(producto)}-${indice}`
+                        }
                       >
                         <div className="imagen-producto">
                           {producto.imagen ? (
@@ -525,9 +523,7 @@ export default function Carrito() {
 
                   <div className="fila total">
                     <span>Total</span>
-                    <strong>
-                      {formatoPrecio(totalCompra)}
-                    </strong>
+                    <strong>{formatoPrecio(totalCompra)}</strong>
                   </div>
 
                   {costoEnvio === null && (
@@ -747,32 +743,16 @@ export default function Carrito() {
         .encabezado {
           min-height: 70px;
           width: 100%;
-          padding: 12px clamp(16px, 2.5vw, 38px) 12px
-            clamp(24px, 6vw, 90px);
+          padding: 12px clamp(16px, 2.5vw, 38px);
           display: flex;
           align-items: center;
           border-bottom: 1px solid rgba(213, 180, 119, 0.12);
-        }
-
-        .logo {
-          display: flex;
-          align-items: center;
-          flex-shrink: 0;
-        }
-
-        .logo img {
-          display: block;
-          width: clamp(125px, 14vw, 190px);
-          max-height: 48px;
-          object-fit: contain;
-          object-position: left center;
         }
 
         .menu {
           display: flex;
           align-items: center;
           gap: clamp(20px, 3vw, 42px);
-          margin-left: clamp(25px, 4vw, 58px);
         }
 
         .menu a {
@@ -810,13 +790,6 @@ export default function Carrito() {
 
         .titulo {
           margin-bottom: 42px;
-        }
-
-        .sobre-titulo {
-          margin: 0 0 17px;
-          color: #d5b477;
-          font-size: 10px;
-          letter-spacing: 2.5px;
         }
 
         h1 {
@@ -1270,7 +1243,6 @@ export default function Carrito() {
 
           .menu {
             gap: 18px;
-            margin-left: 25px;
           }
 
           .columnas {
@@ -1301,16 +1273,17 @@ export default function Carrito() {
             padding: 14px 22px;
           }
 
-          .logo img {
-            width: 145px;
-          }
-
           .menu {
-            order: 3;
+            order: 1;
             width: 100%;
-            margin-left: 0;
             justify-content: space-between;
             gap: 10px;
+          }
+
+          .icono-carrito {
+            position: absolute;
+            top: 15px;
+            right: 18px;
           }
 
           .columnas {
@@ -1330,10 +1303,6 @@ export default function Carrito() {
 
           .encabezado {
             padding: 14px 18px;
-          }
-
-          .logo img {
-            width: 130px;
           }
 
           .menu a {
