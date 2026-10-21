@@ -238,7 +238,7 @@ export default function Home() {
             top: 0;
             left: 0;
             width: 100%;
-            height: 112px;
+            height: 124px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -253,7 +253,7 @@ export default function Home() {
             align-items: center;
             justify-content: flex-start;
             flex: 0 0 auto;
-            width: clamp(220px, 21vw, 300px);
+            width: clamp(280px, 24vw, 340px);
             text-decoration: none;
           }
 
@@ -261,7 +261,7 @@ export default function Home() {
             display: block;
             width: 100%;
             height: auto;
-            max-height: 92px;
+            max-height: 108px;
             object-fit: contain;
             object-position: left center;
           }
@@ -287,9 +287,9 @@ export default function Home() {
             padding: 10px 0;
             color: rgba(255, 255, 255, 0.88);
             text-decoration: none;
-            font-size: 10px;
+            font-size: 13px;
             font-weight: 400;
-            letter-spacing: 1.1px;
+            letter-spacing: 1.25px;
             white-space: nowrap;
             transition: color 0.2s ease;
           }
@@ -350,17 +350,17 @@ export default function Home() {
             margin: 0;
             color: #f6f1e8;
             font-family: "Cormorant Garamond", Georgia, serif;
-            font-size: clamp(49px, 5.4vw, 78px);
+            font-size: clamp(46px, 4.6vw, 66px);
             font-weight: 500;
-            line-height: 0.99;
-            letter-spacing: -1.3px;
+            line-height: 1;
+            letter-spacing: -1px;
           }
 
           .hero-subtitle {
             margin: 21px 0 12px;
             color: #d2b177;
             font-family: "Cormorant Garamond", Georgia, serif;
-            font-size: clamp(23px, 2.2vw, 30px);
+            font-size: clamp(23px, 2.05vw, 28px);
             font-weight: 500;
             line-height: 1.2;
           }
@@ -482,17 +482,17 @@ export default function Home() {
 
           @media (max-width: 1100px) and (min-width: 769px) {
             .navbar {
-              height: 100px;
-              gap: 18px;
+              height: 110px;
+              gap: 16px;
               padding: 0 24px;
             }
 
             .nav-brand {
-              width: 195px;
+              width: 220px;
             }
 
             .nav-brand img {
-              max-height: 82px;
+              max-height: 94px;
             }
 
             .nav-menu {
@@ -500,7 +500,7 @@ export default function Home() {
             }
 
             .nav-menu a {
-              font-size: 9px;
+              font-size: 11px;
               letter-spacing: 0.7px;
             }
 
@@ -521,7 +521,7 @@ export default function Home() {
             }
 
             .hero-content h1 {
-              font-size: clamp(46px, 5.5vw, 62px);
+              font-size: clamp(43px, 4.8vw, 56px);
             }
 
             .hero-subtitle {
@@ -571,7 +571,7 @@ export default function Home() {
             }
 
             .navbar {
-              height: 104px;
+              height: 112px;
               display: flex;
               flex-wrap: wrap;
               align-content: center;
@@ -581,12 +581,12 @@ export default function Home() {
             }
 
             .nav-brand {
-              width: 150px;
+              width: 170px;
               max-width: calc(100% - 70px);
             }
 
             .nav-brand img {
-              max-height: 62px;
+              max-height: 70px;
             }
 
             .navigation {
@@ -601,8 +601,8 @@ export default function Home() {
             }
 
             .nav-menu a {
-              font-size: clamp(8px, 1.8vw, 10px);
-              letter-spacing: 0.35px;
+              font-size: clamp(9px, 2vw, 11px);
+              letter-spacing: 0.45px;
             }
 
             .cart {
@@ -628,14 +628,14 @@ export default function Home() {
             }
 
             .hero-content h1 {
-              font-size: clamp(37px, 7.5vw, 51px);
+              font-size: clamp(35px, 6.8vw, 46px);
               line-height: 1;
               letter-spacing: -0.5px;
             }
 
             .hero-subtitle {
               margin: 12px 0 8px;
-              font-size: clamp(20px, 4.7vw, 25px);
+              font-size: clamp(19px, 4.4vw, 24px);
               line-height: 1.18;
             }
 
@@ -675,17 +675,17 @@ export default function Home() {
             }
 
             .navbar {
-              height: 100px;
+              height: 108px;
               gap: 4px 8px;
               padding: 7px 12px 8px;
             }
 
             .nav-brand {
-              width: 140px;
+              width: 155px;
             }
 
             .nav-brand img {
-              max-height: 58px;
+              max-height: 64px;
             }
 
             .nav-menu {
@@ -693,7 +693,7 @@ export default function Home() {
             }
 
             .nav-menu a {
-              font-size: clamp(8px, 2vw, 9px);
+              font-size: clamp(8px, 2.2vw, 10px);
               letter-spacing: 0.1px;
             }
 
@@ -708,13 +708,13 @@ export default function Home() {
             }
 
             .hero-content {
-              top: 205px;
+              top: 213px;
               left: 4%;
               width: 92%;
             }
 
             .hero-content h1 {
-              font-size: clamp(34px, 8.4vw, 43px);
+              font-size: clamp(32px, 7.8vw, 40px);
               line-height: 1.04;
             }
 
@@ -751,11 +751,11 @@ export default function Home() {
             }
 
             .nav-brand {
-              width: 125px;
+              width: 135px;
             }
 
             .nav-brand img {
-              max-height: 52px;
+              max-height: 56px;
             }
 
             .nav-menu {
@@ -763,7 +763,7 @@ export default function Home() {
             }
 
             .nav-menu a {
-              font-size: 7.5px;
+              font-size: 8px;
               letter-spacing: 0;
             }
 
@@ -778,7 +778,7 @@ export default function Home() {
             }
 
             .hero-content {
-              top: 196px;
+              top: 205px;
             }
 
             .hero-content h1 {
@@ -811,15 +811,15 @@ export default function Home() {
             }
 
             .navbar {
-              height: 96px;
+              height: 108px;
             }
 
             .nav-brand {
-              width: 190px;
+              width: 220px;
             }
 
             .nav-brand img {
-              max-height: 78px;
+              max-height: 92px;
             }
 
             .hero-content {
@@ -835,4 +835,3 @@ export default function Home() {
     </>
   );
 }
-
