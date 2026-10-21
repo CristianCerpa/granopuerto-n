@@ -13,6 +13,7 @@ export default function Home() {
   const [nextBag, setNextBag] = useState(1);
   const [isSliding, setIsSliding] = useState(false);
   const [cartCount, setCartCount] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     function updateCartCount() {
@@ -110,21 +111,36 @@ export default function Home() {
             />
           </a>
 
-          <nav className="navigation" aria-label="Navegación principal">
+          <nav
+            id="menu-principal"
+            className={`navigation ${menuOpen ? "menu-open" : ""}`}
+            aria-label="Navegación principal"
+          >
             <ul className="nav-menu">
               <li>
-                <a href="/" className="active" aria-current="page">
+                <a
+                  href="/"
+                  className="active"
+                  aria-current="page"
+                  onClick={() => setMenuOpen(false)}
+                >
                   INICIO
                 </a>
               </li>
               <li>
-                <a href="/cafes">CAFÉS</a>
+                <a href="/cafes" onClick={() => setMenuOpen(false)}>
+                  CAFÉS
+                </a>
               </li>
               <li>
-                <a href="/nosotros">NOSOTROS</a>
+                <a href="/nosotros" onClick={() => setMenuOpen(false)}>
+                  NOSOTROS
+                </a>
               </li>
               <li>
-                <a href="/contacto">CONTACTO</a>
+                <a href="/contacto" onClick={() => setMenuOpen(false)}>
+                  CONTACTO
+                </a>
               </li>
             </ul>
           </nav>
@@ -153,6 +169,19 @@ export default function Home() {
             </svg>
             <span>{cartCount}</span>
           </a>
+
+          <button
+            type="button"
+            className={`mobile-menu-toggle ${menuOpen ? "is-open" : ""}`}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={menuOpen}
+            aria-controls="menu-principal"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
         </header>
 
         <section className="hero-content">
@@ -332,6 +361,17 @@ export default function Home() {
             display: block;
             width: 27px;
             height: 27px;
+          }
+
+          /* BOTÓN HAMBURGUESA: OCULTO EN ESCRITORIO */
+
+          .mobile-menu-toggle {
+            display: none;
+            border: 0;
+            padding: 8px;
+            background: transparent;
+            color: #d7b574;
+            cursor: pointer;
           }
 
           /* CONTENIDO PRINCIPAL */
@@ -582,7 +622,7 @@ export default function Home() {
 
             .nav-brand {
               width: 170px;
-              max-width: calc(100% - 70px);
+              max-width: calc(100% - 110px);
             }
 
             .nav-brand img {
@@ -590,19 +630,68 @@ export default function Home() {
             }
 
             .navigation {
-              order: 3;
-              flex: 0 0 100%;
-              min-width: 0;
+              display: none;
+              position: absolute;
+              top: 100%;
+              left: 0;
+              width: 100%;
+              padding: 12px 20px 20px;
+              margin: 0;
+              background: rgba(14, 13, 11, 0.98);
+              border-bottom: 1px solid rgba(201, 166, 107, 0.35);
+            }
+
+            .navigation.menu-open {
+              display: block;
             }
 
             .nav-menu {
+              flex-direction: column;
+              align-items: center;
               justify-content: center;
-              gap: clamp(15px, 4vw, 28px);
+              gap: 8px;
             }
 
             .nav-menu a {
-              font-size: clamp(9px, 2vw, 11px);
-              letter-spacing: 0.45px;
+              padding: 12px 10px;
+              font-size: 12px;
+              letter-spacing: 1.2px;
+            }
+
+            .mobile-menu-toggle {
+              order: 3;
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+              gap: 6px;
+              width: 40px;
+              height: 40px;
+              flex: 0 0 40px;
+              margin-left: 8px;
+            }
+
+            .mobile-menu-toggle span {
+              display: block;
+              width: 25px;
+              height: 2px;
+              background: #d7b574;
+              border-radius: 2px;
+              transition:
+                transform 0.25s ease,
+                opacity 0.25s ease;
+            }
+
+            .mobile-menu-toggle.is-open span:first-child {
+              transform: translateY(8px) rotate(45deg);
+            }
+
+            .mobile-menu-toggle.is-open span:nth-child(2) {
+              opacity: 0;
+            }
+
+            .mobile-menu-toggle.is-open span:last-child {
+              transform: translateY(-8px) rotate(-45deg);
             }
 
             .cart {
@@ -682,19 +771,19 @@ export default function Home() {
 
             .nav-brand {
               width: 155px;
+              max-width: calc(100% - 100px);
             }
 
             .nav-brand img {
               max-height: 64px;
             }
 
-            .nav-menu {
-              gap: clamp(13px, 3.7vw, 22px);
+            .mobile-menu-toggle {
+              margin-left: 5px;
             }
 
-            .nav-menu a {
-              font-size: clamp(8px, 2.2vw, 10px);
-              letter-spacing: 0.1px;
+            .nav-menu {
+              gap: 8px;
             }
 
             .cart {
@@ -752,19 +841,26 @@ export default function Home() {
 
             .nav-brand {
               width: 135px;
+              max-width: calc(100% - 95px);
             }
 
             .nav-brand img {
               max-height: 56px;
             }
 
-            .nav-menu {
-              gap: clamp(10px, 3vw, 15px);
+            .mobile-menu-toggle {
+              width: 36px;
+              height: 40px;
+              flex-basis: 36px;
+              margin-left: 3px;
             }
 
-            .nav-menu a {
-              font-size: 8px;
-              letter-spacing: 0;
+            .mobile-menu-toggle span {
+              width: 23px;
+            }
+
+            .nav-menu {
+              gap: 8px;
             }
 
             .cart {
@@ -835,4 +931,3 @@ export default function Home() {
     </>
   );
 }
-
