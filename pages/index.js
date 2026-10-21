@@ -154,12 +154,14 @@ export default function Home() {
         </div>
 
         <section className="hero-content">
-          <p className="eyebrow">CAFÉ DE ORIGEN</p>
-
           <h1>No es solo café.</h1>
 
+          <p className="hero-subtitle">
+            Es historia, viaje y carácter porteño en cada sorbo.
+          </p>
+
           <p className="hero-description">
-            Origen, carácter y esencia porteña.
+            Granos seleccionados del mundo, transformados en una experiencia única.
           </p>
 
           <a href="/cafes" className="hero-button">
@@ -309,7 +311,7 @@ export default function Home() {
             z-index: 10;
             top: 100px;
             left: 50%;
-            width: clamp(150px, 16vw, 205px);
+            width: clamp(180px, 18vw, 245px);
             transform: translateX(-50%);
           }
 
@@ -330,15 +332,6 @@ export default function Home() {
             text-align: left;
           }
 
-          .eyebrow {
-            margin: 0 0 17px;
-            color: #d2b177;
-            font-family: "Inter", Arial, sans-serif;
-            font-size: 10px;
-            font-weight: 500;
-            letter-spacing: 3px;
-          }
-
           .hero-content h1 {
             margin: 0;
             color: #f6f1e8;
@@ -349,13 +342,23 @@ export default function Home() {
             letter-spacing: -1.3px;
           }
 
-          .hero-description {
-            margin: 21px 0 30px;
-            color: rgba(247, 245, 241, 0.87);
+          .hero-subtitle {
+            margin: 21px 0 12px;
+            color: #d2b177;
             font-family: "Cormorant Garamond", Georgia, serif;
-            font-size: clamp(20px, 2vw, 27px);
+            font-size: clamp(23px, 2.2vw, 30px);
+            font-weight: 500;
+            line-height: 1.2;
+          }
+
+          .hero-description {
+            margin: 0 0 30px;
+            color: rgba(247, 245, 241, 0.82);
+            font-family: "Inter", Arial, sans-serif;
+            font-size: clamp(13px, 1.15vw, 16px);
             font-weight: 400;
-            line-height: 1.35;
+            line-height: 1.7;
+            max-width: 460px;
           }
 
           .hero-button {
@@ -475,7 +478,7 @@ export default function Home() {
 
             .hero-logo {
               top: 95px;
-              width: 165px;
+              width: 185px;
             }
 
             .hero-content {
@@ -553,9 +556,9 @@ export default function Home() {
             }
 
             .hero-logo {
-              top: 78px;
-              width: 158px;
-              max-width: 42vw;
+              top: 75px;
+              width: 175px;
+              max-width: 46vw;
             }
 
             .hero-content {
@@ -568,22 +571,23 @@ export default function Home() {
               text-align: center;
             }
 
-            .eyebrow {
-              margin-bottom: 10px;
-              font-size: 9px;
-              letter-spacing: 2.4px;
-            }
-
             .hero-content h1 {
               font-size: clamp(37px, 7.5vw, 51px);
               line-height: 1;
               letter-spacing: -0.5px;
             }
 
+            .hero-subtitle {
+              margin: 12px 0 8px;
+              font-size: clamp(20px, 4.7vw, 25px);
+              line-height: 1.18;
+            }
+
             .hero-description {
-              margin: 12px 0 19px;
-              font-size: clamp(17px, 3.8vw, 21px);
-              line-height: 1.3;
+              margin: 0 auto 17px;
+              max-width: 420px;
+              font-size: clamp(12px, 3.2vw, 14px);
+              line-height: 1.55;
             }
 
             .hero-button {
@@ -640,8 +644,8 @@ export default function Home() {
             }
 
             .hero-logo {
-              top: 72px;
-              width: 142px;
+              top: 68px;
+              width: 155px;
             }
 
             .hero-content {
@@ -650,20 +654,20 @@ export default function Home() {
               width: 92%;
             }
 
-            .eyebrow {
-              margin-bottom: 9px;
-              font-size: 8px;
-              letter-spacing: 2px;
-            }
-
             .hero-content h1 {
               font-size: clamp(34px, 8.4vw, 43px);
               line-height: 1.04;
             }
 
+            .hero-subtitle {
+              margin: 10px 0 7px;
+              font-size: clamp(19px, 5vw, 23px);
+            }
+
             .hero-description {
-              margin: 11px 0 17px;
-              font-size: clamp(16px, 4vw, 19px);
+              margin: 0 auto 15px;
+              font-size: clamp(11px, 3.4vw, 13px);
+              line-height: 1.5;
             }
 
             .hero-button {
@@ -707,8 +711,8 @@ export default function Home() {
             }
 
             .hero-logo {
-              top: 68px;
-              width: 130px;
+              top: 65px;
+              width: 140px;
             }
 
             .hero-content {
@@ -719,8 +723,12 @@ export default function Home() {
               font-size: 33px;
             }
 
+            .hero-subtitle {
+              font-size: 18px;
+            }
+
             .hero-description {
-              font-size: 16px;
+              font-size: 11px;
             }
 
             .hero-button {
