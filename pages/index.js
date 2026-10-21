@@ -145,6 +145,19 @@ export default function Home() {
             </ul>
           </nav>
 
+          <button
+            type="button"
+            className={`mobile-menu-toggle ${menuOpen ? "is-open" : ""}`}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={menuOpen}
+            aria-controls="menu-principal"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+
           <a
             className="cart"
             href="/carrito"
@@ -169,30 +182,17 @@ export default function Home() {
             </svg>
             <span>{cartCount}</span>
           </a>
-
-          <button
-            type="button"
-            className={`mobile-menu-toggle ${menuOpen ? "is-open" : ""}`}
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
-            aria-expanded={menuOpen}
-            aria-controls="menu-principal"
-          >
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
         </header>
 
         <section className="hero-content">
-          <h1>No es solo café</h1>
+          <h1>No es solo café.</h1>
 
           <p className="hero-subtitle">
-            Es historia, viaje y carácter porteño en cada sorbo
+            Es historia, viaje y carácter porteño en cada sorbo.
           </p>
 
           <p className="hero-description">
-            Granos seleccionados del mundo, transformados en una experiencia única
+            Granos seleccionados del mundo, transformados en una experiencia única.
           </p>
 
           <a href="/cafes" className="hero-button">
@@ -363,7 +363,7 @@ export default function Home() {
             height: 27px;
           }
 
-          /* HAMBURGUESA OCULTA EN ESCRITORIO */
+          /* HAMBURGUESA: OCULTA EN ESCRITORIO */
 
           .mobile-menu-toggle {
             display: none;
@@ -659,7 +659,7 @@ export default function Home() {
             }
 
             .mobile-menu-toggle {
-              order: 3;
+              order: 2;
               display: flex;
               flex-direction: column;
               justify-content: center;
@@ -695,9 +695,9 @@ export default function Home() {
             }
 
             .cart {
-              order: 2;
+              order: 3;
               gap: 4px;
-              margin-left: auto;
+              margin-left: 0;
               font-size: 10px;
             }
 
@@ -931,3 +931,4 @@ export default function Home() {
     </>
   );
 }
+
