@@ -226,7 +226,7 @@ export default function Home() {
               ),
               url("/fondo-cafe.png");
             background-size: cover;
-            background-position: center center;
+            background-position: center bottom;
             background-repeat: no-repeat;
           }
 
@@ -567,7 +567,7 @@ export default function Home() {
                 ),
                 url("/fondo-cafe.png");
               background-size: cover;
-              background-position: center center;
+              background-position: center bottom;
             }
 
             .navbar {
@@ -835,3 +835,4 @@ export default function Home() {
     </>
   );
 }
+
