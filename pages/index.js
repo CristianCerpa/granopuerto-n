@@ -363,7 +363,7 @@ export default function Home() {
             height: 27px;
           }
 
-          /* BOTÓN HAMBURGUESA: OCULTO EN ESCRITORIO */
+          /* HAMBURGUESA OCULTA EN ESCRITORIO */
 
           .mobile-menu-toggle {
             display: none;
@@ -707,7 +707,7 @@ export default function Home() {
             }
 
             .hero-content {
-              top: 225px;
+              top: 165px;
               left: 5%;
               width: 90%;
               max-width: 480px;
@@ -723,13 +723,13 @@ export default function Home() {
             }
 
             .hero-subtitle {
-              margin: 12px 0 8px;
+              margin: 14px 0 12px;
               font-size: clamp(19px, 4.4vw, 24px);
               line-height: 1.18;
             }
 
             .hero-description {
-              margin: 0 auto 17px;
+              margin: 0 auto 28px;
               max-width: 420px;
               font-size: clamp(12px, 3.2vw, 14px);
               line-height: 1.55;
@@ -797,7 +797,7 @@ export default function Home() {
             }
 
             .hero-content {
-              top: 213px;
+              top: 155px;
               left: 4%;
               width: 92%;
             }
@@ -808,12 +808,12 @@ export default function Home() {
             }
 
             .hero-subtitle {
-              margin: 10px 0 7px;
+              margin: 12px 0 10px;
               font-size: clamp(19px, 5vw, 23px);
             }
 
             .hero-description {
-              margin: 0 auto 15px;
+              margin: 0 auto 26px;
               font-size: clamp(11px, 3.4vw, 13px);
               line-height: 1.5;
             }
@@ -874,7 +874,7 @@ export default function Home() {
             }
 
             .hero-content {
-              top: 205px;
+              top: 150px;
             }
 
             .hero-content h1 {
