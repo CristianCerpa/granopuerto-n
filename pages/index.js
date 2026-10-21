@@ -15,22 +15,37 @@ export default function Home() {
   const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
-    try {
-      const savedCart = JSON.parse(
-        localStorage.getItem("granopuerto-carrito") || "[]"
-      );
-
-      if (Array.isArray(savedCart)) {
-        setCartCount(
-          savedCart.reduce(
-            (total, item) => total + (Number(item.cantidad) || 0),
-            0
-          )
+    function updateCartCount() {
+      try {
+        const savedCart = JSON.parse(
+          localStorage.getItem("granopuerto-carrito") || "[]"
         );
+
+        if (Array.isArray(savedCart)) {
+          setCartCount(
+            savedCart.reduce(
+              (total, item) =>
+                total + (Number(item.cantidad) || 0),
+              0
+            )
+          );
+        } else {
+          setCartCount(0);
+        }
+      } catch {
+        setCartCount(0);
       }
-    } catch {
-      setCartCount(0);
     }
+
+    updateCartCount();
+
+    window.addEventListener("storage", updateCartCount);
+    window.addEventListener("carrito-actualizado", updateCartCount);
+
+    return () => {
+      window.removeEventListener("storage", updateCartCount);
+      window.removeEventListener("carrito-actualizado", updateCartCount);
+    };
   }, []);
 
   useEffect(() => {
@@ -57,12 +72,17 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Granopuerto | Coffee Roasters</title>
-        <meta name="description" content="Granopuerto Coffee Roasters" />
+        <title>Granopuerto | Café de origen</title>
+        <meta
+          name="description"
+          content="Descubre los cafés de origen de GRANOPUERTO. Carácter, calidad y esencia porteña."
+        />
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1"
         />
+        <meta name="theme-color" content="#0e0d0b" />
+
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
@@ -70,19 +90,19 @@ export default function Home() {
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
           rel="stylesheet"
         />
       </Head>
 
       <main className="hero">
-        <div className="hero-background" />
+        <div className="hero-background" aria-hidden="true" />
 
         <header className="navbar">
-          <nav>
+          <nav className="navigation" aria-label="Navegación principal">
             <ul className="nav-menu">
               <li>
-                <a href="/" className="active">
+                <a href="/" className="active" aria-current="page">
                   INICIO
                 </a>
               </li>
@@ -98,65 +118,77 @@ export default function Home() {
             </ul>
           </nav>
 
-          <a className="cart" href="/carrito" aria-label={`Ver carrito, ${cartCount} productos`}>
+          <a
+            className="cart"
+            href="/carrito"
+            aria-label={`Ver carrito, ${cartCount} productos`}
+          >
             <svg
               className="cart-icon"
               viewBox="0 0 32 32"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
             >
               <path
                 d="M3 5H7L10.2 20.5C10.5 22 11.8 23 13.4 23H24.5C26 23 27.3 22 27.7 20.6L30 12H9"
-                stroke="white"
+                stroke="currentColor"
                 strokeWidth="1.7"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
-              <circle cx="13" cy="27" r="1.8" fill="white" />
-              <circle cx="24" cy="27" r="1.8" fill="white" />
+              <circle cx="13" cy="27" r="1.8" fill="currentColor" />
+              <circle cx="24" cy="27" r="1.8" fill="currentColor" />
             </svg>
             <span>{cartCount}</span>
           </a>
         </header>
 
         <div className="hero-logo">
-          <img src="/logo.png" alt="Granopuerto Coffee Roasters" />
+          <a href="/" aria-label="Granopuerto, inicio">
+            <img
+              src="/logo.png"
+              alt="Granopuerto Coffee Roasters"
+            />
+          </a>
         </div>
 
         <section className="hero-content">
-          <h1>Granopuerto no es solo café</h1>
-          <p>
-            Es historia, viaje y carácter porteño en cada sorbo.
-            <br className="desktop-break" />
-            Granos seleccionados del mundo, transformados en una
-            <br className="desktop-break" />
-            experiencia única.
+          <p className="eyebrow">CAFÉ DE ORIGEN</p>
+
+          <h1>No es solo café.</h1>
+
+          <p className="hero-description">
+            Origen, carácter y esencia porteña.
           </p>
+
+          <a href="/cafes" className="hero-button">
+            DESCUBRIR NUESTROS CAFÉS
+            <span aria-hidden="true">→</span>
+          </a>
         </section>
 
         <div
           className={`coffee-carousel ${
             isSliding ? "is-sliding" : ""
           }`}
+          aria-label="Nuestros cafés de origen"
         >
           <img
+            key={coffeeBags[currentBag]}
             className="coffee-bag coffee-bag-current"
             src={coffeeBags[currentBag]}
-            alt="Café Granopuerto"
+            alt="Bolsa de café GRANOPUERTO"
           />
 
           {isSliding && (
             <img
               className="coffee-bag coffee-bag-next"
               src={coffeeBags[nextBag]}
-              alt="Café Granopuerto"
+              alt="Siguiente café de origen GRANOPUERTO"
             />
           )}
         </div>
-
-        <a href="/cafes" className="hero-button">
-          VER NUESTROS CAFÉS&nbsp;
-        </a>
 
         <style jsx>{`
           * {
@@ -165,65 +197,57 @@ export default function Home() {
 
           .hero {
             position: relative;
+            isolation: isolate;
             width: 100%;
+            min-height: 650px;
             height: 100vh;
             height: 100svh;
-            min-height: 620px;
             overflow: hidden;
             background: #0e0d0b;
-            color: #ffffff;
-            font-family: "Cormorant Garamond", Georgia, serif;
+            color: #f7f5f1;
+            font-family: "Inter", Arial, sans-serif;
           }
 
           .hero-background {
             position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            width: 100%;
-            height: 65%;
-            background-image: url("/fondo-cafe.png");
+            z-index: -1;
+            inset: 0;
+            background-image:
+              linear-gradient(
+                90deg,
+                rgba(14, 13, 11, 0.97) 0%,
+                rgba(14, 13, 11, 0.89) 35%,
+                rgba(14, 13, 11, 0.5) 68%,
+                rgba(14, 13, 11, 0.28) 100%
+              ),
+              url("/fondo-cafe.png");
             background-size: cover;
-            background-position: center bottom;
+            background-position: center center;
             background-repeat: no-repeat;
-            z-index: 1;
-          }
-
-          .hero-background::before {
-            content: "";
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 0;
-            height: 45%;
-            background: linear-gradient(
-              to bottom,
-              #0e0d0b 0%,
-              rgba(14, 13, 11, 0.96) 25%,
-              rgba(14, 13, 11, 0.55) 70%,
-              rgba(14, 13, 11, 0) 100%
-            );
           }
 
           .navbar {
             position: absolute;
+            z-index: 50;
             top: 0;
             left: 0;
             width: 100%;
-            height: 70px;
+            height: 76px;
             display: flex;
-            justify-content: flex-start;
             align-items: center;
-            padding-left: clamp(24px, 6vw, 90px);
-            z-index: 50;
+            padding: 0 clamp(24px, 5.5vw, 84px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
             font-family: "Inter", Arial, sans-serif;
+          }
+
+          .navigation {
+            min-width: 0;
           }
 
           .nav-menu {
             display: flex;
             align-items: center;
-            justify-content: flex-start;
-            gap: clamp(30px, 4vw, 55px);
+            gap: clamp(24px, 3.5vw, 52px);
             list-style: none;
             margin: 0;
             padding: 0;
@@ -231,19 +255,19 @@ export default function Home() {
 
           .nav-menu a {
             position: relative;
-            color: #ffffff;
+            display: inline-block;
+            padding: 10px 0;
+            color: rgba(255, 255, 255, 0.88);
             text-decoration: none;
-            font-family: "Inter", Arial, sans-serif;
-            font-size: clamp(9px, 0.75vw, 12px);
+            font-size: 10px;
             font-weight: 400;
-            letter-spacing: clamp(0.6px, 0.08vw, 1.2px);
-            padding: 8px 0;
+            letter-spacing: 1.1px;
             white-space: nowrap;
-            transition: color 0.25s ease;
+            transition: color 0.2s ease;
           }
 
           .nav-menu a:hover {
-            color: #d9a33f;
+            color: #d7b574;
           }
 
           .nav-menu .active::after {
@@ -251,40 +275,45 @@ export default function Home() {
             position: absolute;
             left: 0;
             right: 0;
-            bottom: -3px;
-            height: 2px;
-            background: #d9a33f;
+            bottom: 1px;
+            height: 1px;
+            background: #c9a66b;
           }
 
           .cart {
             position: absolute;
-            right: clamp(16px, 2.5vw, 38px);
             top: 50%;
+            right: clamp(20px, 4vw, 60px);
             transform: translateY(-50%);
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 10px;
-            color: #ffffff;
+            gap: 8px;
+            color: #f7f5f1;
             text-decoration: none;
-            font-family: "Inter", Arial, sans-serif;
-            font-size: 14px;
+            font-size: 12px;
+            font-weight: 400;
+          }
+
+          .cart:hover {
+            color: #d7b574;
           }
 
           .cart-icon {
-            width: 34px;
-            height: 34px;
             display: block;
+            width: 29px;
+            height: 29px;
           }
 
           .hero-logo {
             position: absolute;
-            z-index: 30;
-            top: clamp(72px, 8vh, 100px);
+            z-index: 10;
+            top: 100px;
             left: 50%;
+            width: clamp(150px, 16vw, 205px);
             transform: translateX(-50%);
-            width: clamp(180px, 23vw, 285px);
           }
 
+          .hero-logo a,
           .hero-logo img {
             display: block;
             width: 100%;
@@ -293,52 +322,93 @@ export default function Home() {
 
           .hero-content {
             position: absolute;
-            z-index: 40;
-            top: clamp(255px, 36vh, 350px);
-            left: 50%;
-            transform: translateX(-50%);
-            width: min(900px, 88%);
-            text-align: center;
+            z-index: 30;
+            top: 50%;
+            left: clamp(38px, 9vw, 138px);
+            width: min(44%, 540px);
+            transform: translateY(-35%);
+            text-align: left;
+          }
+
+          .eyebrow {
+            margin: 0 0 17px;
+            color: #d2b177;
+            font-family: "Inter", Arial, sans-serif;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 3px;
           }
 
           .hero-content h1 {
-            margin: 0 0 14px;
-            color: #f7f5f1;
+            margin: 0;
+            color: #f6f1e8;
             font-family: "Cormorant Garamond", Georgia, serif;
-            font-size: clamp(31px, 3.5vw, 50px);
-            line-height: 1.05;
-            font-weight: 600;
+            font-size: clamp(49px, 5.4vw, 78px);
+            font-weight: 500;
+            line-height: 0.99;
+            letter-spacing: -1.3px;
           }
 
-          .hero-content p {
-            margin: 0 auto;
-            max-width: 720px;
-            color: #f3f1ed;
+          .hero-description {
+            margin: 21px 0 30px;
+            color: rgba(247, 245, 241, 0.87);
             font-family: "Cormorant Garamond", Georgia, serif;
-            font-size: clamp(15px, 1.45vw, 21px);
-            line-height: 1.3;
+            font-size: clamp(20px, 2vw, 27px);
             font-weight: 400;
+            line-height: 1.35;
+          }
+
+          .hero-button {
+            min-height: 49px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 23px;
+            padding: 0 23px;
+            border: 1px solid #c9a66b;
+            background: #c9a66b;
+            color: #15120d;
+            text-decoration: none;
+            font-family: "Inter", Arial, sans-serif;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1.1px;
+            white-space: nowrap;
+            transition:
+              background-color 0.2s ease,
+              border-color 0.2s ease;
+          }
+
+          .hero-button:hover {
+            border-color: #dfc18a;
+            background: #dfc18a;
+          }
+
+          .hero-button span {
+            font-size: 17px;
+            line-height: 1;
           }
 
           .coffee-carousel {
             position: absolute;
             z-index: 20;
-            left: 50%;
-            transform: translateX(-50%);
+            right: clamp(5%, 11vw, 170px);
             bottom: -1%;
-            width: clamp(145px, 20vw, 225px);
-            height: clamp(190px, 28vw, 300px);
+            width: clamp(260px, 30vw, 440px);
+            height: min(70vh, 690px);
             overflow: visible;
           }
 
           .coffee-bag {
             position: absolute;
-            left: 0;
+            right: 0;
             bottom: 0;
-            width: 100%;
-            height: auto;
             display: block;
-            filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.65));
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center bottom;
+            filter: drop-shadow(0 22px 32px rgba(0, 0, 0, 0.52));
             pointer-events: none;
           }
 
@@ -362,6 +432,7 @@ export default function Home() {
             from {
               transform: translateX(0);
             }
+
             to {
               transform: translateX(-100vw);
             }
@@ -371,278 +442,315 @@ export default function Home() {
             from {
               transform: translateX(100vw);
             }
+
             to {
               transform: translateX(0);
             }
           }
 
-          .hero-button {
-            position: absolute;
-            z-index: 60;
-            left: 50%;
-            transform: translateX(-50%);
-            bottom: clamp(115px, 17vh, 150px);
-            width: clamp(210px, 25vw, 320px);
-            height: clamp(34px, 4vh, 44px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(255, 255, 255, 0.85);
-            background: rgba(14, 13, 11, 0.38);
-            color: #ffffff;
-            text-decoration: none;
-            font-family: "Inter", Arial, sans-serif;
-            font-size: clamp(8px, 0.7vw, 10px);
-            letter-spacing: clamp(1.8px, 0.22vw, 3px);
-            white-space: nowrap;
-            transition: background 0.25s ease, color 0.25s ease;
-          }
-
-          .hero-button:hover {
-            background: #ffffff;
-            color: #0e0d0b;
-          }
-
-          @media (max-width: 1100px) {
-            .hero-logo {
-              top: 75px;
-              width: 230px;
-            }
-
+          @media (min-width: 1500px) {
             .hero-content {
-              top: 260px;
-            }
-
-            .hero-content h1 {
-              font-size: 42px;
-            }
-
-            .hero-content p {
-              font-size: 18px;
+              left: max(9vw, calc((100vw - 1400px) / 2));
             }
 
             .coffee-carousel {
-              width: 190px;
-              bottom: -1%;
-              height: 250px;
+              right: max(10vw, calc((100vw - 1400px) / 2));
+              width: min(32vw, 470px);
+            }
+          }
+
+          @media (max-width: 1100px) and (min-width: 769px) {
+            .navbar {
+              padding-left: 30px;
+            }
+
+            .nav-menu {
+              gap: 27px;
+            }
+
+            .nav-menu a {
+              font-size: 9px;
+              letter-spacing: 0.8px;
+            }
+
+            .hero-logo {
+              top: 95px;
+              width: 165px;
+            }
+
+            .hero-content {
+              left: 6%;
+              width: 45%;
+            }
+
+            .hero-content h1 {
+              font-size: clamp(46px, 5.5vw, 62px);
+            }
+
+            .hero-description {
+              font-size: 21px;
             }
 
             .hero-button {
-              bottom: 125px;
+              min-height: 46px;
+              gap: 12px;
+              padding: 0 15px;
+              font-size: 9px;
+              letter-spacing: 0.7px;
+            }
+
+            .coffee-carousel {
+              right: 5%;
+              width: 37vw;
+              height: 61vh;
             }
           }
 
           @media (max-width: 768px) {
             .hero {
-              min-height: 560px;
-            }
-
-            .navbar {
-              height: 55px;
-              padding-left: 16px;
-            }
-
-            .nav-menu {
-              gap: 24px;
-            }
-
-            .nav-menu a {
-              font-size: 8px;
-              letter-spacing: 0.7px;
-            }
-
-            .cart {
-              right: 12px;
-              gap: 7px;
-              font-size: 12px;
-            }
-
-            .cart-icon {
-              width: 28px;
-              height: 28px;
+              height: auto;
+              min-height: 740px;
+              height: 100svh;
+              min-height: max(740px, 100svh);
             }
 
             .hero-background {
-              height: 64%;
-              bottom: 0;
+              background-image:
+                linear-gradient(
+                  180deg,
+                  rgba(14, 13, 11, 0.95) 0%,
+                  rgba(14, 13, 11, 0.83) 40%,
+                  rgba(14, 13, 11, 0.48) 100%
+                ),
+                url("/fondo-cafe.png");
               background-size: cover;
-              background-position: center bottom;
+              background-position: center center;
             }
 
-            .hero-background::before {
-              height: 42%;
-              background: linear-gradient(
-                to bottom,
-                #0e0d0b 0%,
-                rgba(14, 13, 11, 0.95) 20%,
-                rgba(14, 13, 11, 0.55) 55%,
-                rgba(14, 13, 11, 0) 100%
-              );
+            .navbar {
+              height: 58px;
+              padding: 0 14px;
+            }
+
+            .nav-menu {
+              gap: clamp(10px, 3.1vw, 22px);
+            }
+
+            .nav-menu a {
+              font-size: clamp(7px, 1.35vw, 9px);
+              letter-spacing: 0.4px;
+            }
+
+            .cart {
+              right: 13px;
+              gap: 4px;
+              font-size: 10px;
+            }
+
+            .cart-icon {
+              width: 24px;
+              height: 24px;
             }
 
             .hero-logo {
-              top: 58px;
-              width: 175px;
-              max-width: 45vw;
+              top: 78px;
+              width: 158px;
+              max-width: 42vw;
             }
 
             .hero-content {
-              top: 178px;
-              width: 92%;
+              top: 238px;
+              left: 5%;
+              width: 90%;
+              max-width: 480px;
+              transform: none;
+              margin: 0;
+              text-align: center;
+            }
+
+            .eyebrow {
+              margin-bottom: 10px;
+              font-size: 9px;
+              letter-spacing: 2.4px;
             }
 
             .hero-content h1 {
-              margin: 0 0 8px;
-              font-size: 28px;
-              line-height: 1.05;
+              font-size: clamp(37px, 7.5vw, 51px);
+              line-height: 1;
+              letter-spacing: -0.5px;
             }
 
-            .hero-content p {
-              max-width: 360px;
-              font-size: 13px;
-              line-height: 1.25;
-            }
-
-            .desktop-break {
-              display: none;
+            .hero-description {
+              margin: 12px 0 19px;
+              font-size: clamp(17px, 3.8vw, 21px);
+              line-height: 1.3;
             }
 
             .hero-button {
-              bottom: 285px;
-              width: 205px;
-              height: 32px;
-              font-size: 8px;
-              letter-spacing: 2px;
+              min-height: 43px;
+              gap: 13px;
+              padding: 0 17px;
+              font-size: 9px;
+              letter-spacing: 0.8px;
             }
 
             .coffee-carousel {
-              width: 125px;
-              bottom: 5px;
-              height: 170px;
+              right: auto;
+              left: 50%;
+              bottom: -5px;
+              width: clamp(205px, 47vw, 285px);
+              height: clamp(300px, 42vh, 390px);
+              transform: translateX(-50%);
+            }
+
+            .coffee-bag {
+              object-position: center bottom;
             }
           }
 
           @media (max-width: 480px) {
             .hero {
-              min-height: 500px;
+              min-height: 720px;
+              min-height: max(720px, 100svh);
             }
 
             .navbar {
-              height: 45px;
-              padding-left: 12px;
+              height: 52px;
+              padding: 0 9px;
             }
 
             .nav-menu {
-              gap: 18px;
+              gap: clamp(8px, 2.5vw, 12px);
             }
 
             .nav-menu a {
-              font-size: 7px;
-              letter-spacing: 0.5px;
+              font-size: clamp(6.5px, 1.8vw, 8px);
+              letter-spacing: 0.15px;
             }
 
             .cart {
               right: 8px;
-              font-size: 11px;
-              gap: 5px;
+              gap: 3px;
+              font-size: 9px;
             }
 
             .cart-icon {
-              width: 25px;
-              height: 25px;
-            }
-
-            .hero-background {
-              height: 65%;
-              background-position: center bottom;
-            }
-
-            .hero-background::before {
-              height: 38%;
-              background: linear-gradient(
-                to bottom,
-                #0e0d0b 0%,
-                rgba(14, 13, 11, 0.94) 18%,
-                rgba(14, 13, 11, 0.48) 52%,
-                rgba(14, 13, 11, 0) 100%
-              );
+              width: 21px;
+              height: 21px;
             }
 
             .hero-logo {
-              top: 83px;
-              width: 150px;
+              top: 72px;
+              width: 142px;
             }
 
             .hero-content {
-              top: 186px;
-              width: 94%;
+              top: 210px;
+              left: 4%;
+              width: 92%;
+            }
+
+            .eyebrow {
+              margin-bottom: 9px;
+              font-size: 8px;
+              letter-spacing: 2px;
             }
 
             .hero-content h1 {
-              margin-bottom: 7px;
-              font-size: 23px;
-              line-height: 1.05;
+              font-size: clamp(34px, 8.4vw, 43px);
+              line-height: 1.04;
             }
 
-            .hero-content p {
-              max-width: 310px;
-              font-size: 11px;
-              line-height: 1.25;
+            .hero-description {
+              margin: 11px 0 17px;
+              font-size: clamp(16px, 4vw, 19px);
             }
 
             .hero-button {
-              bottom: 350px;
-              width: 190px;
-              height: 29px;
-              font-size: 7px;
-              letter-spacing: 1.8px;
+              min-height: 42px;
+              gap: 9px;
+              padding: 0 13px;
+              font-size: 8px;
+              letter-spacing: 0.5px;
             }
 
             .coffee-carousel {
-              width: 125px;
-              bottom: 30px;
-              height: 170px;
+              bottom: 0;
+              width: clamp(190px, 55vw, 245px);
+              height: 300px;
             }
           }
 
           @media (max-width: 360px) {
+            .navbar {
+              padding: 0 7px;
+            }
+
             .nav-menu {
-              gap: 14px;
+              gap: 7px;
             }
 
             .nav-menu a {
               font-size: 6.5px;
+              letter-spacing: 0;
+            }
+
+            .cart {
+              right: 6px;
+              gap: 2px;
+              font-size: 8px;
+            }
+
+            .cart-icon {
+              width: 19px;
+              height: 19px;
             }
 
             .hero-logo {
-              top: 50px;
-              width: 140px;
+              top: 68px;
+              width: 130px;
             }
 
             .hero-content {
-              top: 126px;
+              top: 196px;
             }
 
             .hero-content h1 {
-              font-size: 21px;
+              font-size: 33px;
             }
 
-            .hero-content p {
-              font-size: 10px;
-              max-width: 285px;
+            .hero-description {
+              font-size: 16px;
             }
 
             .hero-button {
-              bottom: 270px;
-              width: 180px;
-              height: 27px;
-              font-size: 6.5px;
+              min-height: 40px;
+              padding: 0 10px;
+              font-size: 7px;
             }
 
             .coffee-carousel {
-              width: 115px;
-              bottom: 5px;
-              height: 155px;
+              width: 185px;
+              height: 280px;
+            }
+          }
+
+          @media (max-height: 700px) and (min-width: 769px) {
+            .hero {
+              min-height: 620px;
+            }
+
+            .hero-logo {
+              top: 82px;
+              width: 155px;
+            }
+
+            .hero-content {
+              transform: translateY(-25%);
+            }
+
+            .coffee-carousel {
+              height: 65vh;
             }
           }
         `}</style>
