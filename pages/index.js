@@ -238,12 +238,12 @@ export default function Home() {
             top: 0;
             left: 0;
             width: 100%;
-            height: 86px;
+            height: 112px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: clamp(18px, 3vw, 46px);
-            padding: 0 clamp(24px, 5vw, 76px);
+            gap: clamp(20px, 3vw, 48px);
+            padding: 0 clamp(28px, 5vw, 76px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.07);
             font-family: "Inter", Arial, sans-serif;
           }
@@ -253,7 +253,7 @@ export default function Home() {
             align-items: center;
             justify-content: flex-start;
             flex: 0 0 auto;
-            width: clamp(140px, 13vw, 175px);
+            width: clamp(220px, 21vw, 300px);
             text-decoration: none;
           }
 
@@ -261,7 +261,7 @@ export default function Home() {
             display: block;
             width: 100%;
             height: auto;
-            max-height: 66px;
+            max-height: 92px;
             object-fit: contain;
             object-position: left center;
           }
@@ -482,17 +482,17 @@ export default function Home() {
 
           @media (max-width: 1100px) and (min-width: 769px) {
             .navbar {
-              height: 78px;
-              gap: 20px;
-              padding: 0 28px;
+              height: 100px;
+              gap: 18px;
+              padding: 0 24px;
             }
 
             .nav-brand {
-              width: 135px;
+              width: 195px;
             }
 
             .nav-brand img {
-              max-height: 58px;
+              max-height: 82px;
             }
 
             .nav-menu {
@@ -571,43 +571,50 @@ export default function Home() {
             }
 
             .navbar {
-              height: 68px;
-              gap: 10px;
-              padding: 0 12px;
+              height: 104px;
+              display: flex;
+              flex-wrap: wrap;
+              align-content: center;
+              justify-content: space-between;
+              gap: 4px 12px;
+              padding: 7px 18px 8px;
             }
 
             .nav-brand {
-              width: clamp(82px, 17vw, 120px);
+              width: 150px;
+              max-width: calc(100% - 70px);
             }
 
             .nav-brand img {
-              max-height: 48px;
+              max-height: 62px;
             }
 
             .navigation {
-              flex: 1 1 auto;
+              order: 3;
+              flex: 0 0 100%;
               min-width: 0;
             }
 
             .nav-menu {
-              justify-content: flex-end;
-              gap: clamp(7px, 1.8vw, 13px);
+              justify-content: center;
+              gap: clamp(15px, 4vw, 28px);
             }
 
             .nav-menu a {
-              font-size: clamp(7px, 1.3vw, 9px);
-              letter-spacing: 0.15px;
+              font-size: clamp(8px, 1.8vw, 10px);
+              letter-spacing: 0.35px;
             }
 
             .cart {
-              gap: 3px;
-              margin-left: 0;
-              font-size: 9px;
+              order: 2;
+              gap: 4px;
+              margin-left: auto;
+              font-size: 10px;
             }
 
             .cart-icon {
-              width: 21px;
-              height: 21px;
+              width: 23px;
+              height: 23px;
             }
 
             .hero-content {
@@ -668,36 +675,36 @@ export default function Home() {
             }
 
             .navbar {
-              height: 62px;
-              gap: 6px;
-              padding: 0 8px;
+              height: 100px;
+              gap: 4px 8px;
+              padding: 7px 12px 8px;
             }
 
             .nav-brand {
-              width: 72px;
+              width: 140px;
             }
 
             .nav-brand img {
-              max-height: 42px;
+              max-height: 58px;
             }
 
             .nav-menu {
-              gap: clamp(5px, 1.5vw, 8px);
+              gap: clamp(13px, 3.7vw, 22px);
             }
 
             .nav-menu a {
-              font-size: clamp(6px, 1.65vw, 7.5px);
-              letter-spacing: 0;
+              font-size: clamp(8px, 2vw, 9px);
+              letter-spacing: 0.1px;
             }
 
             .cart {
-              gap: 2px;
-              font-size: 8px;
+              gap: 3px;
+              font-size: 9px;
             }
 
             .cart-icon {
-              width: 19px;
-              height: 19px;
+              width: 21px;
+              height: 21px;
             }
 
             .hero-content {
@@ -739,35 +746,35 @@ export default function Home() {
 
           @media (max-width: 360px) {
             .navbar {
-              gap: 4px;
-              padding: 0 6px;
+              gap: 4px 6px;
+              padding: 7px 9px 8px;
             }
 
             .nav-brand {
-              width: 60px;
+              width: 125px;
             }
 
             .nav-brand img {
-              max-height: 36px;
+              max-height: 52px;
             }
 
             .nav-menu {
-              gap: 4px;
+              gap: clamp(10px, 3vw, 15px);
             }
 
             .nav-menu a {
-              font-size: 5.8px;
+              font-size: 7.5px;
               letter-spacing: 0;
             }
 
             .cart {
-              gap: 1px;
-              font-size: 7px;
+              gap: 2px;
+              font-size: 8px;
             }
 
             .cart-icon {
-              width: 17px;
-              height: 17px;
+              width: 19px;
+              height: 19px;
             }
 
             .hero-content {
@@ -804,15 +811,15 @@ export default function Home() {
             }
 
             .navbar {
-              height: 72px;
+              height: 96px;
             }
 
             .nav-brand {
-              width: 145px;
+              width: 190px;
             }
 
             .nav-brand img {
-              max-height: 54px;
+              max-height: 78px;
             }
 
             .hero-content {
@@ -828,3 +835,4 @@ export default function Home() {
     </>
   );
 }
+
