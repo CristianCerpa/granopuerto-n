@@ -185,18 +185,18 @@ export default function Home() {
         </header>
 
         <section className="hero-content">
-          <h1>No es solo café.</h1>
+          <h1>No es solo café</h1>
 
           <p className="hero-subtitle">
-            Es historia, viaje y carácter porteño en cada sorbo.
+            Es historia, viaje y carácter porteño en cada sorbo
           </p>
 
           <p className="hero-description">
-            Granos seleccionados del mundo, transformados en una experiencia única.
+            Granos seleccionados del mundo, transformados en una experiencia única
           </p>
 
           <a href="/cafes" className="hero-button">
-            DESCUBRIR NUESTROS CAFÉS
+            ENCUENTRA TU CAFÉ
             <span aria-hidden="true">→</span>
           </a>
         </section>
