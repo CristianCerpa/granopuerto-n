@@ -306,12 +306,13 @@ export default function Home() {
             height: 29px;
           }
 
+          /* LOGO MÁS GRANDE */
           .hero-logo {
             position: absolute;
             z-index: 10;
             top: 100px;
             left: 50%;
-            width: clamp(180px, 18vw, 245px);
+            width: clamp(220px, 22vw, 300px);
             transform: translateX(-50%);
           }
 
@@ -478,7 +479,7 @@ export default function Home() {
 
             .hero-logo {
               top: 95px;
-              width: 185px;
+              width: 220px;
             }
 
             .hero-content {
@@ -557,8 +558,8 @@ export default function Home() {
 
             .hero-logo {
               top: 75px;
-              width: 175px;
-              max-width: 46vw;
+              width: 195px;
+              max-width: 50vw;
             }
 
             .hero-content {
@@ -645,7 +646,7 @@ export default function Home() {
 
             .hero-logo {
               top: 68px;
-              width: 155px;
+              width: 175px;
             }
 
             .hero-content {
@@ -712,7 +713,7 @@ export default function Home() {
 
             .hero-logo {
               top: 65px;
-              width: 140px;
+              width: 155px;
             }
 
             .hero-content {
@@ -750,7 +751,7 @@ export default function Home() {
 
             .hero-logo {
               top: 82px;
-              width: 155px;
+              width: 190px;
             }
 
             .hero-content {
