@@ -385,35 +385,35 @@ export default function Home() {
             transform: translateY(-35%);
             text-align: left;
           }
+.hero-content h1 {
+  margin: 0;
+  color: #f6f1e8;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(42px, 4.1vw, 58px);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.6px;
+}
 
-          .hero-content h1 {
-            margin: 0;
-            color: #f6f1e8;
-            font-family: "Cormorant Garamond", Georgia, serif;
-            font-size: clamp(46px, 4vw, 58px);
-            font-weight: 500;
-            line-height: 1;
-            letter-spacing: -1px;
-          }
+.hero-subtitle {
+  margin: 15px 0 9px;
+  color: #d2b177;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(22px, 1.8vw, 26px);
+  font-weight: 500;
+  line-height: 1.25;
+}
 
-          .hero-subtitle {
-            margin: 21px 0 12px;
-            color: #d2b177;
-            font-family: "Cormorant Garamond", Georgia, serif;
-            font-size: clamp(23px, 2.05vw, 28px);
-            font-weight: 500;
-            line-height: 1.2;
-          }
+.hero-description {
+  max-width: 440px;
+  margin: 0 0 22px;
+  color: rgba(247, 245, 241, 0.82);
+  font-family: "Inter", Arial, sans-serif;
+  font-size: clamp(12px, 1vw, 14px);
+  font-weight: 400;
+  line-height: 1.6;
+}
 
-          .hero-description {
-            max-width: 460px;
-            margin: 0 0 30px;
-            color: rgba(247, 245, 241, 0.82);
-            font-family: "Inter", Arial, sans-serif;
-            font-size: clamp(13px, 1.15vw, 16px);
-            font-weight: 400;
-            line-height: 1.7;
-          }
 
           .hero-button {
             min-height: 49px;
