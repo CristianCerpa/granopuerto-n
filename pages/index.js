@@ -390,7 +390,7 @@ export default function Home() {
   margin: 0;
   color: #f6f1e8;
   font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: clamp(36px, 3.5vw, 50px);
+  font-size: clamp(32px, 3vw, 44px);
   font-weight: 500;
   line-height: 1.1;
   letter-spacing: 0.2px;
