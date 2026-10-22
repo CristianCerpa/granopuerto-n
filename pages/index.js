@@ -549,14 +549,14 @@ export default function Home() {
             }
 
             .cart {
-              gap: 5px;
+              gap: 7px;
               margin-left: 0;
-              font-size: 10px;
+              font-size: 12px;
             }
 
             .cart-icon {
-              width: 24px;
-              height: 24px;
+              width: 28px;
+              height: 28px;
             }
 
             .hero-content {
@@ -700,14 +700,14 @@ export default function Home() {
 
             .cart {
               order: 3;
-              gap: 4px;
+              gap: 7px;
               margin-left: 0;
-              font-size: 10px;
+              font-size: 12px;
             }
 
             .cart-icon {
-              width: 23px;
-              height: 23px;
+              width: 28px;
+              height: 28px;
             }
 
             .hero-content {
@@ -791,13 +791,13 @@ export default function Home() {
             }
 
             .cart {
-              gap: 3px;
-              font-size: 9px;
+              gap: 5px;
+              font-size: 11px;
             }
 
             .cart-icon {
-              width: 21px;
-              height: 21px;
+              width: 25px;
+              height: 25px;
             }
 
             .hero-content {
