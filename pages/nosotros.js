@@ -15,7 +15,7 @@ export default function Nosotros() {
 
         const total = carrito.reduce(
           (suma, producto) =>
-            suma + Number(producto.cantidad || 1),
+            suma + (Number(producto.cantidad) || 0),
           0
         );
 
@@ -27,9 +27,11 @@ export default function Nosotros() {
 
     actualizarCarrito();
     window.addEventListener("storage", actualizarCarrito);
+    window.addEventListener("carrito-actualizado", actualizarCarrito);
 
     return () => {
       window.removeEventListener("storage", actualizarCarrito);
+      window.removeEventListener("carrito-actualizado", actualizarCarrito);
     };
   }, []);
 
@@ -71,9 +73,11 @@ export default function Nosotros() {
             <a href="/" onClick={() => setMenuOpen(false)}>
               INICIO
             </a>
+
             <a href="/cafes" onClick={() => setMenuOpen(false)}>
               CAFÉS
             </a>
+
             <a
               className="activo"
               href="/nosotros"
@@ -81,6 +85,7 @@ export default function Nosotros() {
             >
               NOSOTROS
             </a>
+
             <a href="/contacto" onClick={() => setMenuOpen(false)}>
               CONTACTO
             </a>
@@ -102,7 +107,7 @@ export default function Nosotros() {
           <a
             className="carrito-link"
             href="/carrito"
-            aria-label={`Ver carrito, ${cantidadCarrito} productos`}
+            aria-label={`Carrito: ${cantidadCarrito} productos`}
           >
             <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
               <path
@@ -115,12 +120,7 @@ export default function Nosotros() {
               <circle cx="13" cy="27" r="1.8" fill="currentColor" />
               <circle cx="24" cy="27" r="1.8" fill="currentColor" />
             </svg>
-
-            {cantidadCarrito > 0 && (
-              <span className="contador-carrito">
-                {cantidadCarrito}
-              </span>
-            )}
+            <span>{cantidadCarrito}</span>
           </a>
         </header>
 
@@ -175,15 +175,15 @@ export default function Nosotros() {
           font-family: "Cormorant Garamond", Georgia, serif;
         }
 
-        /* ENCABEZADO */
+        /* ENCABEZADO: MISMAS MEDIDAS QUE cafes.js */
+
         .encabezado {
-          position: relative;
-          min-height: 70px;
-          padding: 0 0 0 clamp(24px, 6vw, 90px);
+          min-height: 82px;
+          padding: 14px 5%;
           display: flex;
           align-items: center;
           justify-content: flex-start;
-          gap: clamp(30px, 4vw, 55px);
+          gap: 24px;
           border-bottom: 1px solid rgba(255, 255, 255, 0.12);
         }
 
@@ -199,23 +199,30 @@ export default function Nosotros() {
           height: auto;
         }
 
-        /* MENÚ DE ESCRITORIO: estilo de index.js */
+        /* MENÚ DE ESCRITORIO */
+
         .menu {
           display: flex;
           justify-content: flex-end;
           align-items: center;
           gap: clamp(22px, 3vw, 44px);
           margin-left: auto;
-          margin-right: clamp(60px, 7vw, 100px);
+          position: relative;
+          left: 0;
+        }
+
+        .menu a,
+        .carrito-link {
+          color: #fff;
+          text-decoration: none;
+          font-family: "Inter", Arial, sans-serif;
+          white-space: nowrap;
         }
 
         .menu a {
           position: relative;
           display: inline-block;
           padding: 10px 0;
-          color: rgba(255, 255, 255, 0.88);
-          text-decoration: none;
-          font-family: Inter, Arial, sans-serif;
           font-size: 13px;
           font-weight: 400;
           letter-spacing: 1.25px;
@@ -223,10 +230,7 @@ export default function Nosotros() {
           transition: color 0.2s ease;
         }
 
-        .menu a:hover {
-          color: #d7b574;
-        }
-
+        .menu a:hover,
         .menu .activo {
           color: #d9a33f;
         }
@@ -238,10 +242,11 @@ export default function Nosotros() {
           right: 0;
           bottom: 1px;
           height: 1px;
-          background: #c9a66b;
+          background: #d9a33f;
         }
 
-        /* HAMBURGUESA: oculta en escritorio */
+        /* HAMBURGUESA: OCULTA EN ESCRITORIO */
+
         .menu-toggle {
           display: none;
           border: 0;
@@ -251,36 +256,23 @@ export default function Nosotros() {
           cursor: pointer;
         }
 
-        /* CARRITO: se conserva su posición y estilo */
+        /* CARRITO: MISMO ESTILO QUE cafes.js */
+
         .carrito-link {
-          position: absolute;
-          right: clamp(16px, 2.5vw, 38px);
-          top: 50%;
-          transform: translateY(-50%);
           display: flex;
           align-items: center;
-          justify-content: center;
-          color: #fff;
-          text-decoration: none;
-          font-family: Inter, Arial, sans-serif;
-          font-size: 14px;
           gap: 10px;
+          margin-left: 0;
+          font-size: 14px;
         }
 
         .carrito-link svg {
           display: block;
           width: 34px;
           height: 34px;
-          flex-shrink: 0;
         }
 
-        .contador-carrito {
-          font-family: Inter, Arial, sans-serif;
-          font-size: 11px;
-          font-weight: 500;
-          color: inherit;
-          line-height: 1;
-        }
+        /* CONTENIDO ORIGINAL DE NOSOTROS */
 
         .historia {
           flex: 1;
@@ -360,13 +352,11 @@ export default function Nosotros() {
           letter-spacing: 2px;
         }
 
-        /* MÓVIL: hamburguesa igual a index.js */
+        /* MÓVIL: MISMO COMPORTAMIENTO QUE cafes.js */
+
         @media (max-width: 768px) {
           .encabezado {
             position: relative;
-            padding-left: 24px;
-            padding-right: 90px;
-            gap: 24px;
           }
 
           .menu {
@@ -397,7 +387,6 @@ export default function Nosotros() {
           }
 
           .menu-toggle {
-            order: 2;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -429,40 +418,18 @@ export default function Nosotros() {
           .menu-toggle.is-open span:last-child {
             transform: translateY(-8px) rotate(-45deg);
           }
-
-          .marca img {
-            width: 112px;
-          }
-
-          .carrito-link {
-            right: 12px;
-            gap: 7px;
-            font-size: 12px;
-          }
-
-          .carrito-link svg {
-            width: 28px;
-            height: 28px;
-          }
         }
 
         @media (max-width: 600px) {
           .encabezado {
-            min-height: auto;
             flex-wrap: wrap;
             justify-content: space-between;
-            padding: 14px 60px 14px 5%;
+            padding: 14px 5%;
             gap: 14px;
           }
 
           .marca img {
             width: 112px;
-          }
-
-          .carrito-link {
-            right: 12px;
-            top: 28px;
-            transform: translateY(-50%);
           }
 
           .historia {
@@ -476,15 +443,9 @@ export default function Nosotros() {
         }
 
         @media (max-width: 480px) {
-          .encabezado {
-            padding-left: 5%;
-            padding-right: 48px;
-          }
-
           .carrito-link {
-            right: 8px;
-            font-size: 11px;
             gap: 5px;
+            font-size: 11px;
           }
 
           .carrito-link svg {
