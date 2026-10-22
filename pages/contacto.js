@@ -12,6 +12,7 @@ export default function Contacto() {
 
   const [enviado, setEnviado] = useState(false);
   const [cantidadCarrito, setCantidadCarrito] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     function actualizarCarrito() {
@@ -84,24 +85,52 @@ export default function Contacto() {
       </Head>
 
       <main className="contacto">
+        {/* ENCABEZADO IGUAL A CAFES.JS */}
         <header className="encabezado">
           <a className="marca" href="/" aria-label="Volver al inicio">
             <img src="/logo.png" alt="GRANOPUERTO" />
           </a>
 
-          <nav className="menu">
-            <a href="/">INICIO</a>
-            <a href="/cafes">CAFÉS</a>
-            <a href="/nosotros">NOSOTROS</a>
-            <a className="activo" href="/contacto">
+          <nav
+            id="menu-principal"
+            className={`menu ${menuOpen ? "menu-abierto" : ""}`}
+            aria-label="Navegación principal"
+          >
+            <a href="/" onClick={() => setMenuOpen(false)}>
+              INICIO
+            </a>
+            <a href="/cafes" onClick={() => setMenuOpen(false)}>
+              CAFÉS
+            </a>
+            <a href="/nosotros" onClick={() => setMenuOpen(false)}>
+              NOSOTROS
+            </a>
+            <a
+              className="activo"
+              href="/contacto"
+              onClick={() => setMenuOpen(false)}
+            >
               CONTACTO
             </a>
           </nav>
 
+          <button
+            type="button"
+            className={`menu-toggle ${menuOpen ? "is-open" : ""}`}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={menuOpen}
+            aria-controls="menu-principal"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+
           <a
             className="carrito-link"
             href="/carrito"
-            aria-label={`Ver carrito, ${cantidadCarrito} productos`}
+            aria-label={`Carrito: ${cantidadCarrito} productos`}
           >
             <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
               <path
@@ -115,14 +144,11 @@ export default function Contacto() {
               <circle cx="24" cy="27" r="1.8" fill="currentColor" />
             </svg>
 
-            {cantidadCarrito > 0 && (
-              <span className="contador-carrito">
-                {cantidadCarrito}
-              </span>
-            )}
+            <span>{cantidadCarrito}</span>
           </a>
         </header>
 
+        {/* CONTENIDO ORIGINAL DE CONTACTO */}
         <section className="contenido">
           <h1>Hablemos de café.</h1>
 
@@ -217,16 +243,16 @@ export default function Contacto() {
           font-family: "Cormorant Garamond", Georgia, serif;
         }
 
-        /* Encabezado conservado */
+        /* ENCABEZADO: MISMAS MEDIDAS QUE CAFES.JS */
         .encabezado {
-          position: relative;
-          min-height: 70px;
-          padding: 0 0 0 clamp(24px, 6vw, 90px);
+          min-height: 82px;
+          padding: 14px 5%;
           display: flex;
           align-items: center;
           justify-content: flex-start;
-          gap: clamp(30px, 4vw, 55px);
+          gap: 24px;
           border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+          position: relative;
         }
 
         .marca {
@@ -243,18 +269,29 @@ export default function Contacto() {
 
         .menu {
           display: flex;
-          justify-content: flex-start;
+          justify-content: flex-end;
           align-items: center;
-          gap: clamp(30px, 4vw, 55px);
+          gap: clamp(22px, 3vw, 44px);
+          margin-left: auto;
+          position: relative;
+          left: 0;
+        }
+
+        .menu a,
+        .carrito-link {
+          color: #fff;
+          text-decoration: none;
+          font-family: "Inter", Arial, sans-serif;
+          white-space: nowrap;
         }
 
         .menu a {
-          color: #fff;
-          text-decoration: none;
-          font-family: Inter, Arial, sans-serif;
-          font-size: clamp(9px, 0.75vw, 12px);
-          letter-spacing: clamp(0.6px, 0.08vw, 1.2px);
-          white-space: nowrap;
+          position: relative;
+          display: inline-block;
+          padding: 10px 0;
+          font-size: 13px;
+          font-weight: 400;
+          letter-spacing: 1.25px;
           transition: color 0.2s ease;
         }
 
@@ -263,19 +300,30 @@ export default function Contacto() {
           color: #d9a33f;
         }
 
+        .menu-toggle {
+          display: none;
+          border: 0;
+          padding: 8px;
+          background: transparent;
+          color: #d7b574;
+          cursor: pointer;
+        }
+
+        .menu-toggle span {
+          display: block;
+          width: 25px;
+          height: 2px;
+          background: #d7b574;
+          border-radius: 2px;
+          transition: transform 0.25s ease, opacity 0.25s ease;
+        }
+
         .carrito-link {
-          position: absolute;
-          right: clamp(16px, 2.5vw, 38px);
-          top: 50%;
-          transform: translateY(-50%);
           display: flex;
           align-items: center;
-          justify-content: center;
-          color: #fff;
-          text-decoration: none;
-          font-family: Inter, Arial, sans-serif;
-          font-size: 14px;
           gap: 10px;
+          margin-left: 0;
+          font-size: 14px;
         }
 
         .carrito-link svg {
@@ -285,15 +333,14 @@ export default function Contacto() {
           flex-shrink: 0;
         }
 
-        /* Contador sin círculo ni fondo */
-        .contador-carrito {
-          font-family: Inter, Arial, sans-serif;
-          font-size: 11px;
-          font-weight: 500;
-          color: inherit;
+        .carrito-link span {
+          font-family: "Inter", Arial, sans-serif;
+          font-size: 14px;
+          font-weight: 400;
           line-height: 1;
         }
 
+        /* CONTENIDO ORIGINAL */
         .contenido {
           flex: 1;
           width: min(620px, 88%);
@@ -304,7 +351,7 @@ export default function Contacto() {
         .sobretitulo {
           margin: 0 0 14px;
           color: #d9a33f;
-          font-family: Inter, Arial, sans-serif;
+          font-family: "Inter", Arial, sans-serif;
           font-size: 10px;
           letter-spacing: 3px;
           text-align: center;
@@ -341,7 +388,7 @@ export default function Contacto() {
 
         .campo label {
           color: #e9e3d9;
-          font-family: Inter, Arial, sans-serif;
+          font-family: "Inter", Arial, sans-serif;
           font-size: 12px;
           letter-spacing: 0.4px;
         }
@@ -355,7 +402,7 @@ export default function Contacto() {
           outline: none;
           background: #171512;
           color: #f7f5f1;
-          font-family: Inter, Arial, sans-serif;
+          font-family: "Inter", Arial, sans-serif;
           font-size: 13px;
         }
 
@@ -386,7 +433,7 @@ export default function Contacto() {
           border: 1px solid rgba(255, 255, 255, 0.8);
           background: transparent;
           color: #fff;
-          font-family: Inter, Arial, sans-serif;
+          font-family: "Inter", Arial, sans-serif;
           font-size: 10px;
           letter-spacing: 1.3px;
           cursor: pointer;
@@ -402,7 +449,7 @@ export default function Contacto() {
         .aviso {
           margin: 0;
           color: #d9a33f;
-          font-family: Inter, Arial, sans-serif;
+          font-family: "Inter", Arial, sans-serif;
           font-size: 12px;
           line-height: 1.6;
           text-align: center;
@@ -413,49 +460,74 @@ export default function Contacto() {
           border-top: 1px solid rgba(255, 255, 255, 0.12);
           color: #aaa49a;
           text-align: center;
-          font-family: Inter, Arial, sans-serif;
+          font-family: "Inter", Arial, sans-serif;
           font-size: 9px;
           letter-spacing: 2px;
         }
 
+        /* TABLET Y MÓVIL: MISMO MENÚ QUE CAFES.JS */
         @media (max-width: 768px) {
           .encabezado {
-            padding-left: 24px;
-            padding-right: 90px;
-            gap: 24px;
-          }
-
-          .marca img {
-            width: 112px;
+            position: relative;
           }
 
           .menu {
-            gap: 24px;
+            display: none;
+            position: absolute;
+            z-index: 20;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            padding: 12px 20px 20px;
+            margin: 0;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: rgba(14, 13, 11, 0.98);
+            border-bottom: 1px solid rgba(201, 166, 107, 0.35);
+          }
+
+          .menu.menu-abierto {
+            display: flex;
           }
 
           .menu a {
-            font-size: 8px;
-            letter-spacing: 0.7px;
-          }
-
-          .carrito-link {
-            right: 12px;
-            gap: 7px;
+            padding: 12px 10px;
             font-size: 12px;
+            letter-spacing: 1.2px;
           }
 
-          .carrito-link svg {
-            width: 28px;
-            height: 28px;
+          .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            width: 40px;
+            height: 40px;
+            flex: 0 0 40px;
+            margin-left: 8px;
+          }
+
+          .menu-toggle.is-open span:first-child {
+            transform: translateY(8px) rotate(45deg);
+          }
+
+          .menu-toggle.is-open span:nth-child(2) {
+            opacity: 0;
+          }
+
+          .menu-toggle.is-open span:last-child {
+            transform: translateY(-8px) rotate(-45deg);
           }
         }
 
         @media (max-width: 600px) {
           .encabezado {
-            min-height: auto;
             flex-wrap: wrap;
             justify-content: space-between;
-            padding: 14px 60px 14px 5%;
+            padding: 14px 5%;
             gap: 14px;
           }
 
@@ -463,66 +535,46 @@ export default function Contacto() {
             width: 112px;
           }
 
-          .menu {
-            order: 3;
-            width: 100%;
-            gap: clamp(12px, 4vw, 22px);
-          }
-
-          .menu a {
-            font-size: 8px;
-            letter-spacing: 0.7px;
-          }
-
-          .carrito-link {
-            right: 12px;
-            top: 28px;
-            transform: translateY(-50%);
-          }
-
-          .contenido {
-            padding: 48px 0 60px;
+          .presentacion {
+            padding: 42px 20px 28px;
           }
 
           .introduccion {
             font-size: 17px;
           }
+
+          .contenido {
+            padding: 48px 0 60px;
+          }
         }
 
         @media (max-width: 480px) {
-          .encabezado {
-            padding-left: 5%;
-            padding-right: 48px;
-          }
-
-          .menu {
-            gap: 18px;
-          }
-
-          .menu a {
-            font-size: 7px;
-            letter-spacing: 0.5px;
-          }
-
           .carrito-link {
-            right: 8px;
-            font-size: 11px;
             gap: 5px;
+            font-size: 11px;
           }
 
           .carrito-link svg {
             width: 25px;
             height: 25px;
           }
+
+          .carrito-link span {
+            font-size: 11px;
+          }
         }
 
         @media (max-width: 360px) {
-          .menu {
-            gap: 14px;
+          .encabezado {
+            gap: 8px;
           }
 
-          .menu a {
-            font-size: 6.5px;
+          .marca img {
+            width: 105px;
+          }
+
+          .menu-toggle {
+            margin-left: 0;
           }
         }
       `}</style>
