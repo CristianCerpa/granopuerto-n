@@ -185,14 +185,14 @@ export default function Home() {
         </header>
 
         <section className="hero-content">
-          <h1>No es solo café.</h1>
+          <h1>No es solo café</h1>
 
           <p className="hero-subtitle">
-            Es historia, viaje y carácter porteño en cada sorbo.
+            Es historia, viaje y carácter porteño en cada sorbo
           </p>
 
           <p className="hero-description">
-            Granos seleccionados del mundo, transformados en una experiencia única.
+            Granos seleccionados del mundo, transformados en una experiencia única
           </p>
 
           <a href="/cafes" className="hero-button">
@@ -390,7 +390,7 @@ export default function Home() {
             margin: 0;
             color: #f6f1e8;
             font-family: "Cormorant Garamond", Georgia, serif;
-            font-size: clamp(46px, 4.6vw, 66px);
+            font-size: clamp(46px, 4vw, 58px);
             font-weight: 500;
             line-height: 1;
             letter-spacing: -1px;
