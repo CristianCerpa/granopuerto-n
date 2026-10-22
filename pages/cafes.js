@@ -206,7 +206,7 @@ export default function Cafes() {
         <section className="presentacion">
           <h1>Nuestros cafés</h1>
           <p className="introduccion">
-            Granos cuidadosamente seleccionados, con dedicación en cada detalle del tueste, para crear un café que vas a querer repetir
+            Granos seleccionados, con un tueste delicado que conserva lo mejor del café
           </p>
         </section>
 
