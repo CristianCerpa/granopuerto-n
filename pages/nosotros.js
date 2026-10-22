@@ -311,10 +311,10 @@ export default function Nosotros() {
           background: #d9a33f;
         }
 .historia > p:not(.sobretitulo):not(.frase) {
-  margin: 0 auto 14px;
+  margin: 0 auto 12px;
   color: #d5d0c8;
   font-size: 20px;
-  line-height: 1.8;
+  line-height: 1.5;
   letter-spacing: 0.6px;
 }
 
