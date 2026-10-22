@@ -392,7 +392,7 @@ export default function Home() {
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: clamp(32px, 3vw, 44px);
   font-weight: 500;
-  line-height: 1.1;
+  line-height: 1.4;
   letter-spacing: 0.2px;
 }
 
@@ -402,7 +402,7 @@ export default function Home() {
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: clamp(22px, 1.8vw, 26px);
   font-weight: 500;
-  line-height: 1.6;
+  line-height: 1.8;
   letter-spacing: 0.3px;
 }
 
@@ -413,7 +413,7 @@ export default function Home() {
   font-family: "Inter", Arial, sans-serif;
   font-size: clamp(12px, 1vw, 14px);
   font-weight: 400;
-  line-height: 2.2;
+  line-height: 2.6;
   letter-spacing: 0.2px;
 }
 
