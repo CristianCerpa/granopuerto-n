@@ -57,6 +57,7 @@ const formatPrice = (price) =>
 export default function Cafes() {
   const [carrito, setCarrito] = useState([]);
   const [mensaje, setMensaje] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     try {
@@ -146,12 +147,41 @@ export default function Cafes() {
             <img src="/logo.png" alt="GRANOPUERTO" />
           </a>
 
-          <nav className="menu">
-            <a href="/">INICIO</a>
-            <a className="activo" href="/cafes">CAFÉS</a>
-            <a href="/nosotros">NOSOTROS</a>
-            <a href="/contacto">CONTACTO</a>
+          <nav
+            id="menu-principal"
+            className={`menu ${menuOpen ? "menu-abierto" : ""}`}
+            aria-label="Navegación principal"
+          >
+            <a href="/" onClick={() => setMenuOpen(false)}>
+              INICIO
+            </a>
+            <a
+              className="activo"
+              href="/cafes"
+              onClick={() => setMenuOpen(false)}
+            >
+              CAFÉS
+            </a>
+            <a href="/nosotros" onClick={() => setMenuOpen(false)}>
+              NOSOTROS
+            </a>
+            <a href="/contacto" onClick={() => setMenuOpen(false)}>
+              CONTACTO
+            </a>
           </nav>
+
+          <button
+            type="button"
+            className={`menu-toggle ${menuOpen ? "is-open" : ""}`}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={menuOpen}
+            aria-controls="menu-principal"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
 
           <a
             className="carrito-link"
@@ -279,10 +309,10 @@ export default function Cafes() {
 
         .menu {
           display: flex;
-          justify-content: flex-start;
+          justify-content: flex-end;
           align-items: center;
-          gap: clamp(30px, 4vw, 55px);
-          margin-left: 12px;
+          gap: clamp(22px, 3vw, 44px);
+          margin-left: auto;
         }
 
         .menu a,
@@ -295,11 +325,22 @@ export default function Cafes() {
 
         .menu a {
           position: relative;
-          font-size: clamp(9px, 0.75vw, 12px);
+          display: inline-block;
+          padding: 10px 0;
+          font-size: 13px;
           font-weight: 400;
-          letter-spacing: clamp(0.6px, 0.08vw, 1.2px);
-          padding: 8px 0;
-          transition: color 0.25s ease;
+          letter-spacing: 1.25px;
+          white-space: nowrap;
+          transition: color 0.2s ease;
+        }
+
+        .menu-toggle {
+          display: none;
+          border: 0;
+          padding: 8px;
+          background: transparent;
+          color: #d7b574;
+          cursor: pointer;
         }
 
         .menu a:hover,
@@ -516,23 +557,68 @@ export default function Cafes() {
         }
 
         @media (max-width: 768px) {
+          .encabezado {
+            position: relative;
+          }
+
           .menu {
-            gap: 24px;
+            display: none;
+            position: absolute;
+            z-index: 20;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            padding: 12px 20px 20px;
+            margin: 0;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: rgba(14, 13, 11, 0.98);
+            border-bottom: 1px solid rgba(201, 166, 107, 0.35);
+          }
+
+          .menu.menu-abierto {
+            display: flex;
           }
 
           .menu a {
-            font-size: 8px;
-            letter-spacing: 0.7px;
-          }
-
-          .carrito-link {
-            gap: 7px;
+            padding: 12px 10px;
             font-size: 12px;
+            letter-spacing: 1.2px;
           }
 
-          .carrito-link svg {
-            width: 28px;
-            height: 28px;
+          .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            width: 40px;
+            height: 40px;
+            flex: 0 0 40px;
+            margin-left: 8px;
+          }
+
+          .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background: #d7b574;
+            border-radius: 2px;
+            transition: transform 0.25s ease, opacity 0.25s ease;
+          }
+
+          .menu-toggle.is-open span:first-child {
+            transform: translateY(8px) rotate(45deg);
+          }
+
+          .menu-toggle.is-open span:nth-child(2) {
+            opacity: 0;
+          }
+
+          .menu-toggle.is-open span:last-child {
+            transform: translateY(-8px) rotate(-45deg);
           }
         }
 
@@ -546,18 +632,6 @@ export default function Cafes() {
 
           .marca img {
             width: 112px;
-          }
-
-          .menu {
-            order: 3;
-            width: 100%;
-            margin-left: 0;
-            gap: clamp(12px, 4vw, 22px);
-          }
-
-          .menu a {
-            font-size: 9px;
-            letter-spacing: 0.5px;
           }
 
           .presentacion {
@@ -593,25 +667,9 @@ export default function Cafes() {
             width: 25px;
             height: 25px;
           }
-
-          .menu {
-            gap: 18px;
-          }
-
-          .menu a {
-            font-size: 7px;
-            letter-spacing: 0.5px;
-          }
         }
 
         @media (max-width: 360px) {
-          .menu {
-            gap: 14px;
-          }
-
-          .menu a {
-            font-size: 6.5px;
-          }
         }
       `}</style>
     </>
