@@ -275,13 +275,13 @@ export default function Nosotros() {
 
         /* CONTENIDO ORIGINAL DE NOSOTROS */
 
-        .historia {
-          flex: 1;
-          width: min(760px, 88%);
-          margin: 0 auto;
-          padding: 100px 0 110px;
-          text-align: center;
-        }
+.historia {
+  flex: 1;
+  width: min(760px, 88%);
+  margin: 0 auto;
+  padding: 100px 0 110px;
+  text-align: center;
+}
 
         .sobretitulo {
           margin: 0 0 22px;
@@ -310,19 +310,21 @@ export default function Nosotros() {
           height: 1px;
           background: #d9a33f;
         }
+.historia > p:not(.sobretitulo):not(.frase) {
+  margin: 0 auto 28px;
+  color: #d5d0c8;
+  font-size: 20px;
+  line-height: 1.8;
+  letter-spacing: 0.3px;
+}
 
-        .historia > p:not(.sobretitulo):not(.frase) {
-          margin: 0 auto 22px;
-          color: #d5d0c8;
-          font-size: 20px;
-          line-height: 1.7;
-        }
-
-        .historia .frase {
-          margin: 36px auto;
-          color: #d9a33f;
-          font-size: clamp(23px, 3vw, 30px);
-          line-height: 1.45;
+.historia .frase {
+  margin: 36px auto;
+  color: #d9a33f;
+  font-size: clamp(23px, 3vw, 30px);
+  line-height: 1.45;
+  letter-spacing: 1.5px;
+}
         }
 
         .boton {
