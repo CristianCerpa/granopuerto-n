@@ -379,19 +379,20 @@ export default function Cafes() {
           letter-spacing: 2px;
         }
 
-        .presentacion h1 {
-          margin: 12px 0;
-          font-size: clamp(38px, 5vw, 58px);
-          font-weight: 500;
-        }
-
-        .introduccion {
-          max-width: 580px;
-          margin: 0 auto;
-          color: #d5d0c8;
-          font-size: 19px;
-          line-height: 1.5;
-        }
+.presentacion h1 {
+  margin: 12px 0;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(38px, 5vw, 58px);
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+.introduccion {
+  max-width: 580px;
+  margin: 0 auto;
+  color: #d5d0c8;
+  font-size: 19px;
+  line-height: 1.5;
+}
 
         .mensaje {
           width: fit-content;
