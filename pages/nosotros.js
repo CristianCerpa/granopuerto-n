@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 export default function Nosotros() {
   const [cantidadCarrito, setCantidadCarrito] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     function actualizarCarrito() {
@@ -25,7 +26,6 @@ export default function Nosotros() {
     }
 
     actualizarCarrito();
-
     window.addEventListener("storage", actualizarCarrito);
 
     return () => {
@@ -63,14 +63,41 @@ export default function Nosotros() {
             <img src="/logo.png" alt="GRANOPUERTO" />
           </a>
 
-          <nav className="menu">
-            <a href="/">INICIO</a>
-            <a href="/cafes">CAFÉS</a>
-            <a className="activo" href="/nosotros">
+          <nav
+            id="menu-principal"
+            className={`menu ${menuOpen ? "menu-abierto" : ""}`}
+            aria-label="Navegación principal"
+          >
+            <a href="/" onClick={() => setMenuOpen(false)}>
+              INICIO
+            </a>
+            <a href="/cafes" onClick={() => setMenuOpen(false)}>
+              CAFÉS
+            </a>
+            <a
+              className="activo"
+              href="/nosotros"
+              onClick={() => setMenuOpen(false)}
+            >
               NOSOTROS
             </a>
-            <a href="/contacto">CONTACTO</a>
+            <a href="/contacto" onClick={() => setMenuOpen(false)}>
+              CONTACTO
+            </a>
           </nav>
+
+          <button
+            type="button"
+            className={`menu-toggle ${menuOpen ? "is-open" : ""}`}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={menuOpen}
+            aria-controls="menu-principal"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
 
           <a
             className="carrito-link"
@@ -148,7 +175,7 @@ export default function Nosotros() {
           font-family: "Cormorant Garamond", Georgia, serif;
         }
 
-        /* ENCABEZADO: alineación, letras, logo y carrito como cafes.js */
+        /* ENCABEZADO */
         .encabezado {
           position: relative;
           min-height: 70px;
@@ -172,28 +199,59 @@ export default function Nosotros() {
           height: auto;
         }
 
+        /* MENÚ DE ESCRITORIO: estilo de index.js */
         .menu {
           display: flex;
-          justify-content: flex-start;
+          justify-content: flex-end;
           align-items: center;
-          gap: clamp(30px, 4vw, 55px);
+          gap: clamp(22px, 3vw, 44px);
+          margin-left: auto;
+          margin-right: clamp(60px, 7vw, 100px);
         }
 
         .menu a {
-          color: #fff;
+          position: relative;
+          display: inline-block;
+          padding: 10px 0;
+          color: rgba(255, 255, 255, 0.88);
           text-decoration: none;
           font-family: Inter, Arial, sans-serif;
-          font-size: clamp(9px, 0.75vw, 12px);
-          letter-spacing: clamp(0.6px, 0.08vw, 1.2px);
+          font-size: 13px;
+          font-weight: 400;
+          letter-spacing: 1.25px;
           white-space: nowrap;
           transition: color 0.2s ease;
         }
 
-        .menu a:hover,
+        .menu a:hover {
+          color: #d7b574;
+        }
+
         .menu .activo {
           color: #d9a33f;
         }
 
+        .menu .activo::after {
+          content: "";
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 1px;
+          height: 1px;
+          background: #c9a66b;
+        }
+
+        /* HAMBURGUESA: oculta en escritorio */
+        .menu-toggle {
+          display: none;
+          border: 0;
+          padding: 8px;
+          background: transparent;
+          color: #d7b574;
+          cursor: pointer;
+        }
+
+        /* CARRITO: se conserva su posición y estilo */
         .carrito-link {
           position: absolute;
           right: clamp(16px, 2.5vw, 38px);
@@ -216,7 +274,6 @@ export default function Nosotros() {
           flex-shrink: 0;
         }
 
-        /* Contador sin círculo ni fondo */
         .contador-carrito {
           font-family: Inter, Arial, sans-serif;
           font-size: 11px;
@@ -303,24 +360,78 @@ export default function Nosotros() {
           letter-spacing: 2px;
         }
 
+        /* MÓVIL: hamburguesa igual a index.js */
         @media (max-width: 768px) {
           .encabezado {
+            position: relative;
             padding-left: 24px;
             padding-right: 90px;
             gap: 24px;
           }
 
-          .marca img {
-            width: 112px;
+          .menu {
+            display: none;
+            position: absolute;
+            z-index: 20;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            padding: 12px 20px 20px;
+            margin: 0;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: rgba(14, 13, 11, 0.98);
+            border-bottom: 1px solid rgba(201, 166, 107, 0.35);
           }
 
-          .menu {
-            gap: 24px;
+          .menu.menu-abierto {
+            display: flex;
           }
 
           .menu a {
-            font-size: 8px;
-            letter-spacing: 0.7px;
+            padding: 12px 10px;
+            font-size: 12px;
+            letter-spacing: 1.2px;
+          }
+
+          .menu-toggle {
+            order: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            width: 40px;
+            height: 40px;
+            flex: 0 0 40px;
+            margin-left: 8px;
+          }
+
+          .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background: #d7b574;
+            border-radius: 2px;
+            transition: transform 0.25s ease, opacity 0.25s ease;
+          }
+
+          .menu-toggle.is-open span:first-child {
+            transform: translateY(8px) rotate(45deg);
+          }
+
+          .menu-toggle.is-open span:nth-child(2) {
+            opacity: 0;
+          }
+
+          .menu-toggle.is-open span:last-child {
+            transform: translateY(-8px) rotate(-45deg);
+          }
+
+          .marca img {
+            width: 112px;
           }
 
           .carrito-link {
@@ -348,17 +459,6 @@ export default function Nosotros() {
             width: 112px;
           }
 
-          .menu {
-            order: 3;
-            width: 100%;
-            gap: clamp(12px, 4vw, 22px);
-          }
-
-          .menu a {
-            font-size: 8px;
-            letter-spacing: 0.7px;
-          }
-
           .carrito-link {
             right: 12px;
             top: 28px;
@@ -381,15 +481,6 @@ export default function Nosotros() {
             padding-right: 48px;
           }
 
-          .menu {
-            gap: 18px;
-          }
-
-          .menu a {
-            font-size: 7px;
-            letter-spacing: 0.5px;
-          }
-
           .carrito-link {
             right: 8px;
             font-size: 11px;
@@ -403,12 +494,15 @@ export default function Nosotros() {
         }
 
         @media (max-width: 360px) {
-          .menu {
-            gap: 14px;
+          .menu-toggle {
+            width: 36px;
+            height: 40px;
+            flex-basis: 36px;
+            margin-left: 3px;
           }
 
-          .menu a {
-            font-size: 6.5px;
+          .menu-toggle span {
+            width: 23px;
           }
         }
       `}</style>
