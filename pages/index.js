@@ -39,6 +39,7 @@ export default function Home() {
     }
 
     updateCartCount();
+
     window.addEventListener("storage", updateCartCount);
     window.addEventListener("carrito-actualizado", updateCartCount);
 
@@ -184,14 +185,14 @@ export default function Home() {
         </header>
 
         <section className="hero-content">
-          <h1>No es solo café</h1>
+          <h1>No es solo café.</h1>
 
           <p className="hero-subtitle">
-            Es historia, viaje y carácter porteño
+            Es historia, viaje y carácter porteño en cada sorbo.
           </p>
 
           <p className="hero-description">
-            Cafés de origen seleccionados
+            Granos seleccionados del mundo, transformados en una experiencia única.
           </p>
 
           <a href="/cafes" className="hero-button">
@@ -396,7 +397,7 @@ export default function Home() {
           }
 
           .hero-subtitle {
-            margin: 15px 0 8px;
+            margin: 21px 0 12px;
             color: #d2b177;
             font-family: "Cormorant Garamond", Georgia, serif;
             font-size: clamp(23px, 2.05vw, 28px);
@@ -406,12 +407,12 @@ export default function Home() {
 
           .hero-description {
             max-width: 460px;
-            margin: 0 0 19px;
+            margin: 0 0 30px;
             color: rgba(247, 245, 241, 0.82);
             font-family: "Inter", Arial, sans-serif;
             font-size: clamp(13px, 1.15vw, 16px);
             font-weight: 400;
-            line-height: 1.45;
+            line-height: 1.7;
           }
 
           .hero-button {
@@ -451,7 +452,7 @@ export default function Home() {
             position: absolute;
             z-index: 20;
             right: clamp(5%, 11vw, 170px);
-            bottom: 6%;
+            bottom: -1%;
             width: clamp(260px, 30vw, 440px);
             height: min(70vh, 690px);
             overflow: visible;
@@ -581,7 +582,6 @@ export default function Home() {
 
             .coffee-carousel {
               right: 5%;
-              bottom: 5%;
               width: 37vw;
               height: 61vh;
             }
@@ -723,13 +723,13 @@ export default function Home() {
             }
 
             .hero-subtitle {
-              margin: 11px 0 8px;
+              margin: 14px 0 12px;
               font-size: clamp(19px, 4.4vw, 24px);
               line-height: 1.18;
             }
 
             .hero-description {
-              margin: 0 auto 19px;
+              margin: 0 auto 28px;
               max-width: 420px;
               font-size: clamp(12px, 3.2vw, 14px);
               line-height: 1.55;
@@ -808,12 +808,12 @@ export default function Home() {
             }
 
             .hero-subtitle {
-              margin: 10px 0 7px;
+              margin: 12px 0 10px;
               font-size: clamp(19px, 5vw, 23px);
             }
 
             .hero-description {
-              margin: 0 auto 18px;
+              margin: 0 auto 26px;
               font-size: clamp(11px, 3.4vw, 13px);
               line-height: 1.5;
             }
