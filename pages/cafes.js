@@ -384,14 +384,18 @@ export default function Cafes() {
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: clamp(38px, 5vw, 58px);
   font-weight: 400;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
 }
+
 .introduccion {
-  max-width: 580px;
+  max-width: 650px;
   margin: 0 auto;
   color: #d5d0c8;
-  font-size: 19px;
-  line-height: 1.5;
+  font-family: "Inter", Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.7;
+  letter-spacing: 0.6px;
 }
 
         .mensaje {
