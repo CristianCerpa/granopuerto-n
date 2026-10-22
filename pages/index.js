@@ -1,3 +1,4 @@
+
 import Head from "next/head";
 import { useEffect, useState } from "react";
 
@@ -38,7 +39,6 @@ export default function Home() {
     }
 
     updateCartCount();
-
     window.addEventListener("storage", updateCartCount);
     window.addEventListener("carrito-actualizado", updateCartCount);
 
@@ -634,4 +634,301 @@ export default function Home() {
               position: absolute;
               top: 100%;
               left: 0;
-              width: 100
+              width: 100%;
+              padding: 12px 20px 20px;
+              margin: 0;
+              background: rgba(14, 13, 11, 0.98);
+              border-bottom: 1px solid rgba(201, 166, 107, 0.35);
+            }
+
+            .navigation.menu-open {
+              display: block;
+            }
+
+            .nav-menu {
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              gap: 8px;
+            }
+
+            .nav-menu a {
+              padding: 12px 10px;
+              font-size: 12px;
+              letter-spacing: 1.2px;
+            }
+
+            .mobile-menu-toggle {
+              order: 2;
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+              gap: 6px;
+              width: 40px;
+              height: 40px;
+              flex: 0 0 40px;
+              margin-left: 8px;
+            }
+
+            .mobile-menu-toggle span {
+              display: block;
+              width: 25px;
+              height: 2px;
+              background: #d7b574;
+              border-radius: 2px;
+              transition:
+                transform 0.25s ease,
+                opacity 0.25s ease;
+            }
+
+            .mobile-menu-toggle.is-open span:first-child {
+              transform: translateY(8px) rotate(45deg);
+            }
+
+            .mobile-menu-toggle.is-open span:nth-child(2) {
+              opacity: 0;
+            }
+
+            .mobile-menu-toggle.is-open span:last-child {
+              transform: translateY(-8px) rotate(-45deg);
+            }
+
+            .cart {
+              order: 3;
+              gap: 4px;
+              margin-left: 0;
+              font-size: 10px;
+            }
+
+            .cart-icon {
+              width: 23px;
+              height: 23px;
+            }
+
+            .hero-content {
+              top: 165px;
+              left: 5%;
+              width: 90%;
+              max-width: 480px;
+              transform: none;
+              margin: 0;
+              text-align: center;
+            }
+
+            .hero-content h1 {
+              font-size: clamp(35px, 6.8vw, 46px);
+              line-height: 1;
+              letter-spacing: -0.5px;
+            }
+
+            .hero-subtitle {
+              margin: 14px 0 12px;
+              font-size: clamp(19px, 4.4vw, 24px);
+              line-height: 1.18;
+            }
+
+            .hero-description {
+              margin: 0 auto 28px;
+              max-width: 420px;
+              font-size: clamp(12px, 3.2vw, 14px);
+              line-height: 1.55;
+            }
+
+            .hero-button {
+              min-height: 43px;
+              gap: 13px;
+              padding: 0 17px;
+              font-size: 9px;
+              letter-spacing: 0.8px;
+            }
+
+            .coffee-carousel {
+              right: auto;
+              left: 50%;
+              bottom: -5px;
+              width: clamp(205px, 47vw, 285px);
+              height: clamp(300px, 42vh, 390px);
+              transform: translateX(-50%);
+            }
+
+            .coffee-bag {
+              object-position: center bottom;
+            }
+          }
+
+          @media (max-width: 480px) {
+            .hero {
+              min-height: 720px;
+              min-height: max(720px, 100svh);
+            }
+
+            .navbar {
+              height: 108px;
+              gap: 4px 8px;
+              padding: 7px 12px 8px;
+            }
+
+            .nav-brand {
+              width: 155px;
+              max-width: calc(100% - 100px);
+            }
+
+            .nav-brand img {
+              max-height: 64px;
+            }
+
+            .mobile-menu-toggle {
+              margin-left: 5px;
+            }
+
+            .nav-menu {
+              gap: 8px;
+            }
+
+            .cart {
+              gap: 3px;
+              font-size: 9px;
+            }
+
+            .cart-icon {
+              width: 21px;
+              height: 21px;
+            }
+
+            .hero-content {
+              top: 155px;
+              left: 4%;
+              width: 92%;
+            }
+
+            .hero-content h1 {
+              font-size: clamp(32px, 7.8vw, 40px);
+              line-height: 1.04;
+            }
+
+            .hero-subtitle {
+              margin: 12px 0 10px;
+              font-size: clamp(19px, 5vw, 23px);
+            }
+
+            .hero-description {
+              margin: 0 auto 26px;
+              font-size: clamp(11px, 3.4vw, 13px);
+              line-height: 1.5;
+            }
+
+            .hero-button {
+              min-height: 42px;
+              gap: 9px;
+              padding: 0 13px;
+              font-size: 8px;
+              letter-spacing: 0.5px;
+            }
+
+            .coffee-carousel {
+              bottom: 0;
+              width: clamp(190px, 55vw, 245px);
+              height: 300px;
+            }
+          }
+
+          @media (max-width: 360px) {
+            .navbar {
+              gap: 4px 6px;
+              padding: 7px 9px 8px;
+            }
+
+            .nav-brand {
+              width: 135px;
+              max-width: calc(100% - 95px);
+            }
+
+            .nav-brand img {
+              max-height: 56px;
+            }
+
+            .mobile-menu-toggle {
+              width: 36px;
+              height: 40px;
+              flex-basis: 36px;
+              margin-left: 3px;
+            }
+
+            .mobile-menu-toggle span {
+              width: 23px;
+            }
+
+            .nav-menu {
+              gap: 8px;
+            }
+
+            .cart {
+              gap: 2px;
+              font-size: 8px;
+            }
+
+            .cart-icon {
+              width: 19px;
+              height: 19px;
+            }
+
+            .hero-content {
+              top: 150px;
+            }
+
+            .hero-content h1 {
+              font-size: 33px;
+            }
+
+            .hero-subtitle {
+              font-size: 18px;
+            }
+
+            .hero-description {
+              font-size: 11px;
+            }
+
+            .hero-button {
+              min-height: 40px;
+              padding: 0 10px;
+              font-size: 7px;
+            }
+
+            .coffee-carousel {
+              width: 185px;
+              height: 280px;
+            }
+          }
+
+          @media (max-height: 700px) and (min-width: 769px) {
+            .hero {
+              min-height: 620px;
+            }
+
+            .navbar {
+              height: 108px;
+            }
+
+            .nav-brand {
+              width: 220px;
+            }
+
+            .nav-brand img {
+              max-height: 92px;
+            }
+
+            .hero-content {
+              transform: translateY(-25%);
+            }
+
+            .coffee-carousel {
+              height: 65vh;
+            }
+          }
+        `}</style>
+      </main>
+    </>
+  );
+}
+
