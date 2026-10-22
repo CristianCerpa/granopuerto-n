@@ -348,7 +348,7 @@ export default function Home() {
             margin-left: clamp(4px, 1vw, 14px);
             color: #f7f5f1;
             text-decoration: none;
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 400;
             transition: color 0.2s ease;
           }
@@ -359,8 +359,8 @@ export default function Home() {
 
           .cart-icon {
             display: block;
-            width: 27px;
-            height: 27px;
+            width: 34px;
+            height: 34px;
           }
 
           /* HAMBURGUESA: OCULTA EN ESCRITORIO */
