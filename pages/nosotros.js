@@ -125,29 +125,30 @@ export default function Nosotros() {
         </header>
 
         <section className="historia">
-          <p>
-            ¡Bienvenido a nuestra tienda!
 
-            Este es un espacio para conocernos mejor y descubrir lo que
-            tenemos para ti. Gracias por visitarnos y ser parte de nuestra
-            comunidad.
-          </p>
+                   <p>
+    ¡Bienvenido a nuestra tienda!
+  </p>
 
-          <p>
-            Nacimos inspirados en Valparaíso, puerto histórico que conectó
-            a Chile con el mundo a través del comercio y las culturas.
-          </p>
+  <p>
+    Nacimos inspirados en Valparaíso, un puerto histórico que conectó
+    a Chile con el mundo a través del comercio y las culturas.
+  </p>
 
-          <p>
-            Hoy, ese espíritu vive en nuestros cafés de distintos orígenes,
-            tostados y envasados en Valparaíso, donde cada grano encuentra
-            una nueva historia.
-          </p>
+  <p>
+    Hoy, ese espíritu vive en nuestros cafés de distintos orígenes,
+    que nos conectan con los aromas y sabores del mundo, desde
+    nuestra esencia porteña.
+  </p>
+
+  <p>
+    Gracias por visitarnos y ser parte de nuestra comunidad
+  </p>
 
           <p className="frase">
             <strong>
               <br />
-              El mundo del café, con esencia porteña.
+              El mundo del café, en un solo lugar
             </strong>
           </p>
 
