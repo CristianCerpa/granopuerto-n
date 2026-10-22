@@ -327,23 +327,24 @@ export default function Nosotros() {
 }
         }
 
-        .boton {
-          display: inline-block;
-          padding: 14px 24px;
-          border: 1px solid rgba(255, 255, 255, 0.8);
-          color: #fff;
-          text-decoration: none;
-          font-family: Inter, Arial, sans-serif;
-          font-size: 10px;
-          letter-spacing: 1px;
-          transition: background 0.25s ease, color 0.25s ease;
-        }
+.boton {
+  display: inline-block;
+  padding: 14px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  color: #fff;
+  background: transparent;
+  text-decoration: none;
+  font-family: Inter, Arial, sans-serif;
+  font-size: 10px;
+  letter-spacing: 1px;
+  transition: background 0.25s ease, color 0.25s ease;
+}
 
-        .boton:hover {
-          border-color: #d9a33f;
-          background: #d9a33f;
-          color: #0e0d0b;
-        }
+.boton:hover {
+  border-color: #d9a33f;
+  background: #d9a33f;
+  color: #0e0d0b;
+}
 
         .pie {
           padding: 24px;
