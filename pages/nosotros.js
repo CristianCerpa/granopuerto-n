@@ -131,7 +131,7 @@ export default function Nosotros() {
   </p>
 
   <p>
-    Nacimos inspirados en Valparaíso, un puerto histórico que conectó
+    Nacimos en Valparaíso, un puerto histórico que conectó
     a Chile con el mundo a través del comercio y las culturas.
   </p>
 
@@ -311,11 +311,11 @@ export default function Nosotros() {
           background: #d9a33f;
         }
 .historia > p:not(.sobretitulo):not(.frase) {
-  margin: 0 auto 28px;
+  margin: 0 auto 14px;
   color: #d5d0c8;
   font-size: 20px;
   line-height: 1.8;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.6px;
 }
 
 .historia .frase {
