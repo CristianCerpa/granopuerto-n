@@ -452,7 +452,7 @@ export default function Home() {
             position: absolute;
             z-index: 20;
             right: clamp(5%, 11vw, 170px);
-            bottom: -1%;
+            bottom: 4%;
             width: clamp(260px, 30vw, 440px);
             height: min(70vh, 690px);
             overflow: visible;
