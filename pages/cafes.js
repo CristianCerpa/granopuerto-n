@@ -307,13 +307,17 @@ export default function Cafes() {
           height: auto;
         }
 
-        .menu {
-          display: flex;
-          justify-content: flex-end;
-          align-items: center;
-          gap: clamp(22px, 3vw, 44px);
-          margin-left: auto;
-        }
+
+.menu {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: clamp(22px, 3vw, 44px);
+  margin-left: auto;
+  position: relative;
+  left: 0;
+}
+
 
         .menu a,
         .carrito-link {
@@ -352,7 +356,7 @@ export default function Cafes() {
           display: flex;
           align-items: center;
           gap: 10px;
-          margin-left: auto;
+          margin-left: 0;
           font-size: 14px;
         }
 
