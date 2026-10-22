@@ -385,34 +385,38 @@ export default function Home() {
             transform: translateY(-35%);
             text-align: left;
           }
+
 .hero-content h1 {
   margin: 0;
   color: #f6f1e8;
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: clamp(42px, 4.1vw, 58px);
   font-weight: 500;
-  line-height: 1.05;
-  letter-spacing: -0.6px;
+  line-height: 1.1;
+  letter-spacing: 0.2px;
 }
 
 .hero-subtitle {
-  margin: 15px 0 9px;
+  margin: 17px 0 11px;
   color: #d2b177;
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: clamp(22px, 1.8vw, 26px);
   font-weight: 500;
-  line-height: 1.25;
+  line-height: 1.4;
+  letter-spacing: 0.3px;
 }
 
 .hero-description {
   max-width: 440px;
-  margin: 0 0 22px;
+  margin: 0 0 24px;
   color: rgba(247, 245, 241, 0.82);
   font-family: "Inter", Arial, sans-serif;
   font-size: clamp(12px, 1vw, 14px);
   font-weight: 400;
-  line-height: 1.6;
+  line-height: 1.8;
+  letter-spacing: 0.2px;
 }
+
 
 
           .hero-button {
